@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "finwise.maui", "finwise.maui\finwise.maui.csproj", "{255F5F18-4840-4691-9B27-4A8DDEC0145D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{255F5F18-4840-4691-9B27-4A8DDEC0145D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255F5F18-4840-4691-9B27-4A8DDEC0145D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255F5F18-4840-4691-9B27-4A8DDEC0145D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{255F5F18-4840-4691-9B27-4A8DDEC0145D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255F5F18-4840-4691-9B27-4A8DDEC0145D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255F5F18-4840-4691-9B27-4A8DDEC0145D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E6A4051-7712-450D-ACB8-AA0CB0A1E406}
+	EndGlobalSection
+EndGlobal

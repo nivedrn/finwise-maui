@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="finwise.maui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:finwise.maui"
+    xmlns:pages="clr-namespace:finwise.maui.Pages"
+    Shell.FlyoutBehavior="Disabled">
+
+    <TabBar>
+        <Tab Title="Home"
+            Icon="home.png">
+            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:MainPage}" Route="MainPage" />
+        </Tab>
+        <Tab Title="Activity"
+            Icon="chart.png">
+            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        </Tab>
+        <Tab 
+            Icon="plus.png">
+            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        </Tab>
+        <Tab Title="People"
+            Icon="users.png">
+            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        </Tab>
+        <Tab Title="Profile"
+            Icon="user_profile.png">
+            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        </Tab>
+    </TabBar>
+
+</Shell>
