@@ -1,2 +1,2 @@
-# finwise-maui
+# FinWise
 A .NET MAUI application for managing expenses, budget and money owed between people

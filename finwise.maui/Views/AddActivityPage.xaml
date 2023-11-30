@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="finwise.maui.Views.AddActivityPage"
+             Title="AddActivityPage"
+             Shell.TabBarIsVisible="False"
+             Shell.PresentationMode="Modal">
+
+    <VerticalStackLayout>
+        <Button Text="Click to Rotate Text!"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Command="{Binding PopModal}" />
+    </VerticalStackLayout>
+</ContentPage>

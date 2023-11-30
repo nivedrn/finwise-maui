@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace finwise.maui.Classes
+namespace finwise.maui.Models
 {
     public class Activity
     {

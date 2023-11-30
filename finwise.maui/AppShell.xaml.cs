@@ -1,19 +1,35 @@
-﻿using finwise.maui.Pages;
+﻿using finwise.maui.Views;
+using finwise.maui.ViewModels;
+using System.Diagnostics;
 
 namespace finwise.maui
 {
     public partial class AppShell : Shell
     {
+        private AppShellViewModel appShellViewModel;
         public AppShell()
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
-            Routing.RegisterRoute(nameof(ActivityPage), typeof(ActivityPage));
-            Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
-
             Routing.RegisterRoute(nameof(SearchPage), typeof(SearchPage));
-            Routing.RegisterRoute(nameof(ActivityDetailPage), typeof(ActivityDetailPage));
+
+            appShellViewModel = new AppShellViewModel();
+            BindingContext = appShellViewModel;
+        }
+
+        protected override async void OnNavigating(ShellNavigatingEventArgs args)
+        {
+            base.OnNavigating(args);
+
+            if (args.Target.Location.OriginalString == "//AddActivityPage")
+            {
+                Debug.WriteLine(args.Target.Location.OriginalString);
+                ShellNavigatingDeferral token = args.GetDeferral();
+                args.Cancel();
+                token.Complete();
+                await Shell.Current.Navigation.PushModalAsync(new AddActivityPage(), true);
+            }
+
         }
     }
 }

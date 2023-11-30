@@ -1,4 +1,4 @@
-namespace finwise.maui.Pages;
+namespace finwise.maui.Views;
 
 public partial class ProfilePage : ContentPage
 {

@@ -4,29 +4,26 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:finwise.maui"
-    xmlns:pages="clr-namespace:finwise.maui.Pages"
-    Shell.FlyoutBehavior="Disabled">
-
-    <TabBar>
-        <Tab Title="Home"
-            Icon="home.png">
-            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:MainPage}" Route="MainPage" />
+    xmlns:views="clr-namespace:finwise.maui.Views"
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"
+    >
+        
+    <TabBar x:Name="AppTabBar">
+        <Tab x:Name="Home" Title="Home" Icon="{Binding IconDictionary[0], Mode=OneWay}" >
+            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
         </Tab>
-        <Tab Title="Activity"
-            Icon="chart.png">
-            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        <Tab x:Name="Activity" Title="Activity" Icon="{Binding IconDictionary[1], Mode=OneWay}" >
+            <ShellContent ContentTemplate="{DataTemplate views:ActivityPage}" Route="ActivityPage" />
         </Tab>
-        <Tab 
-            Icon="plus.png">
-            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        <Tab x:Name="AddActivity" Title="" Icon="{Binding IconDictionary[2], Mode=OneWay}" >
+            <ShellContent ContentTemplate="{DataTemplate views:AddActivityPage}" Route="AddActivityPage" />
         </Tab>
-        <Tab Title="People"
-            Icon="users.png">
-            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        <Tab x:Name="People" Title="People" Icon="{Binding IconDictionary[3], Mode=OneWay}" >
+            <ShellContent ContentTemplate="{DataTemplate views:PeoplePage}" Route="PeoplePage" />
         </Tab>
-        <Tab Title="Profile"
-            Icon="user_profile.png">
-            <ShellContent Title="Home" ContentTemplate="{DataTemplate pages:ActivityPage}" Route="ActivityPage" />
+        <Tab x:Name="Profile" Title="Profile" Icon="{Binding IconDictionary[4], Mode=OneWay}" >
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="ProfilePage" />
         </Tab>
     </TabBar>
 

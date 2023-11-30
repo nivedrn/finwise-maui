@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace finwise.maui.Classes
+namespace finwise.maui.Models
 {
-    internal class Tag
+    public class Tag
     {
+        public int id { get; set; }
+        public string name { get; set; }
     }
 }

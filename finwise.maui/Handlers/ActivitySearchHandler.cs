@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using finwise.maui.Models;
 
-namespace finwise.maui.Classes
+namespace finwise.maui.Handlers
 {
-    internal class Person
+    public class ActivitySearchHandler 
     {
+        
     }
 }
