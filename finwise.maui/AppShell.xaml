@@ -8,16 +8,18 @@
     Shell.FlyoutBehavior="Disabled"
     BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"
     >
-        
+
+    <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
+    
     <TabBar x:Name="AppTabBar">
         <Tab x:Name="Home" Title="Home" Icon="{Binding IconDictionary[0], Mode=OneWay}" >
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
+            <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="HomePage" />
         </Tab>
         <Tab x:Name="Activity" Title="Activity" Icon="{Binding IconDictionary[1], Mode=OneWay}" >
             <ShellContent ContentTemplate="{DataTemplate views:ActivityPage}" Route="ActivityPage" />
         </Tab>
         <Tab x:Name="AddActivity" Title="" Icon="{Binding IconDictionary[2], Mode=OneWay}" >
-            <ShellContent ContentTemplate="{DataTemplate views:AddActivityPage}" Route="AddActivityPage" />
+            <ShellContent ContentTemplate="{DataTemplate views:AddExpensePage}" Route="AddExpensePage" />
         </Tab>
         <Tab x:Name="People" Title="People" Icon="{Binding IconDictionary[3], Mode=OneWay}" >
             <ShellContent ContentTemplate="{DataTemplate views:PeoplePage}" Route="PeoplePage" />

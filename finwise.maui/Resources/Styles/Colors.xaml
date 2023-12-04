@@ -11,10 +11,14 @@
 
     <Color x:Key="LightNavBar">#FFFFFF</Color>
     <Color x:Key="DarkNavBar">#171415</Color>
-    <Color x:Key="LightBG">#FFFFFF</Color>
+    <Color x:Key="LightSearchBar">#E1E1E1</Color>
+    <Color x:Key="DarkSearchBar">#171415</Color>
+    <Color x:Key="LightBG">#EBEDEF</Color>
     <Color x:Key="DarkBG">#000000</Color>
     <Color x:Key="LightText">#031320</Color>
     <Color x:Key="DarkText">#FFFFFF</Color>
+    <Color x:Key="LightTextLink">#031320</Color>
+    <Color x:Key="DarkTextLink">#FFFFFF</Color>
     
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

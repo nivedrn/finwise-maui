@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="finwise.maui.Views.HomePage"
+             Title="HomePage"
+             Shell.NavBarIsVisible="False"
+             >
+    
+    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
+
+        <Grid RowDefinitions="45,100,50,auto" ColumnDefinitions="*,50">
+            <BoxView Grid.Row="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}"/>
+            <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="Home" FontSize="20" />
+            <!--<Button Grid.Row="0" Grid.Column="1" Padding="10,0" HeightRequest="40" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=search.png,Dark=search_dark.png}" Command="{Binding SearchCommand}"/>-->
+
+            <BoxView Margin="0,8" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+
+            <BoxView Margin="0,8" CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" >
+                <SearchBar Margin="0,8" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" x:Name="searchInput" Placeholder="Search Expenses" TextChanged="OnSearchTextChanged" MaxLength="100" />
+                <Button Padding="10,0" HeightRequest="35" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Command="{Binding SearchCommand}"/>
+            </HorizontalStackLayout>
+            
+            <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
+                <!-- Large content that exceeds the available space -->
+                <Label Text="Scrollable Content Here..." />
+                <Label Text="Scrollable Content Here..." />
+                <Label Text="Scrollable Content Here..." />
+                <Label Text="Scrollable Content Here..." />
+                <Label Text="Scrollable Content Here..." />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

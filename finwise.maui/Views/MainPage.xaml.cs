@@ -1,13 +1,22 @@
 ﻿using System.Diagnostics;
+using finwise.maui.ViewModels;
 
 namespace finwise.maui.Views
 {
     public partial class MainPage : ContentPage
     {
+        public MainPageViewModel mainPageViewModel;
 
         public MainPage()
         {
             InitializeComponent();
+            mainPageViewModel = new MainPageViewModel();
+            this.BindingContext = mainPageViewModel;
+
+            if (mainPageViewModel.RememberMe)
+            {
+                Shell.Current.GoToAsync("//HomePage");
+            }
         }
 
         protected override void OnAppearing()

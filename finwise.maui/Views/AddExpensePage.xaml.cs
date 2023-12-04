@@ -2,14 +2,18 @@ using Microsoft.Maui.Controls;
 using System.Diagnostics;
 using System.Windows.Input;
 using finwise.maui.ViewModels;
+using CommunityToolkit.Mvvm.Input;
+
 namespace finwise.maui.Views;
 
-public partial class AddActivityPage : ContentPage
+public partial class AddExpensePage : ContentPage
 {
-    public AddActivityPage()
+    AddExpenseViewModel addActivityViewModel;
+    public AddExpensePage()
 	{
 		InitializeComponent();
-        this.BindingContext = new AddActivityViewModel();
+        addActivityViewModel = new AddExpenseViewModel();
+        this.BindingContext = addActivityViewModel;
     }
 
     protected override void OnAppearing()
@@ -23,5 +27,11 @@ public partial class AddActivityPage : ContentPage
         base.OnNavigatedTo(args);
         Debug.WriteLine("On Navigated To: Add Activity");
     }
-    
+
+    [RelayCommand]
+    private static async Task ChangeActivityType(Object obj)
+    {
+        Debug.WriteLine(obj);
+        //await Shell.Current.GoToAsync(nameof(EditAccount));
+    }
 }

@@ -11,7 +11,7 @@
         <BoxView Grid.Row="0" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
 
         <Button Grid.Row="0" Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModal}"/>
-        <Entry Grid.Row="0" Grid.Column="1" x:Name="searchInput" Placeholder="Search" TextChanged="OnEntryTextChanged" Completed="OnEntryCompleted" MaxLength="100" ClearButtonVisibility="WhileEditing"/>
+        <SearchBar Grid.Row="0" Grid.Column="1" x:Name="searchInput" Placeholder="Search" TextChanged="OnEntryTextChanged" MaxLength="100" />
         
         <!-- Large content that exceeds the available space -->
         <ScrollView Padding="10" Grid.Row="1" Grid.ColumnSpan="3" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">

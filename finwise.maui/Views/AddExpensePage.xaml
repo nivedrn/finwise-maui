@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="finwise.maui.Views.AddExpensePage"
+             Title="AddExpensePage"
+             Shell.TabBarIsVisible="False"
+             Shell.PresentationMode="ModalAnimated">
+
+    <VerticalStackLayout>
+        <Grid RowDefinitions="45,*,auto" ColumnDefinitions="50,*,50">
+
+            <BoxView Grid.Row="0" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}">
+                <BoxView.Shadow>
+                    <Shadow Brush="Red"
+                            Radius="20"
+                            Opacity="0.9"/>
+                </BoxView.Shadow>
+            </BoxView>
+
+            <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=cross.png,Dark=search_dark.png}" Command="{Binding PopModalCommand}"/>
+            <Label Grid.Row="0" Grid.Column="1" Padding="10,0" VerticalTextAlignment="Center" Text="Add Expense" FontSize="20" />
+            <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SearchCommand}"/>
+
+            <!--<BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalTextAlignment="Start" Text="Add Expense" FontSize="20" />
+            <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="50,0" Padding="0,0,0,0" HeightRequest="31" CornerRadius="2">
+                <Grid RowDefinitions="*" ColumnDefinitions="*,*">
+                    <Frame Grid.Column="0" Margin="0,0,0,0" HeightRequest="30" Padding="5" CornerRadius="2">
+                        <Label HorizontalOptions="Center" Text="Expense">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding ChangeActivityTypeCommand}" CommandParameter="true"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+                    <Frame Grid.Column="1" Margin="0,0,0,0" HeightRequest="30" Padding="5" CornerRadius="2" >
+                        <Label HorizontalOptions="Center" Text="Income">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeActivityTypeCommand}" CommandParameter="false"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+                </Grid>
+            </Frame>-->
+
+            <VerticalStackLayout Margin="20,30" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                <Grid RowDefinitions="*,*,*" ColumnDefinitions="auto,*">
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Description" FontSize="12" />
+                    <Entry Margin="0,5" Grid.Row="0" Grid.Column="1" HeightRequest="60" x:Name="activityDescription" Text="{Binding addActivityViewModel.activity.description}" Placeholder="Enter a description" MaxLength="100" />
+                    <Label Margin="0,10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Amount" FontSize="12" />
+                    <Entry Margin="0,10" Grid.Row="1" Grid.Column="1" HeightRequest="60" x:Name="activityAmount"  Text="{Binding addActivityViewModel.activity.amount}" Placeholder="0.00" Keyboard="Numeric" />
+                    <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="Activity Date" FontSize="12" />
+                    <DatePicker Grid.Row="2" Grid.Column="1" HeightRequest="60" x:Name="activityDate" Date="{Binding addActivityViewModel.activity.activityDate}" />
+                </Grid>
+            </VerticalStackLayout>
+            
+            <!--<Button Grid.Row="3" Grid.Column="0" Text="Cancel"
+                    BackgroundColor="#EBEDEF"
+                    TextColor="Black"
+                    Padding="10"
+                    Margin="0,10,2,0"
+                    CornerRadius="3"
+                    VerticalOptions="Center"
+                    Command="{Binding PopModalCommand}" />
+            <Button Grid.Row="3" Grid.Column="1" Text="Add Item"
+                    BackgroundColor="#52BE80"
+                    TextColor="Black"
+                    CornerRadius="3"
+                    Padding="10"
+                    Margin="2,10,0,0"
+                    VerticalOptions="Center"
+                    IsEnabled="False"
+                    Command="{Binding AddActivityCommand}" />-->
+        </Grid>
+        
+    </VerticalStackLayout>
+    
+</ContentPage>

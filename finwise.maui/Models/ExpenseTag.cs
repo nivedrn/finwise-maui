@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using finwise.maui.Models;
 
-namespace finwise.maui.Handlers
+namespace finwise.maui.Models
 {
-    public class ActivitySearchHandler 
+    internal class ExpenseTag
     {
-        
     }
 }

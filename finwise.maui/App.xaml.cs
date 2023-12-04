@@ -16,7 +16,7 @@ namespace finwise.maui
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
-            services.AddTransient<AddActivityViewModel>();
+            services.AddTransient<AddExpenseViewModel>();
             services.AddTransient<AppShellViewModel>();
             return services.BuildServiceProvider();
         }

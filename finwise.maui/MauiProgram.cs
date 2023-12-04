@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using finwise.maui.Handlers;
 
 namespace finwise.maui
 {

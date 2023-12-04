@@ -21,13 +21,13 @@ namespace finwise.maui
         {
             base.OnNavigating(args);
 
-            if (args.Target.Location.OriginalString == "//AddActivityPage")
+            if (args.Target.Location.OriginalString == "//AddExpensePage")
             {
                 Debug.WriteLine(args.Target.Location.OriginalString);
                 ShellNavigatingDeferral token = args.GetDeferral();
                 args.Cancel();
                 token.Complete();
-                await Shell.Current.Navigation.PushModalAsync(new AddActivityPage(), true);
+                await Shell.Current.Navigation.PushModalAsync(new AddExpensePage(), true);
             }
 
         }
