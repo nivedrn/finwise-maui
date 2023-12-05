@@ -18,10 +18,6 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         bool rememberMe;
 
-        //public ICommand SearchCommand => new Command(async () => await ExecuteSearchCommand());
-        //public ICommand PopModal => new Command(async () => await ExecutePopModalCommand());
-        //public ICommand NavigateTo => new Command(async () => await NavigateToPageCommand());
-
         public BaseViewModel() { }
 
         [RelayCommand]
@@ -31,9 +27,9 @@ namespace finwise.maui.ViewModels
         }
 
         [RelayCommand]
-        private static async Task NavigateTo()
+        private static async Task NavigateTo(String target)
         {
-            await Shell.Current.GoToAsync("");
+            await Shell.Current.GoToAsync(target);
         }
 
         [RelayCommand]

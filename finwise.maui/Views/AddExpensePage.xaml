@@ -7,7 +7,7 @@
              Shell.PresentationMode="ModalAnimated">
 
     <VerticalStackLayout>
-        <Grid RowDefinitions="45,*,auto" ColumnDefinitions="50,*,50">
+        <Grid RowDefinitions="45,*,auto" ColumnDefinitions="auto,*,auto">
 
             <BoxView Grid.Row="0" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}">
                 <BoxView.Shadow>
@@ -17,7 +17,7 @@
                 </BoxView.Shadow>
             </BoxView>
 
-            <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=cross.png,Dark=search_dark.png}" Command="{Binding PopModalCommand}"/>
+            <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=cross.png,Dark=cross_dark.png}" Command="{Binding PopModalCommand}"/>
             <Label Grid.Row="0" Grid.Column="1" Padding="10,0" VerticalTextAlignment="Center" Text="Add Expense" FontSize="20" />
             <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SearchCommand}"/>
 

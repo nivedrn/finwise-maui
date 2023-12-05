@@ -26,7 +26,7 @@ namespace finwise.maui.Handlers
             await dbConnection.CreateTableAsync<ExpenseTag>();
         }
 
-        public async Task<List<Expense>> ActivityCRUD(string mode, List<Expense> activityList)
+        public async Task<List<Expense>> ExpenseCRUD(string mode, List<Expense> activityList)
         {
 
             await Init();

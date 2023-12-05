@@ -17,17 +17,19 @@ public partial class HomePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        Debug.WriteLine("On Appearing: Home Page");
+        Debug.WriteLine("On Appearing: HomePage");
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        Debug.WriteLine("On Navigated To: Home Page");
+        Debug.WriteLine("On Navigated To: HomePage");
     }
 
     public void OnSearchTextChanged(object sender, EventArgs e)
     {
         string text = ((SearchBar)sender).Text;
     }
+
+
 }

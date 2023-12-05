@@ -8,7 +8,7 @@
     
     <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
 
-        <Grid RowDefinitions="45,100,50,auto" ColumnDefinitions="*,50">
+        <Grid RowDefinitions="30,100,50,auto" ColumnDefinitions="*,auto">
             <BoxView Grid.Row="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}"/>
             <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="Home" FontSize="20" />
             <!--<Button Grid.Row="0" Grid.Column="1" Padding="10,0" HeightRequest="40" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=search.png,Dark=search_dark.png}" Command="{Binding SearchCommand}"/>-->
@@ -23,7 +23,6 @@
             
             <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
                 <!-- Large content that exceeds the available space -->
-                <Label Text="Scrollable Content Here..." />
                 <Label Text="Scrollable Content Here..." />
                 <Label Text="Scrollable Content Here..." />
                 <Label Text="Scrollable Content Here..." />

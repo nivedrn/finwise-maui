@@ -70,13 +70,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Pages\ActivityDetailPage.xaml">
+	  <MauiXaml Update="Pages\ExpenseDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\ActivityPage.xaml">
+	  <MauiXaml Update="Pages\ExpensePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\AddActivityPage.xaml">
+	  <MauiXaml Update="Pages\AddExpensePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\PeoplePage.xaml">

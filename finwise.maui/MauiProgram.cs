@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using finwise.maui.Handlers;
+using finwise.maui.ViewModels;
+using finwise.maui.Views;
 
 namespace finwise.maui
 {
@@ -17,6 +19,9 @@ namespace finwise.maui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddSingleton<BaseViewModel>();
+            builder.Services.AddSingleton<HomePage>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

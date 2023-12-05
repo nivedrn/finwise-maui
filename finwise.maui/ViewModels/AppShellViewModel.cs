@@ -11,7 +11,6 @@ namespace finwise.maui.ViewModels
 {
     public partial class AppShellViewModel : BaseViewModel
     {
-
         [ObservableProperty]
         Dictionary<int, string> iconDictionary;
 
@@ -25,6 +24,5 @@ namespace finwise.maui.ViewModels
                 { 4,"user_profile" },
             };
         }
-
     }
 }

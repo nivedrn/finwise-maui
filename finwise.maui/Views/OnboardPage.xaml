@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="finwise.maui.Views.OnboardPage"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled"
+             >
+    
+    <Grid Padding="10" RowDefinitions="*,auto" ColumnDefinitions="*">
+        <BoxView CornerRadius="5" Grid.Row="0" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+        <Label Grid.Row="0" Padding="10,0" VerticalTextAlignment="Center" Text="Onboarding" FontSize="20" />
+
+        <Button Grid.Row="1" 
+                Text="Let's Get Started"
+                BackgroundColor="#EBEDEF"
+                TextColor="Black"
+                Padding="10"
+                Margin="0,10,2,0"
+                CornerRadius="3"
+                VerticalOptions="Center"
+                Command="{Binding OnboardCompleteCommand}" />
+    </Grid>
+    
+</ContentPage>
