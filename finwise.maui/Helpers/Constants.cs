@@ -5,13 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace finwise.maui
+namespace finwise.maui.Helpers
 {
     public static class Constants
     {
         public const string RememberMe = "RememberMe";
-        public const string Username = "Username";
-        public const string AppTheme = "AppTheme";
 
         public const string finwiseDB = "finwiseDB.db3";
 

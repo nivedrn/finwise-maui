@@ -13,7 +13,7 @@
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <Grid RowDefinitions="*">
-                <Button ImageSource="plus.png" Text="Add Expense" CornerRadius="5" Margin="10" Command="{Binding NavigateToCommand}" CommandParameter="//AddExpensePage" />
+                <Button ImageSource="plus.png" Text="Add Expense" CornerRadius="5" Margin="10" Command="{Binding NavigateToCommand}" CommandParameter="//ExpenseEditorPage" />
             </Grid>
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>
@@ -23,7 +23,7 @@
 
     <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="Home" Icon="home.png" ContentTemplate="{DataTemplate views:HomePage}"/>
     <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="People" Icon="users.png" ContentTemplate="{DataTemplate views:PeoplePage}"/>
-    <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="Settings" Icon="settings.png" ContentTemplate="{DataTemplate views:ProfilePage}"/>
+    <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="Settings" Icon="user_profile.png" ContentTemplate="{DataTemplate views:SettingsPage}"/>
 
     <TabBar x:Name="AppTabBar" IsVisible="{OnIdiom Phone=True,Default=False}">
         <Tab x:Name="Home" Title="Home" Icon="{Binding IconDictionary[0], Mode=OneWay}" >
@@ -33,15 +33,14 @@
             <ShellContent ContentTemplate="{DataTemplate views:PeoplePage}" Route="PeoplePage" />
         </Tab>
         <Tab x:Name="AddExpense" Title="" Icon="{Binding IconDictionary[2], Mode=OneWay}" >
-            <ShellContent ContentTemplate="{DataTemplate views:AddExpensePage}" Route="AddExpensePage" />
+            <ShellContent ContentTemplate="{DataTemplate views:ExpenseEditorPage}" Route="ExpenseEditorPage" />
         </Tab>
-        <Tab x:Name="Expense" Title="Expenses" Icon="{Binding IconDictionary[1], Mode=OneWay}" >
-            <ShellContent ContentTemplate="{DataTemplate views:ActivityPage}" Route="ActivityPage" />
+        <Tab x:Name="Expense" Title="Charts" Icon="{Binding IconDictionary[1], Mode=OneWay}" >
+            <ShellContent ContentTemplate="{DataTemplate views:ExpenseDetailPage}" Route="ExpenseDetailPage" />
         </Tab>
         <Tab x:Name="Profile" Title="Settings" Icon="{Binding IconDictionary[4], Mode=OneWay}" >
-            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="ProfilePage" />
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="SettingsPage" />
         </Tab>
     </TabBar>
     
-
 </Shell>

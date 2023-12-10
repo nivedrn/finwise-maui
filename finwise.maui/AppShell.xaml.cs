@@ -16,9 +16,11 @@ namespace finwise.maui
             {
                 Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
                 Routing.RegisterRoute(nameof(PeoplePage), typeof(PeoplePage));
-                Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
-                Routing.RegisterRoute(nameof(AddExpensePage), typeof(AddExpensePage));
+                Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
+                Routing.RegisterRoute(nameof(ExpenseEditorPage), typeof(ExpenseEditorPage));
             }
+
+            Routing.RegisterRoute(nameof(ExpenseDetailPage), typeof(ExpenseDetailPage));
 
             appShellViewModel = new AppShellViewModel();
             BindingContext = appShellViewModel;
@@ -28,13 +30,13 @@ namespace finwise.maui
         {
             base.OnNavigating(args);
 
-            if (args.Target.Location.OriginalString == "//AddExpensePage")
+            if (args.Target.Location.OriginalString == "//ExpenseEditorPage")
             {
                 Debug.WriteLine(args.Target.Location.OriginalString);
                 ShellNavigatingDeferral token = args.GetDeferral();
                 args.Cancel();
                 token.Complete();
-                await Shell.Current.Navigation.PushModalAsync(new AddExpensePage(), true);
+                await Shell.Current.Navigation.PushModalAsync(new ExpenseEditorPage(null), true);
             }
 
         }

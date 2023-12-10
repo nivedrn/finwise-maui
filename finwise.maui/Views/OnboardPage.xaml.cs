@@ -16,14 +16,14 @@ namespace finwise.maui.Views
             if (rememberMe)
             {
                 Debug.WriteLine("It Remembers");
-                Preferences.Default.Set<bool>("RememberMe", false);
+                
                 if (DeviceInfo.Idiom == DeviceIdiom.Phone)
                 {
                     Shell.Current.GoToAsync("//HomePage");
                 }
                 else if (DeviceInfo.Idiom != DeviceIdiom.Phone)
                 {
-                    Shell.Current.GoToAsync(nameof(finwise.maui.Views.HomePage));
+                    Shell.Current.GoToAsync("HomePage");
                 }
             }
 

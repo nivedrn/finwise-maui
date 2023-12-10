@@ -3,31 +3,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SQLite;
+using System.Xml.Serialization;
 
 namespace finwise.maui.Models
 {
-    public class Expense
+    public enum ExpenseType
     {
-        [PrimaryKey, AutoIncrement]
-        public string id {  get; set; }
-        
-        [MaxLength(20)]
-        public string expenseType { get; set; }
+        OneTime,
+        Recurring
+    }
 
-        [MaxLength(100)]
+    public enum RecurringUOM
+    {
+        NotApplicable,
+        Daily,
+        Weekly,
+        Monthly,
+        Yearly
+    }
+
+    [XmlRoot("Expenses")]
+    public class Expense: BaseModel
+    {
         public string description {  get; set; }
-
         public float amount { get; set; }
+        public ExpenseType expenseType { get; set; }
+        public RecurringUOM recurringUOM { get; set; }
 
-        public DateTime expenseDate { get; set; }
+        public List<Tag> tags { get; set; }
+        public string notes { get; set; }
 
-        [MaxLength(400)]
-        public string notes{  get; set; }
+        public List<Person> persons { get; set; }
+        public bool isShared { get; set; }
 
+        public bool isDeleted { get; set; }
         public DateTime createdDate { get; set; }
-        public DateTime modifiedDate{ get; set; }
-        public bool isDeleted{ get; set; }
+        public DateTime modifiedDate { get; set; }
 
+        public Expense()
+        {
+            this.amount = 0;
+            this.expenseType = ExpenseType.OneTime;
+            this.recurringUOM = RecurringUOM.NotApplicable;
+
+            this.tags = new List<Tag>();
+
+            this.isShared = false;
+            this.isDeleted = false;
+            this.createdDate = DateTime.Now;
+            this.modifiedDate = DateTime.Now;
+
+        }
     }
 }

@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using finwise.maui.Models;
 
 namespace finwise.maui.ViewModels
 {
@@ -18,13 +20,12 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         bool rememberMe;
 
-        public BaseViewModel() { }
+        [ObservableProperty]
+        bool isBusy;
 
-        [RelayCommand]
-        private static async Task Search()
-        {
-            await Shell.Current.Navigation.PushModalAsync(new finwise.maui.Views.SearchPage(), true);
-        }
+        public ObservableCollection<Expense> Expenses { get; set; }
+
+        public BaseViewModel() {}
 
         [RelayCommand]
         private static async Task NavigateTo(String target)
@@ -35,7 +36,6 @@ namespace finwise.maui.ViewModels
         [RelayCommand]
         private static async Task PopModal()
         {
-
             await Shell.Current.Navigation.PopModalAsync();
         }
     }

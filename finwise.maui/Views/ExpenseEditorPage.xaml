@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="finwise.maui.Views.ExpenseEditorPage"
+             Title="ExpenseEditorPage"
+             Shell.TabBarIsVisible="False"
+             Shell.PresentationMode="ModalAnimated">
+
+    <VerticalStackLayout>
+        <Grid RowDefinitions="45,*,auto" ColumnDefinitions="auto,*,auto">
+
+            <BoxView Grid.Row="0" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}"/>
+
+            <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}" ImageSource="{AppThemeBinding Light=cross.png,Dark=cross_dark.png}" Command="{Binding PopModalCommand}"/>
+            <Label Grid.Row="0" Grid.Column="1" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
+            <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseCommand}"/>
+
+            <VerticalStackLayout Margin="20,30" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                <Label Text="Description" FontSize="12" />
+                <Entry HeightRequest="50" x:Name="activityDescription" Text="{Binding ExpenseItem.description}" Placeholder="Enter a description" MaxLength="100" />
+                <Label Margin="0,10,0,0" Text="Amount" FontSize="12" />
+                <Entry HeightRequest="50" x:Name="activityAmount"  Text="{Binding ExpenseItem.amount}" Placeholder="0.00" Keyboard="Numeric" />
+                <Label Margin="0,10,0,0" Text="Activity Date" FontSize="12" />
+                <DatePicker HeightRequest="50" x:Name="activityDate" Date="{Binding ExpenseItem.expenseDate}" />
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </VerticalStackLayout>
+
+</ContentPage>

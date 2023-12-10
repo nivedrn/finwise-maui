@@ -7,11 +7,10 @@ using System.Xml.Serialization;
 
 namespace finwise.maui.Models
 {
-    [XmlRoot("Persons")]
-    public class Person: BaseModel
+    [XmlRoot("Groups")]
+    public class Group: BaseModel
     {
-        public string name { get; set; }
-        public string email { get; set; }
-        public string phoneNo { get; set; }
+        public string groupName { get; set; }
+        public List<string> personIds { get; set; }
     }
 }

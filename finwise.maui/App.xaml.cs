@@ -1,24 +1,55 @@
-﻿using finwise.maui.ViewModels;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using finwise.maui.Handlers;
+using finwise.maui.Helpers;
+using finwise.maui.Models;
+using finwise.maui.ViewModels;
 namespace finwise.maui
 {
     public partial class App : Application
     {
-        public IServiceProvider Services { get; }
+        public static DBHandler _localDB { get; private set; }
 
-        public App()
+        public static List<Expense> _expenses { get; private set; }
+        public static List<Person> _people { get; private set; }
+        public static List<Group> _groups { get; private set; }
+
+        public static BaseViewModel _bvm { get; private set; }
+
+        public App(BaseViewModel bvm)
         {
-            Services = ConfigureServices();
-            InitializeComponent();
+            //_localDB = localDB;
 
+            _bvm = bvm;
+
+            Task.Run(async () =>
+            {
+                _expenses = await MyStorage.LoadFromDataFile<Expense>();
+                _people = await MyStorage.LoadFromDataFile<Person>();
+                _groups = await MyStorage.LoadFromDataFile<Group>();
+            });
+
+            InitializeComponent();
             MainPage = new AppShell();
         }
 
-        private static IServiceProvider ConfigureServices()
+        protected override void OnSleep()
         {
-            var services = new ServiceCollection();
-            services.AddTransient<AddExpenseViewModel>();
-            services.AddTransient<AppShellViewModel>();
-            return services.BuildServiceProvider();
+            Task.Run(async () =>
+            {
+                await MyStorage.WriteToDataFile<Expense>(_expenses);
+                await MyStorage.WriteToDataFile<Person>(_people);
+                await MyStorage.WriteToDataFile<Group>(_groups);
+            });
         }
+
+        //protected override void OnResume()
+        //{
+        //    Task.Run(async () =>
+        //    {
+        //        await MyStorage.WriteToDataFile<Expense>(_expenses);
+        //        await MyStorage.WriteToDataFile<Person>(_people);
+        //        await MyStorage.WriteToDataFile<Group>(_groups);
+        //    });
+        //}
     }
 }

@@ -5,28 +5,69 @@
              Title="HomePage"
              Shell.NavBarIsVisible="False"
              >
+
+    <ContentPage.Resources>
+        <DataTemplate x:Name="SortAndFilterSheet" x:Key="SortAndFilterSheet">
+            <Grid RowDefinitions="55,200,300" ColumnDefinitions="*" Padding="10">
+                <FlexLayout Grid.Row="0" JustifyContent="SpaceBetween" >
+                    <Label Text="Clear"/>
+                    <Label Text="Sort and Filter"/>
+                    <Label Text="Apply"/>
+                </FlexLayout>
+                <BoxView Grid.Row="1" BackgroundColor="{StaticResource LightNavBar}"/>
+                <BoxView Grid.Row="2" BackgroundColor="{StaticResource LightNavBar}"/>
+            </Grid>
+        </DataTemplate>
+        
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     
     <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
-
         <Grid RowDefinitions="30,100,50,auto" ColumnDefinitions="*,auto">
             <BoxView Grid.Row="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}"/>
-            <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="Home" FontSize="20" />
-            <!--<Button Grid.Row="0" Grid.Column="1" Padding="10,0" HeightRequest="40" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=search.png,Dark=search_dark.png}" Command="{Binding SearchCommand}"/>-->
-
+            <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
+            
             <BoxView Margin="0,8" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
 
             <BoxView Margin="0,8" CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
             <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" >
-                <SearchBar Margin="0,8" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" x:Name="searchInput" Placeholder="Search Expenses" TextChanged="OnSearchTextChanged" MaxLength="100" />
-                <Button Padding="10,0" HeightRequest="35" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Command="{Binding SearchCommand}"/>
+                <SearchBar Margin="0,8" WidthRequest="320" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" x:Name="searchInput" Placeholder="Search by description, amount or tags" TextChanged="OnSearchTextChanged" MaxLength="100" />
+                <Button Padding="10,0" HeightRequest="30" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Clicked="ShowBottomSheet" />
             </HorizontalStackLayout>
             
             <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
-                <!-- Large content that exceeds the available space -->
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
+                <!--<Button Padding="10,0" HeightRequest="30" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Command="{Binding RefreshExpensesCommand}" />-->
+                <CollectionView ItemsSource="{Binding localBVM.Expenses}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenExpenseDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference expenseCollectioView}}" x:Name="expenseCollectioView" EmptyView="No Expenses Created.">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="40,20" ColumnDefinitions="*,100" Margin="0,0,0,5">
+                                <BoxView CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+                                <Label Padding="10,5,10,0" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding description}" />
+                                <Label Padding="10,5" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End" Text="{Binding amount, StringFormat='{0:C}'}" />
+                                <Label Padding="10,0" Grid.Row="1" Grid.Column="0" FontSize="Micro" Text="{Binding createdDate, StringFormat='Amount: {0:C}'}" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
             </VerticalStackLayout>
         </Grid>
     </ScrollView>
