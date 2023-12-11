@@ -34,13 +34,4 @@ public partial class ExpenseDetailPage : ContentPage
 
     }
 
-    //protected override void OnAppearing()
-    //{
-    //    base.OnAppearing();
-
-    //    if(App._bvm.Expenses[expenseDetailVM.currentIndex] != expenseDetailVM.ExpenseItem) {
-    //        expenseDetailVM.ExpenseItem = App._bvm.Expenses[expenseDetailVM.currentIndex];
-    //    }
-    //}
-
 }

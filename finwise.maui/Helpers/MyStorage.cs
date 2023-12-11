@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Text.Json;
 using finwise.maui.Models;
 
 namespace finwise.maui.Helpers
@@ -24,8 +25,10 @@ namespace finwise.maui.Helpers
                     using (var filestream = File.Create(filepath))
                     {
                         var defaultItems = new List<T>();
-                        XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-                        serializer.Serialize(filestream, defaultItems);
+                        JsonSerializer.Serialize<List<T>>(filestream, defaultItems);
+                        //XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+                        //serializer.Serialize(filestream, defaultItems);
+
                     }
                     Debug.WriteLine(fileName + "File Created at Path" + filepath);
                 }
@@ -45,14 +48,20 @@ namespace finwise.maui.Helpers
             {
                 var itemType = typeof(T);
                 List<T> items = new List<T>();
-                var filepath = Init<T>($"{itemType.Name}s.xml");
+                var filepath = Init<T>($"{itemType.Name}s.json");
 
                 if (File.Exists(filepath))
                 {
-                    using (FileStream fs2 = new FileStream(filepath, FileMode.Open))
+                    using (FileStream filestream = new FileStream(filepath, FileMode.Open))
                     {
-                        XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-                        items = serializer.Deserialize(fs2) as List<T>;
+                        //XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+                        //items = serializer.Deserialize(filestream) as List<T>;
+
+                        using (StreamReader reader = new StreamReader(filestream))
+                        {
+                            string jsonContent = reader.ReadToEnd();
+                            items = JsonSerializer.Deserialize<List<T>>(jsonContent);
+                        }
                     }
                 }
 
@@ -72,14 +81,16 @@ namespace finwise.maui.Helpers
                 var itemType = typeof(T);
                 Debug.WriteLine($"Item Type file: itemType");
 
-                var filepath = Init<T>($"{itemType.Name}s.xml");
+                var filepath = Init<T>($"{itemType.Name}s.json");
 
                 if (filepath is not null)
                 {
-                    using (FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate))
+                    using (FileStream filestream = new FileStream(filepath, FileMode.OpenOrCreate))
                     {
-                        XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-                        serializer.Serialize(fs, items);
+                        //XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+                        //serializer.Serialize(fs, items);
+
+                        JsonSerializer.Serialize<List<T>>(filestream, items);
                     }
                     return true;
                 }

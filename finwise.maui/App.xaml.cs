@@ -2,6 +2,7 @@
 using finwise.maui.Helpers;
 using finwise.maui.Models;
 using finwise.maui.ViewModels;
+using System.Collections.ObjectModel;
 namespace finwise.maui
 {
     public partial class App : Application
@@ -16,9 +17,12 @@ namespace finwise.maui
         {
             _bvm = bvm;
 
-            _expenses = MyStorage.LoadFromDataFile<Expense>();
+            _expenses = MyStorage.LoadFromDataFile<Expense>(); 
+            _bvm.Expenses = new ObservableCollection<Expense>(_expenses);
             _people = MyStorage.LoadFromDataFile<Person>();
+            _bvm.People = new ObservableCollection<Person>(_people);
             _groups = MyStorage.LoadFromDataFile<Group>();
+            _bvm.Groups = new ObservableCollection<Group>(_groups);
 
             InitializeComponent();
             MainPage = new AppShell();

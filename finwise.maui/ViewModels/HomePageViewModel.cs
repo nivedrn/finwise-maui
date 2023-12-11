@@ -7,7 +7,6 @@ using finwise.maui.Models;
 using finwise.maui.Views;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace finwise.maui.ViewModels
@@ -22,7 +21,6 @@ namespace finwise.maui.ViewModels
         public HomePageViewModel() {
         
             Title = "Home";
-            App._bvm.Expenses = new ObservableCollection<Expense>(App._expenses);
             localBVM = App._bvm;
             filterParams = new Dictionary<string, string> { { "searchTerm", "" } };
         }

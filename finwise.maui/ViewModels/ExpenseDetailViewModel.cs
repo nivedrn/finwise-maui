@@ -20,11 +20,8 @@ namespace finwise.maui.ViewModels
         public int currentIndex {get;set;}
         public int expensesCount { get; set; }
 
-        //public BaseViewModel localBVM { get; set; }
-
         public ExpenseDetailViewModel(Expense expense)
         {
-            //localBVM = App._bvm;
             this.currentIndex = App._bvm.Expenses.IndexOf(expense);
             this.expensesCount = App._bvm.Expenses.Count();
             this.Title = "";

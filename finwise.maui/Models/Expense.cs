@@ -29,7 +29,7 @@ namespace finwise.maui.Models
         public ExpenseType expenseType { get; set; }
         public RecurringUOM recurringUOM { get; set; }
 
-        public List<Tag> tags { get; set; }
+        public List<string> tags { get; set; }
         public string notes { get; set; }
 
         public List<Person> persons { get; set; }
@@ -45,7 +45,7 @@ namespace finwise.maui.Models
             this.expenseType = ExpenseType.OneTime;
             this.recurringUOM = RecurringUOM.NotApplicable;
 
-            this.tags = new List<Tag>();
+            this.tags = new List<string>();
 
             this.isShared = false;
             this.isDeleted = false;

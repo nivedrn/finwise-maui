@@ -39,7 +39,7 @@
 
     
     <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
-        <Grid RowDefinitions="30,100,50,auto" ColumnDefinitions="*,auto">
+        <Grid RowDefinitions="30,130,50,auto" ColumnDefinitions="*,auto">
             <BoxView Grid.Row="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}"/>
             <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
             
