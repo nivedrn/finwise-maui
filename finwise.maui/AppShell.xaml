@@ -13,7 +13,7 @@
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <Grid RowDefinitions="*">
-                <Button ImageSource="plus.png" Text="Add Expense" CornerRadius="5" Margin="10" Command="{Binding NavigateToCommand}" CommandParameter="//ExpenseEditorPage" />
+                <Button ImageSource="plus.png" Text="Add Expense" CornerRadius="5" Margin="10" Command="{Binding NavigateToCommand}" CommandParameter="ExpenseEditorPage" />
             </Grid>
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>

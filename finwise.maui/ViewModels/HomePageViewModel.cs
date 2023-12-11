@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using finwise.maui.Models;
 using finwise.maui.Views;
-using finwise.maui.Handlers;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
@@ -15,8 +14,6 @@ namespace finwise.maui.ViewModels
 {
     public partial class HomePageViewModel: BaseViewModel
     {
-        public ObservableCollection<ExpenseDB> ExpensesDB { get; set; }
-
         public BaseViewModel localBVM { get; set; }
 
         [ObservableProperty]
@@ -26,7 +23,6 @@ namespace finwise.maui.ViewModels
         
             Title = "Home";
             App._bvm.Expenses = new ObservableCollection<Expense>(App._expenses);
-            ExpensesDB = new ObservableCollection<ExpenseDB>();
             localBVM = App._bvm;
             filterParams = new Dictionary<string, string> { { "searchTerm", "" } };
         }

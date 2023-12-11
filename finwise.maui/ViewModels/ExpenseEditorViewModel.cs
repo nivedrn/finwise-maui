@@ -57,7 +57,7 @@ namespace finwise.maui.ViewModels
                 this.ExpenseItem.modifiedDate = DateTime.Now;
                 App._bvm.Expenses[currentIndex] = this.ExpenseItem;
             }
-            await MyStorage.WriteToDataFile<Expense>(App._bvm.Expenses.ToList());
+            MyStorage.WriteToDataFile<Expense>(App._bvm.Expenses.ToList());
             await Shell.Current.Navigation.PopModalAsync();
         }
         

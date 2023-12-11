@@ -59,9 +59,6 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\edit_dark.svg" />
-	  <None Remove="Resources\Raw\Expenses.xml" />
-	  <None Remove="Resources\Raw\Groups.xml" />
-	  <None Remove="Resources\Raw\Persons.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -77,15 +74,6 @@
 	  <Compile Update="Views\ExpenseDetailPage.xaml.cs">
 	    <DependentUpon>ExpenseDetailPage.xaml</DependentUpon>
 	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiAsset Update="Resources\Raw\Expenses.xml">
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
-	  </MauiAsset>
-	  <MauiAsset Update="Resources\Raw\Persons.xml">
-	    <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
-	  </MauiAsset>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -116,6 +104,10 @@
 	  <MauiXaml Update="Views\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\Raw\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionfinwisemauiHideInfoBar="True" /></VisualStudio></ProjectExtensions>

@@ -8,6 +8,14 @@ public partial class ExpenseEditorPage : ContentPage
 {
 	ExpenseEditorViewModel expenseEditorViewModel;
 
+    public ExpenseEditorPage()
+    {
+        InitializeComponent();
+
+        expenseEditorViewModel = new ExpenseEditorViewModel(null);
+        this.BindingContext = expenseEditorViewModel;
+    }
+
     public ExpenseEditorPage(Expense expense)
 	{
 		InitializeComponent();

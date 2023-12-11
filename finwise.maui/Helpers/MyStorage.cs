@@ -13,15 +13,14 @@ namespace finwise.maui.Helpers
     {
         public MyStorage(){}
 
-        public static async Task<string> Init<T>(string fileName) where T: BaseModel, new()
+        public static string Init<T>(string fileName) where T: BaseModel, new()
         {
             try
             {
-                var mainDir = FileSystem.Current.AppDataDirectory;
-                var filepath = Path.Combine(mainDir, fileName);
+                var filepath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
+
                 if (!File.Exists(filepath))
                 {
-                    await Logger.WriteLogsAsync("Creating File: " + filepath);
                     using (var filestream = File.Create(filepath))
                     {
                         var defaultItems = new List<T>();
@@ -40,33 +39,25 @@ namespace finwise.maui.Helpers
             return null;
         }
 
-        public static async Task<List<T>> LoadFromDataFile<T>() where T : BaseModel, new()
+        public static List<T> LoadFromDataFile<T>() where T : BaseModel, new()
         {
             try
             {
                 var itemType = typeof(T);
                 List<T> items = new List<T>();
-                var filepath = await Init<T>($"{itemType.Name}s.xml");
+                var filepath = Init<T>($"{itemType.Name}s.xml");
 
                 if (File.Exists(filepath))
                 {
-                    await Logger.WriteLogsAsync("Reading File: " + filepath);
-
                     using (FileStream fs2 = new FileStream(filepath, FileMode.Open))
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
                         items = serializer.Deserialize(fs2) as List<T>;
                     }
                 }
-                await Logger.WriteLogsAsync($"Found { items.Count } for {itemType.Name} ");
+
                 return items;
             }
-            catch (FileNotFoundException ex)
-            {
-                Debug.WriteLine($"File not found: {ex.FileName}");
-                return new List<T>();
-            }
-
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error reading file: {ex.Message}");
@@ -74,14 +65,14 @@ namespace finwise.maui.Helpers
             }
         }
 
-        public static async Task<bool> WriteToDataFile<T>(List<T> items) where T : BaseModel, new()
+        public static bool WriteToDataFile<T>(List<T> items) where T : BaseModel, new()
         {
             try
             {
                 var itemType = typeof(T);
                 Debug.WriteLine($"Item Type file: itemType");
 
-                var filepath = await Init<T>($"{itemType.Name}s.xml");
+                var filepath = Init<T>($"{itemType.Name}s.xml");
 
                 if (filepath is not null)
                 {

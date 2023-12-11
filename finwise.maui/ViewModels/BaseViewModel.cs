@@ -30,9 +30,9 @@ namespace finwise.maui.ViewModels
         public BaseViewModel() {}
 
         [RelayCommand]
-        private static async Task NavigateTo(String target)
+        private static async Task NavigateTo(string target)
         {
-            await Shell.Current.GoToAsync(target);
+            await Shell.Current.GoToAsync($"{target}");
         }
 
         [RelayCommand]
