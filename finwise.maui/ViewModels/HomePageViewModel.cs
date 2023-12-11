@@ -9,6 +9,7 @@ using finwise.maui.Handlers;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace finwise.maui.ViewModels
 {
@@ -18,19 +19,16 @@ namespace finwise.maui.ViewModels
 
         public BaseViewModel localBVM { get; set; }
 
+        [ObservableProperty]
+        Dictionary<string, string> filterParams;
+
         public HomePageViewModel() {
         
             Title = "Home";
             App._bvm.Expenses = new ObservableCollection<Expense>(App._expenses);
             ExpensesDB = new ObservableCollection<ExpenseDB>();
             localBVM = App._bvm;
-        }
-
-        [RelayCommand]
-        public void RefreshExpenses()
-        {
-            App._bvm.Expenses = new ObservableCollection<Expense>(App._expenses);
-            //return null;
+            filterParams = new Dictionary<string, string> { { "searchTerm", "" } };
         }
 
         [RelayCommand]
@@ -42,15 +40,15 @@ namespace finwise.maui.ViewModels
             }
         }
 
-        private async Task FetchExpenses()
+        public ObservableCollection<Expense> RefreshExpenseList()
         {
-            var expenses = await App._localDB.GetItems<ExpenseDB>();
-
-            ExpensesDB.Clear();
-            foreach (var expense in expenses)
+            if (this.FilterParams["searchTerm"] != "")
             {
-                ExpensesDB.Add(expense);
+                return new ObservableCollection<Expense>(localBVM.Expenses.Where(exp => exp.description.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase))?.ToList());
             }
+
+            return new ObservableCollection<Expense>(App._bvm.Expenses); 
         }
+
     }
 }

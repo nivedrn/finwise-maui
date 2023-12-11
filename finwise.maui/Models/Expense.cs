@@ -22,7 +22,6 @@ namespace finwise.maui.Models
         Yearly
     }
 
-    [XmlRoot("Expenses")]
     public class Expense: BaseModel
     {
         public string description {  get; set; }
@@ -50,8 +49,6 @@ namespace finwise.maui.Models
 
             this.isShared = false;
             this.isDeleted = false;
-            this.createdDate = DateTime.Now;
-            this.modifiedDate = DateTime.Now;
 
         }
     }

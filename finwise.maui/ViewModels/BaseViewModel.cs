@@ -24,6 +24,8 @@ namespace finwise.maui.ViewModels
         bool isBusy;
 
         public ObservableCollection<Expense> Expenses { get; set; }
+        public ObservableCollection<Person> People { get; set; }
+        public ObservableCollection<Group> Groups { get; set; }
 
         public BaseViewModel() {}
 

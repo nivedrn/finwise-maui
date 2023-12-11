@@ -36,20 +36,23 @@ namespace finwise.maui
         {
             Task.Run(async () =>
             {
-                await MyStorage.WriteToDataFile<Expense>(_expenses);
-                await MyStorage.WriteToDataFile<Person>(_people);
-                await MyStorage.WriteToDataFile<Group>(_groups);
+                await MyStorage.WriteToDataFile<Expense>(_bvm.Expenses.ToList());
+                await MyStorage.WriteToDataFile<Person>(_bvm.People.ToList());
+                await MyStorage.WriteToDataFile<Group>(_bvm.Groups.ToList());
+                //await MyStorage.WriteToDataFile<Expense>(_expenses);
+                //await MyStorage.WriteToDataFile<Person>(_people);
+                //await MyStorage.WriteToDataFile<Group>(_groups);
             });
         }
 
-        //protected override void OnResume()
-        //{
-        //    Task.Run(async () =>
-        //    {
-        //        await MyStorage.WriteToDataFile<Expense>(_expenses);
-        //        await MyStorage.WriteToDataFile<Person>(_people);
-        //        await MyStorage.WriteToDataFile<Group>(_groups);
-        //    });
-        //}
+        protected override void OnResume()
+        {
+            Task.Run(async () =>
+            {
+                _expenses = await MyStorage.LoadFromDataFile<Expense>();
+                _people = await MyStorage.LoadFromDataFile<Person>();
+                _groups = await MyStorage.LoadFromDataFile<Group>();
+            });
+        }
     }
 }

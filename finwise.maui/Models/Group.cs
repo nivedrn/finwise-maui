@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 
 namespace finwise.maui.Models
 {
-    [XmlRoot("Groups")]
     public class Group: BaseModel
     {
         public string groupName { get; set; }

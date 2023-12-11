@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using System.Diagnostics.Contracts;
+using CommunityToolkit.Maui.Core.Platform;
 using CommunityToolkit.Mvvm.Input;
 using finwise.maui.ViewModels;
 
@@ -20,31 +20,41 @@ public partial class HomePage : ContentPage, IDisposable
 #nullable enable
     BottomSheetView? bottomSheet;
 
-    public HomePageViewModel homePageViewModel;
+    public HomePageViewModel homePageVM;
 
     public HomePage()
     {
         InitializeComponent();
-        homePageViewModel = new HomePageViewModel();
-        this.BindingContext = homePageViewModel;
+        homePageVM = new HomePageViewModel();
+        this.BindingContext = homePageVM;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         Debug.WriteLine("On Appearing: HomePage");
+        expenseCollectioView.SelectedItem = null;
+        expenseCollectioView.ItemsSource = homePageVM.RefreshExpenseList();
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
         Debug.WriteLine("On Navigated To: HomePage");
-        expenseCollectioView.SelectedItem = null;
     }
 
     public void OnSearchTextChanged(object sender, EventArgs e)
     {
-        string text = ((SearchBar)sender).Text;
+        this.homePageVM.FilterParams["searchTerm"] = ((SearchBar)sender).Text;
+        expenseCollectioView.ItemsSource = homePageVM.RefreshExpenseList();
+    }
+
+    public async void ClearAllFilters(object sender, EventArgs args)
+    {
+        expenseCollectioView.SelectedItem = null;
+        searchInput.Text = "";
+        expenseCollectioView.ItemsSource = homePageVM.localBVM.Expenses;
+        bottomSheet?.CloseBottomSheet();
     }
 
     private void ShowBottomSheet(object sender, EventArgs e)

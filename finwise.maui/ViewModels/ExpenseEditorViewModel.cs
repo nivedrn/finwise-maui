@@ -48,13 +48,16 @@ namespace finwise.maui.ViewModels
         {
             if (!IsEditMode)
             {
+                this.ExpenseItem.createdDate = DateTime.Now;
+                this.ExpenseItem.modifiedDate = DateTime.Now;
                 App._bvm.Expenses.Insert(0, this.ExpenseItem);
-                //MyStorage.WriteToDataFile(App._expenses);
             }
             else
             {
+                this.ExpenseItem.modifiedDate = DateTime.Now;
                 App._bvm.Expenses[currentIndex] = this.ExpenseItem;
             }
+            await MyStorage.WriteToDataFile<Expense>(App._bvm.Expenses.ToList());
             await Shell.Current.Navigation.PopModalAsync();
         }
         

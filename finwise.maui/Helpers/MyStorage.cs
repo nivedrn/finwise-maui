@@ -90,15 +90,14 @@ namespace finwise.maui.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
                         serializer.Serialize(fs, items);
                     }
+                    return true;
                 }
-
-                return true;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error reading file: {ex.Message}");
-                return false;
             }
+            return false;
         }
     }
 }

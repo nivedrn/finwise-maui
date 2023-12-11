@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 
 namespace finwise.maui.Models
 {
-    [XmlRoot("Persons")]
     public class Person: BaseModel
     {
         public string name { get; set; }
