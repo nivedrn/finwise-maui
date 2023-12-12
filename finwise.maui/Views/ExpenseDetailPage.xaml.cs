@@ -1,5 +1,6 @@
 using finwise.maui.Models;
 using finwise.maui.ViewModels;
+using System.Diagnostics;
 
 namespace finwise.maui.Views;
 
@@ -32,6 +33,14 @@ public partial class ExpenseDetailPage : ContentPage
             expenseDetailVM.ExpenseItem = App._bvm.Expenses[expenseDetailVM.currentIndex];
         }
 
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        Debug.WriteLine("On Appearing: ExpenseDetailPage");
+
+        this.BindingContext = expenseDetailVM = new ExpenseDetailViewModel(App._bvm.Expenses[expenseDetailVM.currentIndex]);
     }
 
 }

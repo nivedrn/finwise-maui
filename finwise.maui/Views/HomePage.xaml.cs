@@ -49,7 +49,7 @@ public partial class HomePage : ContentPage, IDisposable
         expenseCollectioView.ItemsSource = homePageVM.RefreshExpenseList();
     }
 
-    public async void ClearAllFilters(object sender, EventArgs args)
+    public void ClearAllFilters(object sender, EventArgs args)
     {
         expenseCollectioView.SelectedItem = null;
         searchInput.Text = "";

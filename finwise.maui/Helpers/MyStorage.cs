@@ -14,11 +14,18 @@ namespace finwise.maui.Helpers
     {
         public MyStorage(){}
 
+        public static bool toDelete = false;
         public static string Init<T>(string fileName) where T: BaseModel, new()
         {
             try
             {
                 var filepath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
+
+                if (toDelete)
+                {
+                    File.Delete(filepath);
+                    toDelete = false;
+                }
 
                 if (!File.Exists(filepath))
                 {
@@ -26,9 +33,6 @@ namespace finwise.maui.Helpers
                     {
                         var defaultItems = new List<T>();
                         JsonSerializer.Serialize<List<T>>(filestream, defaultItems);
-                        //XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-                        //serializer.Serialize(filestream, defaultItems);
-
                     }
                     Debug.WriteLine(fileName + "File Created at Path" + filepath);
                 }
@@ -54,9 +58,6 @@ namespace finwise.maui.Helpers
                 {
                     using (FileStream filestream = new FileStream(filepath, FileMode.Open))
                     {
-                        //XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-                        //items = serializer.Deserialize(filestream) as List<T>;
-
                         using (StreamReader reader = new StreamReader(filestream))
                         {
                             string jsonContent = reader.ReadToEnd();
@@ -87,9 +88,6 @@ namespace finwise.maui.Helpers
                 {
                     using (FileStream filestream = new FileStream(filepath, FileMode.OpenOrCreate))
                     {
-                        //XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-                        //serializer.Serialize(fs, items);
-
                         JsonSerializer.Serialize<List<T>>(filestream, items);
                     }
                     return true;
@@ -100,6 +98,41 @@ namespace finwise.maui.Helpers
                 Debug.WriteLine($"Error reading file: {ex.Message}");
             }
             return false;
+        }
+
+        public static Dictionary<string, string> LoadAppSettings()
+        {
+            var jsonString = "";
+            if (Preferences.Default.ContainsKey("Settings"))
+            {
+                jsonString =  Preferences.Default.Get("Settings", string.Empty);
+            }
+
+            Dictionary<string, string> defaultSettings = new Dictionary<string, string>(); 
+
+            if (jsonString != "")
+            {
+                defaultSettings = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+            }
+
+            if(defaultSettings.Count == 0)
+            {
+                defaultSettings["username"] = "User";
+                defaultSettings["monthlyBudget"] = "20";
+                defaultSettings["budgetStartDay"] = "12";
+                defaultSettings["currentCountryName"] = "Germany";
+                defaultSettings["currentCurrencyCode"] = "EUR";
+                defaultSettings["currentCurrencySymbol"] = "€";
+            }
+
+            return defaultSettings;
+        }
+
+        public static void SaveAppSettings(Dictionary<string, string> settings)
+        {
+            string json = JsonSerializer.Serialize(settings);
+
+            Preferences.Default.Set("Settings", json);
         }
     }
 }

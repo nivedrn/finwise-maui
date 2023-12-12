@@ -3,6 +3,7 @@ using finwise.maui.Helpers;
 using finwise.maui.Models;
 using finwise.maui.ViewModels;
 using System.Collections.ObjectModel;
+using System.Runtime;
 namespace finwise.maui
 {
     public partial class App : Application
@@ -12,10 +13,13 @@ namespace finwise.maui
         public static List<Group> _groups { get; private set; }
 
         public static BaseViewModel _bvm { get; private set; }
+        public static Dictionary<string, string> _settings { get; private set; }
 
         public App(BaseViewModel bvm)
         {
             _bvm = bvm;
+
+            _settings = MyStorage.LoadAppSettings();
 
             _expenses = MyStorage.LoadFromDataFile<Expense>(); 
             _bvm.Expenses = new ObservableCollection<Expense>(_expenses);

@@ -14,7 +14,7 @@
                     <Label FontSize="Medium" HorizontalOptions="Center" Text="Sort &amp; Filter"/>
                     <Button CornerRadius="3" FontSize="Micro" Padding="6,2,6,2" WidthRequest="70" HorizontalOptions="Center" HeightRequest="30" Text="Apply" Clicked="ClearAllFilters" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Blue300Accent}, Dark={StaticResource Gray900}}"/>
                 </FlexLayout>
-                <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="{StaticResource LightNavBar}"/>
+                <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource LightNavBar}"/>
                 <Label Grid.Row="2" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
                 <Label Grid.Row="3" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Sort By"/>
             </Grid>

@@ -36,7 +36,7 @@
             <ShellContent ContentTemplate="{DataTemplate views:ExpenseEditorPage}" Route="ExpenseEditorPage" />
         </Tab>
         <Tab x:Name="Expense" Title="Charts" Icon="{Binding IconDictionary[1], Mode=OneWay}" >
-            <ShellContent ContentTemplate="{DataTemplate views:ExpenseDetailPage}" Route="ExpenseDetailPage" />
+            <ShellContent ContentTemplate="{DataTemplate views:OnboardPage}" Route="OnboardPage" />
         </Tab>
         <Tab x:Name="Profile" Title="Settings" Icon="{Binding IconDictionary[4], Mode=OneWay}" >
             <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" Route="SettingsPage" />
