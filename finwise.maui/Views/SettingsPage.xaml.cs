@@ -14,10 +14,10 @@ public partial class SettingsPage : ContentPage
         settingsPageVM = new SettingsPageViewModel();
         this.BindingContext = settingsPageVM;
 
-        int selectedIndex = settingsPageVM.budgetStartDateOptions.IndexOf(int.Parse(settingsPageVM.Settings["budgetStartDay"]));
-        budgetStartDatePicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
+        //int selectedIndex = settingsPageVM.budgetStartDateOptions.IndexOf(int.Parse(settingsPageVM.Settings["budgetStartDay"]));
+        //budgetStartDatePicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
 
-        selectedIndex = settingsPageVM.currencyOptions.IndexOf($"{settingsPageVM.Settings["currentCurrencyCode"]} - {settingsPageVM.Settings["currentCurrencySymbol"]}");
+        int selectedIndex = settingsPageVM.currencyOptions.IndexOf($"{settingsPageVM.Settings["currentCurrencyCode"]} - {settingsPageVM.Settings["currentCurrencySymbol"]}");
         budgetCurrencyPicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
     }
 
@@ -37,9 +37,7 @@ public partial class SettingsPage : ContentPage
         var picker = (Picker)sender;
         int selectedIndex = picker.SelectedIndex;
 
-        //bool answer = await DisplayAlert("Are you Sure?", "Changing the default currency will update the currency code on all expenses.", "Confirm", "Cancel");
-
-        if (selectedIndex != -1 && true)
+        if (selectedIndex != -1)
         {
             budgetCurrencyPicker.SelectedIndex = selectedIndex;
             settingsPageVM.Settings["currentCurrencyCode"] = settingsPageVM.currencyDataMap[settingsPageVM.currencyOptions[selectedIndex]].currencyCode;
@@ -60,22 +58,22 @@ public partial class SettingsPage : ContentPage
         settingsPageVM.MonthlyBudgetLabel = $"Monthly Budget ( {settingsPageVM.Settings["currentCurrencyCode"]} {settingsPageVM.Settings["currentCurrencySymbol"]} ) : ";
 
         int selectedIndex = settingsPageVM.budgetStartDateOptions.IndexOf(int.Parse(settingsPageVM.Settings["budgetStartDay"]));
-        budgetStartDatePicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
+        //budgetStartDatePicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
 
         selectedIndex = settingsPageVM.currencyOptions.IndexOf($"{settingsPageVM.Settings["currentCurrencyCode"]} - {settingsPageVM.Settings["currentCurrencySymbol"]}");
         budgetCurrencyPicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
     }
 
 
-    private void budgetStartDatePicker_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        var picker = (Picker)sender;
-        int selectedIndex = picker.SelectedIndex;
+    //private void budgetStartDatePicker_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    var picker = (Picker)sender;
+    //    int selectedIndex = picker.SelectedIndex;
 
-        if (selectedIndex != -1)
-        {
-            budgetStartDatePicker.SelectedIndex = selectedIndex;
-            settingsPageVM.Settings["budgetStartDay"] = settingsPageVM.budgetStartDateOptions[selectedIndex].ToString();
-        }
-    }
+    //    if (selectedIndex != -1)
+    //    {
+    //        budgetStartDatePicker.SelectedIndex = selectedIndex;
+    //        settingsPageVM.Settings["budgetStartDay"] = settingsPageVM.budgetStartDateOptions[selectedIndex].ToString();
+    //    }
+    //}
 }

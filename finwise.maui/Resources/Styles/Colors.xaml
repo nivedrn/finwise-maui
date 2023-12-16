@@ -19,6 +19,18 @@
     <Color x:Key="DarkText">#FFFFFF</Color>
     <Color x:Key="LightTextLink">#031320</Color>
     <Color x:Key="DarkTextLink">#FFFFFF</Color>
+
+    <Color x:Key="DarkTabBarBG">#000000</Color>
+    <Color x:Key="DarkPageBG">#0c0e10</Color>
+    <Color x:Key="DarkCardBG">#1b1d20</Color>
+    <Color x:Key="DarkCardAltBG">#111214</Color>
+    <Color x:Key="DarkTextHeader">#bdbfc1</Color>
+    <Color x:Key="DarkTextSubHeader">#898b90</Color>
+    <Color x:Key="DarkTextContent">#6e7074</Color>
+    <Color x:Key="DarkTextCaption">#44464a</Color>
+    <Color x:Key="DarkButtonGray">#9b9a9e</Color>
+    <Color x:Key="DarkButtonBlue">#0a152f</Color>
+    
     
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

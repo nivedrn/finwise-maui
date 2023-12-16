@@ -66,6 +66,7 @@ namespace finwise.maui.ViewModels
         {
             this.settingsBackup = new Dictionary<string, string>(this.Settings);
             MyStorage.SaveAppSettings(this.Settings);
+            App._settings = this.Settings;
             this.IsEditMode = false;
         }
 

@@ -58,6 +58,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\add_group_dark.svg" />
+	  <None Remove="Resources\Images\add_person_dark.svg" />
 	  <None Remove="Resources\Images\edit_dark.svg" />
 	</ItemGroup>
 
@@ -98,7 +100,13 @@
 	  <MauiXaml Update="Views\ExpenseEditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\GroupDetailPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\HomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PersonDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SettingsPage.xaml">
@@ -107,6 +115,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="ViewComponents\" />
 	  <Folder Include="Resources\Raw\" />
 	</ItemGroup>
 

@@ -4,6 +4,7 @@ using finwise.maui.Helpers;
 using finwise.maui.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,13 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         Boolean isEditMode;
 
+        [ObservableProperty]
+        string currentCurrencySymbol;
+
+        public ObservableCollection<string> expenseTags { get; set; }
+
+        public ObservableCollection<Person> expenseMembers { get; set; }
+
         public int currentIndex {  get; set; }
         //public BaseViewModel localBVM { get; set; }
 
@@ -27,20 +35,24 @@ namespace finwise.maui.ViewModels
             //localBVM = App._bvm;
             if (expense == null)
             {
-                this.ExpenseItem = new Expense();
+                ExpenseItem = new Expense();
                 isEditMode = false;
                 Title = "Add new Expense";
-                this.ExpenseItem.id = Guid.NewGuid().ToString();
-                this.ExpenseItem.description = "Test";
-                this.ExpenseItem.amount = 20;
+                ExpenseItem.id = Guid.NewGuid().ToString();
+                expenseTags = new ObservableCollection<string>();
+                expenseMembers = new ObservableCollection<Person>();
             }
             else
             {
-                this.ExpenseItem = expense;
+                ExpenseItem = expense;
                 currentIndex = App._bvm.Expenses.IndexOf(expense);
                 isEditMode = true;
                 Title = "Modify Expense";
+                expenseTags = new ObservableCollection<string>(ExpenseItem.tags);
+                expenseMembers = new ObservableCollection<Person>(ExpenseItem.members);
             }
+
+            currentCurrencySymbol = App._settings["currentCurrencySymbol"];
         }
 
         [RelayCommand]
@@ -60,6 +72,6 @@ namespace finwise.maui.ViewModels
             MyStorage.WriteToDataFile<Expense>(App._bvm.Expenses.ToList());
             await Shell.Current.Navigation.PopModalAsync();
         }
-        
+                
     }
 }

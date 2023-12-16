@@ -13,7 +13,7 @@ namespace finwise.maui
         public static List<Group> _groups { get; private set; }
 
         public static BaseViewModel _bvm { get; private set; }
-        public static Dictionary<string, string> _settings { get; private set; }
+        public static Dictionary<string, string> _settings { get; set; }
 
         public App(BaseViewModel bvm)
         {

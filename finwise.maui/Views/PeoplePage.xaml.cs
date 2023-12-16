@@ -24,15 +24,32 @@ public partial class PeoplePage : ContentPage
 	{
 		InitializeComponent();
 		this.BindingContext = peoplePageVM = new PeoplePageViewModel();
-
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         Debug.WriteLine("On Appearing: PeoplePage");
-        expenseCollectioView.SelectedItem = null;
-        expenseCollectioView.ItemsSource = peoplePageVM.RefreshPeopleList();
+        peopleCollectionView.SelectedItem = null;
+        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
+    }
+
+    public async void AddPerson(object sender, EventArgs e)
+    {
+        string result = await DisplayPromptAsync("Add a new Friend", "Enter name:", "Continue");
+        if (result != "" && result is not null)
+        {
+            peoplePageVM.AddNewPerson(result);
+        }
+    }
+    
+    public async void AddGroup(object sender, EventArgs e)
+    {
+        string result = await DisplayPromptAsync("Create a new Group", "Enter the group name:", "Continue");
+        if(result != "" && result is not null)
+        {
+            peoplePageVM.AddNewGroup(result);
+        }
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
@@ -44,23 +61,24 @@ public partial class PeoplePage : ContentPage
     public void OnSearchTextChanged(object sender, EventArgs e)
     {
         this.peoplePageVM.FilterParams["searchTerm"] = ((SearchBar)sender).Text;
-        expenseCollectioView.ItemsSource = peoplePageVM.RefreshPeopleList();
+        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
     }
 
     public void ClearAllFilters(object sender, EventArgs args)
     {
-        expenseCollectioView.SelectedItem = null;
+        peopleCollectionView.SelectedItem = null;
         searchInput.Text = "";
-        expenseCollectioView.ItemsSource = peoplePageVM.localBVM.Expenses;
+        peopleCollectionView.ItemsSource = peoplePageVM.localBVM.People;
         bottomSheet?.CloseBottomSheet();
     }
 
     private void ShowBottomSheet(object sender, EventArgs e)
     {
-        bottomSheet = this.ShowBottomSheet(GetBottomSheetView(), true);
+        peoplePageVM.SheetTitle = "Sort & Filter";
+        bottomSheet = this.ShowBottomSheet(GetSortAndFilterBottomSheetView(), true);
     }
 
-    private View GetBottomSheetView()
+    private View GetSortAndFilterBottomSheetView()
     {
         var view = (View)SortAndFilterSheet.CreateContent();
         view.BindingContext = this.BindingContext;

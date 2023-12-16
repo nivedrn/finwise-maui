@@ -15,6 +15,8 @@ namespace finwise.maui.Views
             Debug.WriteLine("Checking if You Remember");
             if (rememberMe)
             {
+                //Preferences.Default.Set("RememberMe", false);
+
                 Debug.WriteLine("It Remembers");
                 
                 if (DeviceInfo.Idiom == DeviceIdiom.Phone)

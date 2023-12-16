@@ -7,7 +7,6 @@
     xmlns:views="clr-namespace:finwise.maui.Views"
     FlyoutWidth="268"
     Shell.FlyoutBehavior="{OnIdiom Phone=Disabled,Default=Locked}"
-    BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"
     >
 
     <Shell.FlyoutFooterTemplate>
@@ -17,19 +16,19 @@
             </Grid>
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>
-
+        
     <!-- Desktop/Tablet-->
-    <ShellContent  Title="Main" Icon="heart.png" FlyoutItem.IsVisible="False" ContentTemplate="{DataTemplate views:OnboardPage}" />
+    <ShellContent  Title="Main" Icon="heart.png" FlyoutItem.IsVisible="True" ContentTemplate="{DataTemplate views:OnboardPage}" />
 
     <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="Home" Icon="home.png" ContentTemplate="{DataTemplate views:HomePage}"/>
     <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="People" Icon="users.png" ContentTemplate="{DataTemplate views:PeoplePage}"/>
     <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="Settings" Icon="user_profile.png" ContentTemplate="{DataTemplate views:SettingsPage}"/>
 
     <TabBar x:Name="AppTabBar" IsVisible="{OnIdiom Phone=True,Default=False}">
-        <Tab x:Name="Home" Title="Home" Icon="{Binding IconDictionary[0], Mode=OneWay}" >
+        <Tab x:Name="Home" Title="Expenses" Icon="{Binding IconDictionary[0], Mode=OneWay}"  >
             <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="HomePage" />
         </Tab>
-        <Tab x:Name="People" Title="People" Icon="{Binding IconDictionary[3], Mode=OneWay}" >
+        <Tab x:Name="People" Title="Friends" Icon="{Binding IconDictionary[3], Mode=OneWay}" >
             <ShellContent ContentTemplate="{DataTemplate views:PeoplePage}" Route="PeoplePage" />
         </Tab>
         <Tab x:Name="AddExpense" Title="" Icon="{Binding IconDictionary[2], Mode=OneWay}" >

@@ -17,7 +17,7 @@ namespace finwise.maui.ViewModels
         public AppShellViewModel()
         {
             IconDictionary = new Dictionary<int, string> { 
-                { 0,"home" },
+                { 0,"receipts" },
                 { 1,"chart" },
                 { 2,"plus" },
                 { 3,"users" },

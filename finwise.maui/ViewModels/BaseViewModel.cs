@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using finwise.maui.Models;
+using CommunityToolkit.Maui.Core;
 
 namespace finwise.maui.ViewModels
 {

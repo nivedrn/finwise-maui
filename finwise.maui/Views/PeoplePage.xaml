@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:Class="finwise.maui.Views.PeoplePage"
              Title="PeoplePage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="Black">
 
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior x:Name="statusBar" StatusBarColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource Blue200Accent} }" StatusBarStyle="{ AppThemeBinding Light=DarkContent, Dark=LightContent }"/>
+    </ContentPage.Behaviors>
+    
     <ContentPage.Resources>
         <DataTemplate x:Name="SortAndFilterSheet" x:Key="SortAndFilterSheet">
             <Grid RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
                 <FlexLayout Grid.Row="0" JustifyContent="SpaceBetween">
                     <Button CornerRadius="3" FontSize="Micro" Padding="6,2,6,2" WidthRequest="70" HorizontalOptions="Center" HeightRequest="30" Text="Clear All" Clicked="ClearAllFilters" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"/>
-                    <Label FontSize="Medium" HorizontalOptions="Center" Text="Sort &amp; Filter"/>
-                    <Button CornerRadius="3" FontSize="Micro" Padding="6,2,6,2" WidthRequest="70" HorizontalOptions="Center" HeightRequest="30" Text="Apply" Clicked="ClearAllFilters" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Blue300Accent}, Dark={StaticResource Gray900}}"/>
+                    <Label FontSize="Medium" HorizontalOptions="Center" Text="{Binding SheetTitle}"/>
                 </FlexLayout>
                 <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource LightNavBar}"/>
                 <Label Grid.Row="2" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
                 <Label Grid.Row="3" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Sort By"/>
             </Grid>
         </DataTemplate>
-        
+
         <Style TargetType="Grid">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
@@ -37,22 +41,27 @@
         </Style>
     </ContentPage.Resources>
 
+    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+            <Grid RowDefinitions="30,80,auto,auto" ColumnDefinitions="*,auto">
+            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
+                <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" FontSize="20" />
+                <HorizontalStackLayout>
+                    <FlexLayout JustifyContent="SpaceBetween">
+                        <ImageButton Source="{AppThemeBinding Light=add_group.png,Dark=edit_dark.png}" Clicked="AddGroup" HeightRequest="35" ToolTipProperties.Text="Create a new Group"/>
+                        <ImageButton Source="{AppThemeBinding Light=user_plus.png,Dark=edit_dark.png}" Clicked="AddPerson" Margin="2,0,0,0" Padding="0,3,0,3" HeightRequest="35" ToolTipProperties.Text="Add new Person"/>
+                    </FlexLayout>
+                </HorizontalStackLayout>
+            </FlexLayout>
 
-    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
-        <Grid RowDefinitions="30,130,50,auto" ColumnDefinitions="*,auto">
-            <BoxView Grid.Row="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}"/>
-            <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
+            <BoxView Margin="0,8" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
 
-            <BoxView Margin="0,8" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
-
-            <BoxView Margin="0,8" CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
-            <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" >
-                <SearchBar x:Name="searchInput" Margin="0,8" WidthRequest="320" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" Placeholder="Search by name of person or group" TextChanged="OnSearchTextChanged" MaxLength="100" />
-                <Button Padding="10,0" HeightRequest="30" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Clicked="ShowBottomSheet" />
-            </HorizontalStackLayout>
-
-            <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
-                <CollectionView x:Name="expenseCollectioView" ItemsSource="{Binding localBVM.People}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenExpenseDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference expenseCollectioView}}" EmptyView="No Person Found.">
+            <BoxView CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
+            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="2" Grid.ColumnSpan="2" >
+                <SearchBar x:Name="searchInput" HeightRequest="30" FlexLayout.Grow="1" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" Placeholder="Search by description, amount or tags" TextChanged="OnSearchTextChanged" MaxLength="100" />
+                <Button Padding="10,0" HeightRequest="30" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Clicked="ShowBottomSheet" />
+            </FlexLayout>
+            <VerticalStackLayout Margin="0,8" Grid.Row="3" Grid.ColumnSpan="2">
+                <CollectionView x:Name="peopleCollectionView" ItemsSource="{Binding localBVM.People}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenExpenseDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference peopleCollectionView}}" EmptyView="No friends added.">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" />
                     </CollectionView.ItemsLayout>

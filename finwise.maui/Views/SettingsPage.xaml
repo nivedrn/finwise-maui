@@ -4,7 +4,7 @@
              x:Class="finwise.maui.Views.SettingsPage"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
+    <ScrollView Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="55" />
@@ -18,15 +18,13 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             
-            <BoxView Grid.Row="0" Color="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}"/>
-
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
                 <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
-                <Button Clicked="EditSettings" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}"/>
+                <Button Clicked="EditSettings" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}"/>
             </FlexLayout>
 
-            <Label Grid.Row="1" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="YOUR DETAILS" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
-            <BoxView Grid.Row="2" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+            <Label Grid.Row="1" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="YOUR DETAILS" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextCaption}}" />
+            <BoxView Grid.Row="2" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardAltBG}}"/>
             <VerticalStackLayout Grid.Row="2" Padding="10,0,10,0" >
                 <FlexLayout JustifyContent="SpaceBetween" Wrap="NoWrap" >
                     <Label FontSize="Small" VerticalOptions="Center" FlexLayout.Grow="0.3" HorizontalOptions="Start" Text="Your Name : "/>
@@ -34,19 +32,19 @@
                 </FlexLayout>
             </VerticalStackLayout>
 
-            <Label Grid.Row="3" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="BUDGET" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
-            <BoxView Grid.Row="4" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+            <Label Grid.Row="3" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="BUDGET" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextCaption}}" />
+            <BoxView Grid.Row="4" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardAltBG}}"/>
             <VerticalStackLayout Grid.Row="4" Padding="10,0,10,0" >
                 <FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding MonthlyBudgetLabel}"/>
+                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding MonthlyBudgetLabel}" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}"/>
                     <Entry VerticalOptions="Center" x:Name="monthlyBudget" IsEnabled="{Binding IsEditMode}" WidthRequest="100" HorizontalTextAlignment="Center" Text="{Binding Settings[monthlyBudget], StringFormat='{0:C}'}" Keyboard="Numeric" />
                 </FlexLayout>
-                <FlexLayout JustifyContent="SpaceBetween">
+                <!--<FlexLayout JustifyContent="SpaceBetween">
                     <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="Start Day of the Monthly Budget : "/>
                     <Picker x:Name="budgetStartDatePicker" SelectedIndexChanged="budgetStartDatePicker_SelectedIndexChanged" WidthRequest="100" IsEnabled="{Binding IsEditMode}" ItemsSource="{Binding budgetStartDateOptions}" HorizontalTextAlignment="Center" Title="Select the start date of the monthly budget." />
-                </FlexLayout>
+                </FlexLayout>-->
                 <FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="Default expense currency : "/>
+                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="Default expense currency : " TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}"/>
                     <Picker x:Name="budgetCurrencyPicker" SelectedIndexChanged="budgetCurrencyPicker_SelectedIndexChanged" WidthRequest="100" IsEnabled="{Binding IsEditMode}" ItemsSource="{Binding currencyOptions}" HorizontalTextAlignment="Center" Title="Select the default expense currency." />
                 </FlexLayout>
             </VerticalStackLayout>

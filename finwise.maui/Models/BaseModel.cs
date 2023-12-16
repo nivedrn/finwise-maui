@@ -10,6 +10,9 @@ namespace finwise.maui.Models
     public class BaseModel: INotifyPropertyChanged
     {
         public string id { get; set; }
+        public DateTime createdDate { get; set; }
+        public DateTime modifiedDate { get; set; }
+        public bool isDeleted { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

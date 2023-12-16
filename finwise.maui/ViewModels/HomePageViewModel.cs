@@ -20,7 +20,7 @@ namespace finwise.maui.ViewModels
 
         public HomePageViewModel() {
         
-            Title = "Home";
+            Title = "Expenses";
             localBVM = App._bvm;
             filterParams = new Dictionary<string, string> { { "searchTerm", "" } };
         }

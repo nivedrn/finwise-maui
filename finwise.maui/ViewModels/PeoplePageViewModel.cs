@@ -17,11 +17,44 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         Dictionary<string, string> filterParams;
 
+        [ObservableProperty]
+        string sheetTitle;
+
         public PeoplePageViewModel()
         {
-            Title = "People";
+            Title = "Friends";
             localBVM = App._bvm;
             filterParams = new Dictionary<string, string> { { "searchTerm", "" } };
+        }
+
+        public void AddNewPerson(string name)
+        {
+            if(name != "")
+            {
+                Person person = new Person();
+                person.name = name;
+                person.id = Guid.NewGuid().ToString();
+                person.createdDate = DateTime.Now;
+                person.modifiedDate = DateTime.Now;
+                person.isDeleted = false;
+
+                App._bvm.People.Insert(0, person);
+            }
+        }
+        
+        public void AddNewGroup(string name)
+        {
+            if(name != "")
+            {
+                Group group = new Group();
+                group.groupName = name;
+                group.id = Guid.NewGuid().ToString();
+                group.createdDate = DateTime.Now;
+                group.modifiedDate = DateTime.Now;
+                group.isDeleted = false;
+
+                App._bvm.Groups.Insert(0, group);
+            }
         }
 
         [RelayCommand]
@@ -40,7 +73,7 @@ namespace finwise.maui.ViewModels
                 return new ObservableCollection<Person>(localBVM.People.Where(exp => exp.name.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase))?.ToList());
             }
 
-            return new ObservableCollection<Person>(App._bvm.People);
+            return new ObservableCollection<Person>(localBVM.People);
         }
     }
 }

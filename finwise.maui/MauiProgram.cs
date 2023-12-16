@@ -28,10 +28,18 @@ namespace finwise.maui
             builder.Services.AddTransient<ExpenseEditorViewModel>();
             builder.Services.AddTransient<HomePageViewModel>();
 
+
+            //          Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(nameof(Entry), (handler, view) =>
+            //          {
+            //#if ANDROID
+            //              handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+            //#endif
+            //          });
+
 //            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(Entry), (handler, view) =>
 //            {
 //#if ANDROID
-//            handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+//                        handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
 //#endif
 //            });
 

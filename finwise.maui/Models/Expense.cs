@@ -7,43 +7,26 @@ using System.Xml.Serialization;
 
 namespace finwise.maui.Models
 {
-    public enum ExpenseType
-    {
-        OneTime,
-        Recurring
-    }
-
-    public enum RecurringUOM
-    {
-        NotApplicable,
-        Daily,
-        Weekly,
-        Monthly,
-        Yearly
-    }
-
     public class Expense: BaseModel
     {
         public string description {  get; set; }
         public float amount { get; set; }
-        public ExpenseType expenseType { get; set; }
-        public RecurringUOM recurringUOM { get; set; }
+        public string repeatExpense { get; set; }
+        public string category { get; set; }
 
         public List<string> tags { get; set; }
         public string notes { get; set; }
 
-        public List<Person> persons { get; set; }
-        public bool isShared { get; set; }
+        public DateTime expenseDate { get; set; }
 
-        public bool isDeleted { get; set; }
-        public DateTime createdDate { get; set; }
-        public DateTime modifiedDate { get; set; }
+        public List<Person> members { get; set; }
+        public bool isShared { get; set; }
 
         public Expense()
         {
-            this.amount = 0;
-            this.expenseType = ExpenseType.OneTime;
-            this.recurringUOM = RecurringUOM.NotApplicable;
+            this.repeatExpense = "Off";
+            this.category = "Others";
+            this.expenseDate = DateTime.Now;
 
             this.tags = new List<string>();
 
