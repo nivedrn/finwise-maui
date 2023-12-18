@@ -35,7 +35,6 @@ namespace finwise.maui.ViewModels
         
         public ExpenseEditorViewModel(Expense expense)
         {
-            //localBVM = App._bvm;
             if (expense == null)
             {
                 ExpenseItem = new Expense();
@@ -86,7 +85,6 @@ namespace finwise.maui.ViewModels
             {
                 this.ExpenseItem.expenseShares = tempExpenseShares.ToList();
                 this.ExpenseItem.isShared = true;
-                this.ExpenseItem.sharingType = "";
                 await Shell.Current.Navigation.PopModalAsync();
             }
         }
@@ -113,17 +111,46 @@ namespace finwise.maui.ViewModels
             {
                 ShowSelectableMembers = false;
                 tempExpenseShares.Add(new ExpenseShare(((Person)obj).id, false));
+                RecalculateSplit();
             }
         }
 
         public void RecalculateSplit()
         {
+            foreach (ExpenseShare share in tempExpenseShares)
+            {
+                switch (ExpenseItem.paidByType)
+                {
+                    case "Paid By You":
+                        if (share.hasPaid)
+                        {
+                            share.paidAmount = ExpenseItem.amount;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                switch (ExpenseItem.shareType)
+                {
+                    case "Equally":
+                        if (share.hasShare)
+                        {
+                            share.shareAmount = ExpenseItem.amount / tempExpenseShares.Count;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
 
         }
 
         public bool ValidateSplit()
         {
-            return false;
+            return true;
         }
     }
 }

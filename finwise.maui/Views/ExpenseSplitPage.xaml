@@ -36,28 +36,33 @@
             </ContentPage>
         </x:Arguments>
     </NavigationPage>-->
-    
+
     <NavigationPage Title="Select Friends" 
             BarBackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}"
-            BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">        
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
         <x:Arguments>
-            <ContentPage x:Name="SelectFriendsTab" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+            <ContentPage x:Name="SelectFriendsTab" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
                 <NavigationPage.TitleView>
                     <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
                         <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
                         <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
                     </FlexLayout>
                 </NavigationPage.TitleView>
-                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
                     <FlexLayout Margin="5,10,5,10">
                         <SearchBar x:Name="expenseMembersSearch" FontSize="16" FlexLayout.Grow="1" HeightRequest="50" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" Placeholder="Search by friend's name" TextChanged="expenseMembersSearch_TextChanged" HorizontalOptions="Center"/>
                     </FlexLayout>
                     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}">
                         <VerticalStackLayout>
-                            <CollectionView Margin="10" x:Name="selectableMembersResult" IsVisible="{Binding ShowSelectableMembers}" ItemsSource="{Binding selectableMembers}" SelectionMode="Single" SelectionChangedCommand="{Binding selectableMembersResult_SelectionChangedCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference selectableMembersResult}}" EmptyView="No matching Results.">
+                            <CollectionView Margin="10" x:Name="selectableMembersResult" IsVisible="{Binding ShowSelectableMembers}" ItemsSource="{Binding selectableMembers}" SelectionMode="Single" SelectionChangedCommand="{Binding selectableMembersResult_SelectionChangedCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference selectableMembersResult}}">
                                 <CollectionView.ItemsLayout>
                                     <LinearItemsLayout Orientation="Vertical" />
                                 </CollectionView.ItemsLayout>
+                                <CollectionView.EmptyView>
+                                    <ContentView>
+                                        <Button Grid.Row="1" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageAltBG}}" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}" ImageSource="{AppThemeBinding Light=user_plus.png,Dark=user_plus_dark.png}" Text="Add new Person" Clicked="QuickAddPerson" Margin="15" Padding="20,20" HeightRequest="45"/>
+                                    </ContentView>
+                                </CollectionView.EmptyView>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Padding="10,5">
@@ -81,7 +86,7 @@
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Padding="10,5" RowDefinitions="*" ColumnDefinitions="50,*,50">
+                                        <Grid Padding="5,5,10,5" RowDefinitions="*" ColumnDefinitions="50,*,50">
                                             <Border Grid.Row="0" Grid.RowSpan="2" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"      Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="30,30,30,30"/>
@@ -97,10 +102,10 @@
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
-                            </CollectionView>                            
+                            </CollectionView>
                         </VerticalStackLayout>
                     </ScrollView>
-                </VerticalStackLayout>                              
+                </VerticalStackLayout>
             </ContentPage>
         </x:Arguments>
     </NavigationPage>
@@ -115,20 +120,20 @@
                         <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
                     </FlexLayout>
                 </NavigationPage.TitleView>
-                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
                     <Label Text="$0.00 of $100.00" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
                     <Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>
                     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}">
                         <VerticalStackLayout>
-                            <CollectionView x:Name="tempExpenseSharePaidMembers" Margin="10,0" IsVisible="{Binding ShowSelectableMembers, Converter={StaticResource BooleanNegationConverter}}" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
+                            <CollectionView x:Name="tempExpenseSharePaidMembers" Margin="10,0" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
                                 <CollectionView.ItemsLayout>
                                     <LinearItemsLayout Orientation="Vertical" />
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid Padding="10,5" RowDefinitions="*" ColumnDefinitions="50,50,2*,*">
+                                        <Grid Padding="5,5,10,5" RowDefinitions="*" ColumnDefinitions="50,50,2*,*">
                                             <CheckBox VerticalOptions="Center" Grid.Column="0" IsChecked="{Binding hasPaid}"/>
-                                            <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"      Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                            <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="30,30,30,30"/>
                                                 </Border.StrokeShape>
@@ -139,7 +144,7 @@
                                                 </Image>
                                             </Border>
                                             <Label Grid.Column="2" VerticalOptions="Center" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
-                                            <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding paidAmount}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}"/>
+                                            <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding paidAmount,StringFormat='{0:F2}'}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
@@ -161,10 +166,12 @@
                         <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
                     </FlexLayout>
                 </NavigationPage.TitleView>
-                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
+                    <Label Text="$0.00 of $100.00" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                    <Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>
                     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}">
                         <VerticalStackLayout>
-                            <CollectionView x:Name="tempExpenseShareMemberSplits" Margin="10,0" IsVisible="{Binding ShowSelectableMembers, Converter={StaticResource BooleanNegationConverter}}" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
+                            <CollectionView x:Name="tempExpenseShareMemberSplits" Margin="10,0" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
                                 <CollectionView.ItemsLayout>
                                     <LinearItemsLayout Orientation="Vertical" />
                                 </CollectionView.ItemsLayout>
@@ -172,7 +179,7 @@
                                     <DataTemplate>
                                         <Grid Padding="10,5" RowDefinitions="*" ColumnDefinitions="50,50,2*,*">
                                             <CheckBox VerticalOptions="Center" Grid.Column="0" IsChecked="{Binding hasShare}"/>
-                                            <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" Stroke="{StaticResource DarkHighlightPurple}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                            <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="30,30,30,30"/>
                                                 </Border.StrokeShape>
@@ -183,7 +190,7 @@
                                                 </Image>
                                             </Border>
                                             <Label Grid.Column="2" VerticalOptions="Center" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
-                                            <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding shareAmount,StringFormat='{0:F2}'}}" Placeholder="0" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}"/>
+                                            <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding shareAmount,StringFormat='{0:F2}'}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>

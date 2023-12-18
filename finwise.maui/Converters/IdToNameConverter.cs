@@ -18,7 +18,7 @@ namespace finwise.maui.Converters
                 if( id != App._settings["userId"])
                 {
                     // Look for the Person with the specified ID
-                    Person person = App._people.Find(p => p.id == id);
+                    Person person = App._bvm.People.ToList().Find(p => p.id == id);
 
                     // If the person is found, return their name, otherwise return the ID
                     return person?.name ?? id;

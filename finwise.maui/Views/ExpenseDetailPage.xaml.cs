@@ -6,7 +6,7 @@ namespace finwise.maui.Views;
 
 public partial class ExpenseDetailPage : ContentPage
 {
-    ExpenseDetailViewModel expenseDetailVM;
+    public ExpenseDetailViewModel expenseDetailVM;
 
     public ExpenseDetailPage(Expense expense)
     {

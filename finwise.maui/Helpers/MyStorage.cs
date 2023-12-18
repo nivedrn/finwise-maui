@@ -14,7 +14,7 @@ namespace finwise.maui.Helpers
     {
         public MyStorage(){}
 
-        public static bool toDelete = true;
+        public static bool toDelete = false;
         public static string Init<T>(string fileName) where T: BaseModel, new()
         {
             try

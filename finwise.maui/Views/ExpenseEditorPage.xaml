@@ -11,31 +11,6 @@
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior x:Name="statusBar" StatusBarColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageBG} }" StatusBarStyle="{ AppThemeBinding Light=DarkContent, Dark=LightContent }"/>
     </ContentPage.Behaviors>
-
-    <ContentPage.Resources>
-        <DataTemplate x:Name="ShareExpenseSheet" x:Key="ShareExpenseSheet">
-            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageBG} }" RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
-                <FlexLayout Grid.Row="0" JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" HorizontalOptions="Center" Text="Share Expense"/>
-                </FlexLayout>
-                <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource LightNavBar}"/>
-                <Label Grid.Row="2" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
-                <Label Grid.Row="3" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Sort By"/>
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate x:Name="ExpenseSplitChangeSheet" x:Key="ExpenseSplitChangeSheet">
-            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageBG} }" RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
-                <FlexLayout Grid.Row="0" JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" HorizontalOptions="Center" Text="Split By"/>
-                </FlexLayout>
-                <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource LightNavBar}"/>
-                <Label Grid.Row="2" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
-                <Label Grid.Row="3" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Sort By"/>
-            </Grid>
-        </DataTemplate>
-
-    </ContentPage.Resources>
     
     <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
         <Grid RowDefinitions="50,*,auto, auto" ColumnDefinitions="*">

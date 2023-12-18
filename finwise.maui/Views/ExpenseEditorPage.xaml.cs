@@ -3,24 +3,10 @@ using finwise.maui.ViewModels;
 using finwise.maui.Models;
 using System.Diagnostics;
 
-
-#if ANDROID
-using BottomSheetView = Google.Android.Material.BottomSheet.BottomSheetDialog;
-#elif IOS || MACCATALYST
-using BottomSheetView = UIKit.UIViewController;
-#elif TIZEN
-using BottomSheetView = Tizen.UIExtensions.NUI.Popup;
-#else
-using BottomSheetView = Microsoft.UI.Xaml.Controls.Primitives.Popup;
-#endif
-
 namespace finwise.maui.Views;
 
 public partial class ExpenseEditorPage : ContentPage
 {
-#nullable enable
-    BottomSheetView? bottomSheet;
-
     ExpenseEditorViewModel expenseEditorVM;
 
     public ExpenseEditorPage()
@@ -48,7 +34,7 @@ public partial class ExpenseEditorPage : ContentPage
         Debug.WriteLine(changedFocus);
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
         
@@ -70,37 +56,6 @@ public partial class ExpenseEditorPage : ContentPage
         //bottomSheet = this.ShowBottomSheet(GetSharedExpenseBottomSheetView(), true);
         //await Shell.Current.GoToAsync("ExpenseSplitPage");
         await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM), false);
-    }
-
-    private void modifyExpenseSplit_Clicked(object sender, EventArgs e)
-    {
-        bottomSheet = this.ShowBottomSheet(GetExpenseSplitBottomSheetView(), true);
-    }
-
-    private View GetSharedExpenseBottomSheetView()
-    {
-        var view = (View)ShareExpenseSheet.CreateContent();
-        view.BindingContext = this.BindingContext;
-        return view;
-    }
-
-    private View GetExpenseSplitBottomSheetView()
-    {
-        var view = (View)ExpenseSplitChangeSheet.CreateContent();
-        view.BindingContext = this.BindingContext;
-        return view;
-    }
-
-    private void OnCloseClicked(object? sender, EventArgs e)
-    {
-        bottomSheet?.CloseBottomSheet();
-    }
-
-    public void Dispose()
-    {
-#if !WINDOWS
-        bottomSheet?.Dispose();
-#endif
     }
 
     private void AddExpenseTag_Clicked(object sender, EventArgs e)
