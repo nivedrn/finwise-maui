@@ -10,7 +10,7 @@ namespace finwise.maui.Models
     public class Expense: BaseModel
     {
         public string description {  get; set; }
-        public float amount { get; set; }
+        public decimal amount { get; set; }
         public string category { get; set; }
 
         public List<string> tags { get; set; }

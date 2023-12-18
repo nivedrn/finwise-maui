@@ -1,6 +1,7 @@
 using finwise.maui.Models;
 using finwise.maui.ViewModels;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace finwise.maui.Views;
@@ -14,6 +15,7 @@ public partial class ExpenseSplitPage : TabbedPage
 	{
 		InitializeComponent();
         this.BindingContext = expenseEditorVM = viewModel;
+        Debug.WriteLine(expenseEditorVM.GetHashCode());
         //selectableMembersResult.ItemsSource = expenseEditorVM.RefreshPeopleList("");
         firstLoad = true;
     }

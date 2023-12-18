@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Text.Json;
 using finwise.maui.Models;
+using Org.Json;
 
 namespace finwise.maui.Helpers
 { 
@@ -24,7 +25,7 @@ namespace finwise.maui.Helpers
                 if (toDelete)
                 {
                     File.Delete(filepath);
-                    toDelete = false;
+                    //toDelete = false;
                 }
 
                 if (!File.Exists(filepath))
@@ -88,7 +89,8 @@ namespace finwise.maui.Helpers
                 {
                     using (FileStream filestream = new FileStream(filepath, FileMode.OpenOrCreate))
                     {
-                        JsonSerializer.Serialize<List<T>>(filestream, items);
+                        string jsonString = JsonSerializer.Serialize<List<T>>(items);
+                        JsonSerializer.Serialize(filestream, items);
                     }
                     return true;
                 }

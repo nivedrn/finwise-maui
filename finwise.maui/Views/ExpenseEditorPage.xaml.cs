@@ -55,6 +55,8 @@ public partial class ExpenseEditorPage : ContentPage
     {
         //bottomSheet = this.ShowBottomSheet(GetSharedExpenseBottomSheetView(), true);
         //await Shell.Current.GoToAsync("ExpenseSplitPage");
+
+        Debug.WriteLine(expenseEditorVM.GetHashCode());
         await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM), false);
     }
 

@@ -32,10 +32,10 @@ namespace finwise.maui.ViewModels
         public bool showSelectableMembers;
 
         [ObservableProperty]
-        public float tempPaidByTotal;
+        public decimal tempPaidByTotal;
 
         [ObservableProperty]
-        public float tempExpenseSplitTotal;
+        public decimal tempExpenseSplitTotal;
 
         public int currentIndex {  get; set; }
         
@@ -48,8 +48,12 @@ namespace finwise.maui.ViewModels
                 Title = "Add new Expense";
                 ExpenseItem.id = Guid.NewGuid().ToString();
                 expenseTags = new ObservableCollection<string>();
+                ExpenseShare appUserShare = new ExpenseShare();
+                appUserShare.personId = App._settings["userId"];
+                appUserShare.isAppUser = true;
+                appUserShare.hasPaid = true;
                 tempExpenseShares = new ObservableCollection<ExpenseShare>{
-                    new ExpenseShare(App._settings["userId"], true)
+                    appUserShare
                 };
             }
             else
@@ -117,7 +121,9 @@ namespace finwise.maui.ViewModels
             if (obj is not null)
             {
                 ShowSelectableMembers = false;
-                tempExpenseShares.Add(new ExpenseShare(((Person)obj).id, false));
+                ExpenseShare tempShare = new ExpenseShare();
+                tempShare.personId = ((Person)obj).id;
+                tempExpenseShares.Add(tempShare);
 
                 if (MainThread.IsMainThread)
                     RecalculateSplit();
@@ -127,7 +133,7 @@ namespace finwise.maui.ViewModels
             }
         }
 
-        public async void RecalculateSplit()
+        public void RecalculateSplit()
         {
             foreach (ExpenseShare share in tempExpenseShares)
             {

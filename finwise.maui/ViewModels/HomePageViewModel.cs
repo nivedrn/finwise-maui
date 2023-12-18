@@ -19,7 +19,7 @@ namespace finwise.maui.ViewModels
         Dictionary<string, string> filterParams;
 
         [ObservableProperty]
-        public float budgetProgress;
+        public decimal budgetProgress;
 
         [ObservableProperty]
         public string budgetMonthDetails;
@@ -63,19 +63,19 @@ namespace finwise.maui.ViewModels
             Task.Run(async () =>
             {
                 IsBusy = true;
-                await UpdateBudgetProgressBar();
+                UpdateBudgetProgressBar();
             });
         }
 
-        public async Task UpdateBudgetProgressBar()
+        public async void UpdateBudgetProgressBar()
         {
             var today = DateTime.Today;
             DateTime startDate = new DateTime(today.Year, today.Month, 1);
             DateTime endDate = startDate.AddMonths(1);
 
             var thisMonthsExpenses = App._bvm.Expenses.Where(expense => expense.expenseDate >= startDate && expense.expenseDate < endDate).ToList();
-            float totalAmount = thisMonthsExpenses.Sum(expense => expense.amount);
-            float budget = float.Parse(App._settings["monthlyBudget"]) != 0 ? float.Parse(App._settings["monthlyBudget"]) : totalAmount;
+            decimal totalAmount = thisMonthsExpenses.Sum(expense => expense.amount);
+            decimal budget = decimal.Parse(App._settings["monthlyBudget"]) != 0 ? decimal.Parse(App._settings["monthlyBudget"]) : totalAmount;
             BudgetProgress = totalAmount / budget;
 
             endDate = endDate.AddDays(-1);

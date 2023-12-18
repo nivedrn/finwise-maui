@@ -10,20 +10,22 @@ namespace finwise.maui.Models
     {
         public string personId { get; set; }
         public bool hasPaid { get; set; }
-        public float paidAmount { get; set; }
+        public decimal paidAmount { get; set; }
 
         public bool hasShare { get; set; }
-        public float shareAmount { get; set; }
+        public decimal shareAmount { get; set; }
+
+        public decimal owedAmount { get; set; }
 
         public bool isAppUser{ get; set; }
 
-        public ExpenseShare(string pId, bool appUser)
+        public ExpenseShare()
         {
             id = Guid.NewGuid().ToString(); 
-            personId = pId;
-            isAppUser = appUser;
-            hasPaid = appUser;
             hasShare = true;
+
+            createdDate = DateTime.Now;
+            modifiedDate = DateTime.Now;
         }
     }
 }

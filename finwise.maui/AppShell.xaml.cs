@@ -18,6 +18,7 @@ namespace finwise.maui
                 Routing.RegisterRoute(nameof(PeoplePage), typeof(PeoplePage));
                 Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
                 Routing.RegisterRoute(nameof(ExpenseEditorPage), typeof(ExpenseEditorPage));
+                Routing.RegisterRoute(nameof(ChartsPage), typeof(ChartsPage));
             }
 
             Routing.RegisterRoute(nameof(ExpenseDetailPage), typeof(ExpenseDetailPage));
