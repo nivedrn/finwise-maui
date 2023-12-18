@@ -8,6 +8,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary>
+                    <!-- Set the default font for the entire application -->
+                    <FontImageSource x:Key="DefaultFont" FontFamily="NunitoRegular.ttf" Glyph="" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="finwise.maui.Views.SettingsPage"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="55" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -17,41 +18,41 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
-                <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
-                <Button Clicked="EditSettings" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}"/>
+                <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" />
+                <HorizontalStackLayout>
+                    <FlexLayout JustifyContent="SpaceBetween">
+                        <ImageButton Source="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Clicked="EditSettings" Margin="2,0,0,0" Padding="0,3,0,3" HeightRequest="35" ToolTipProperties.Text="Edit Settings"/>
+                    </FlexLayout>
+                </HorizontalStackLayout>
             </FlexLayout>
-
-            <Label Grid.Row="1" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="YOUR DETAILS" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}" />
-            <BoxView Grid.Row="2" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
-            <VerticalStackLayout Grid.Row="2" Padding="10,0,10,0" >
+            
+            <Label Grid.Row="1" FontSize="Medium" Padding="5,10,0,4" Margin="10,20,10,0" FontAttributes="Bold" Text="Profile" FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkTextSubHeader}}" />
+            <BoxView Grid.Row="2" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
+            <VerticalStackLayout Grid.Row="2" Margin="10,0" Padding="10,0,10,5" >
                 <FlexLayout JustifyContent="SpaceBetween" Wrap="NoWrap" >
-                    <Label FontSize="Small" VerticalOptions="Center" FlexLayout.Grow="0.3" HorizontalOptions="Start" Text="Your Name : "/>
-                    <Entry VerticalOptions="Center" x:Name="userName" FlexLayout.Grow="0.7" IsEnabled="{Binding IsEditMode}" HorizontalTextAlignment="Center" Text="{Binding Settings[username]}" />
+                    <Label FontSize="Medium" VerticalOptions="Center" FlexLayout.Grow="0.3" HorizontalOptions="Start" Text="Your Name : " FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkTextSubHeader}}" />
+                    <Entry VerticalOptions="Center" x:Name="userName" FontFamily="NunitoBold" FlexLayout.Grow="0.7" IsEnabled="{Binding IsEditMode}" HorizontalTextAlignment="Center" Text="{Binding Settings[username]}" />
                 </FlexLayout>
             </VerticalStackLayout>
 
-            <Label Grid.Row="3" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="BUDGET" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}" />
-            <BoxView Grid.Row="4" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
-            <VerticalStackLayout Grid.Row="4" Padding="10,0,10,0" >
+            <Label Grid.Row="3" FontSize="Medium" Padding="5,10,0,4" Margin="10,20,10,0" FontAttributes="Bold" Text="Budget"  FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkTextSubHeader}}" />
+            <BoxView Grid.Row="4" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
+            <VerticalStackLayout Grid.Row="4" Margin="10,0" Padding="10,0,10,5" >
                 <FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding MonthlyBudgetLabel}" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextHeader}}"/>
-                    <Entry VerticalOptions="Center" x:Name="monthlyBudget" IsEnabled="{Binding IsEditMode}" WidthRequest="100" HorizontalTextAlignment="Center" Text="{Binding Settings[monthlyBudget], StringFormat='{0:C}'}" Keyboard="Numeric" />
+                    <Label FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding MonthlyBudgetLabel}" FontFamily="NunitoSemiBold"  TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkTextSubHeader}}"/>
+                    <Entry VerticalOptions="Center" x:Name="monthlyBudget" FontFamily="NunitoBold" IsEnabled="{Binding IsEditMode}" WidthRequest="100" HorizontalTextAlignment="Center" Text="{Binding Settings[monthlyBudget], StringFormat='{0:C}'}" Keyboard="Numeric" />
                 </FlexLayout>
-                <!--<FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="Start Day of the Monthly Budget : "/>
-                    <Picker x:Name="budgetStartDatePicker" SelectedIndexChanged="budgetStartDatePicker_SelectedIndexChanged" WidthRequest="100" IsEnabled="{Binding IsEditMode}" ItemsSource="{Binding budgetStartDateOptions}" HorizontalTextAlignment="Center" Title="Select the start date of the monthly budget." />
-                </FlexLayout>-->
                 <FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="Default expense currency : " TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextHeader}}"/>
-                    <Picker x:Name="budgetCurrencyPicker" SelectedIndexChanged="budgetCurrencyPicker_SelectedIndexChanged" WidthRequest="100" IsEnabled="{Binding IsEditMode}" ItemsSource="{Binding currencyOptions}" HorizontalTextAlignment="Center" Title="Select the default expense currency." />
+                    <Label FontSize="Medium" VerticalOptions="Center" HorizontalOptions="Center" Text="Default expense currency : " FontFamily="NunitoSemiBold"  TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkTextSubHeader}}"/>
+                    <Picker x:Name="budgetCurrencyPicker" SelectedIndexChanged="budgetCurrencyPicker_SelectedIndexChanged" WidthRequest="100" IsEnabled="{Binding IsEditMode}" ItemsSource="{Binding CurrencyOptions}" FontFamily="NunitoBold" HorizontalTextAlignment="Center" Title="Select the default expense currency." />
                 </FlexLayout>
 
-                <Label Text="{Binding Settings[userId]}" HorizontalOptions="Center" Margin="10"/>
+                <!--<Label Text="{Binding Settings[userId]}" HorizontalOptions="Center" Margin="10"/>-->
             </VerticalStackLayout>
 
-            <FlexLayout Grid.Row="5" Margin="0,20,0,0" JustifyContent="SpaceBetween" IsVisible="{Binding IsEditMode}">
+            <FlexLayout Grid.Row="5" Margin="10,20,10,0" JustifyContent="SpaceBetween" IsVisible="{Binding IsEditMode}">
                 <Button Text="Cancel" CornerRadius="4" FlexLayout.Grow="0.4" BackgroundColor="{AppThemeBinding Light={StaticResource Gray400},Dark={StaticResource Gray600}}" Clicked="CancelEditSettings"/>
                 <Button Text="Save" CornerRadius="4" Margin="10,0,0,0" FlexLayout.Grow="0.6" Command="{Binding SaveEditedSettingsCommand}"/>
             </FlexLayout>

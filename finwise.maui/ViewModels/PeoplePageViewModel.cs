@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using finwise.maui.Helpers;
 using finwise.maui.Models;
+using finwise.maui.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,11 @@ namespace finwise.maui.ViewModels
 
         [ObservableProperty]
         string sheetTitle;
+
+        [ObservableProperty]
+        Person currentIndexPerson;
+
+        public int currentIndex {  get; set; }
 
         public PeoplePageViewModel()
         {
@@ -44,21 +50,17 @@ namespace finwise.maui.ViewModels
             }
             //MyStorage.WriteToDataFile<Person>(App._bvm.People.ToList());
         }
-        
-        //public void AddNewGroup(string name)
-        //{
-        //    if(name != "")
-        //    {
-        //        Group group = new Group();
-        //        group.groupName = name;
-        //        group.id = Guid.NewGuid().ToString();
-        //        group.createdDate = DateTime.Now;
-        //        group.modifiedDate = DateTime.Now;
-        //        group.isDeleted = false;
 
-        //        App._bvm.Groups.Insert(0, group);
-        //    }
-        //}
+        [RelayCommand]
+        public async Task OpenPersonDetail(Object obj)
+        {
+            if (obj is not null)
+            {
+                currentIndex = App._bvm.People.IndexOf((Person)obj);
+                currentIndexPerson = App._bvm.People[currentIndex];
+                await Shell.Current.Navigation.PushModalAsync(new PersonDetailPage(this), true);
+            }
+        }
 
         public ObservableCollection<Person> RefreshPeopleList()
         {

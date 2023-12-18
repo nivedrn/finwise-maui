@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="finwise.maui.Views.PersonDetailPage"
-             Title="PersonDetailPage"
-             Shell.NavBarIsVisible="False">
-    
-    <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            x:Class="finwise.maui.Views.PersonDetailPage"
+            Title="PersonDetailPage"
+            Shell.NavBarIsVisible="False">
+
+    <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
         <VerticalStackLayout.GestureRecognizers>
             <SwipeGestureRecognizer Swiped="OnSwiped" Direction="Left"></SwipeGestureRecognizer>
             <SwipeGestureRecognizer Swiped="OnSwiped" Direction="Right"></SwipeGestureRecognizer>
         </VerticalStackLayout.GestureRecognizers>
 
         <Grid RowDefinitions="45,auto,auto" ColumnDefinitions="*">
-
-            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
-                <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
-                <Label Grid.Row="0" Grid.Column="1" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
+            
+            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0" Margin="5,0">
+                <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
                 <HorizontalStackLayout>
-                    <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Command="{Binding EditExpenseCommand}"/>
-                    <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Command="{Binding EditExpenseCommand}"/>
+                    <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Command="{Binding EditExpenseCommand}"/>
+                    <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Command="{Binding EditExpenseCommand}"/>
                 </HorizontalStackLayout>
             </FlexLayout>
 
-            <Frame Padding="15,40" Margin="10,0" CornerRadius="5" Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
+            <Frame Padding="15,25,15,15" Margin="10,0" CornerRadius="5" Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
                 <VerticalStackLayout>
-                    <Label Text="Description" FontSize="12" />
-                    <Label HeightRequest="50" x:Name="activityDescription" Text="{Binding ExpenseItem.description}" />
+                    <Label HeightRequest="40" HorizontalOptions="Center" FontSize="Large" Text="{Binding CurrentIndexPerson.name}" />
+                    <Label HorizontalOptions="Center" FontSize="Small" Text="You owe jojo $110.00" />
                 </VerticalStackLayout>
             </Frame>
 
             <HorizontalStackLayout Grid.Row="1" HeightRequest="20"></HorizontalStackLayout>
-            <Border Grid.Row="1" Grid.RowSpan="2" WidthRequest="40" HeightRequest="40" VerticalOptions="Start" Stroke="{StaticResource DarkButtonBlue}" Background="{StaticResource DarkButtonBlue}" StrokeThickness="0">
+            <Border Grid.Row="1" Grid.RowSpan="2" WidthRequest="40" HeightRequest="40" VerticalOptions="Start" Stroke="{StaticResource DarkButtonBlue}" Background="{StaticResource DarkHighlightDarkPurple}" StrokeThickness="0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="40,40,40,40"/>
                 </Border.StrokeShape>
-                <Image Source="{AppThemeBinding Light=receipts.png,Dark=receipts_dark.png}" VerticalOptions="Center" HeightRequest="20"/>
+                <Image Source="{AppThemeBinding Light=user.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="20">
+                    <Image.Behaviors>
+                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkHighlightPurple}}" />
+                    </Image.Behaviors>
+                </Image>
             </Border>
         </Grid>
     </VerticalStackLayout>

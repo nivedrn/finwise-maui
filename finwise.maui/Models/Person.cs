@@ -12,5 +12,17 @@ namespace finwise.maui.Models
         public string name { get; set; }
         public string email { get; set; }
         public string phoneNo { get; set; }
+
+        public bool owesYou { get; set; }
+        public float talliedAmount { get; set; }
+
+        public string state { get; set; }
+
+        public Person()
+        {
+            state = "No expenses";
+            owesYou = false;
+            talliedAmount = 0;
+        }
     }
 }

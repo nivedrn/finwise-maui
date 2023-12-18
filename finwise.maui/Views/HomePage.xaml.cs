@@ -35,6 +35,8 @@ public partial class HomePage : ContentPage, IDisposable
         Debug.WriteLine("On Appearing: HomePage");
         expenseCollectioView.SelectedItem = null;
         expenseCollectioView.ItemsSource = homePageVM.RefreshExpenseList();
+
+        homePageVM.InitUpdateBudgetProgressBar();
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)

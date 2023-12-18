@@ -14,11 +14,7 @@ public partial class SettingsPage : ContentPage
         settingsPageVM = new SettingsPageViewModel();
         this.BindingContext = settingsPageVM;
 
-        //int selectedIndex = settingsPageVM.budgetStartDateOptions.IndexOf(int.Parse(settingsPageVM.Settings["budgetStartDay"]));
-        //budgetStartDatePicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
-
-        int selectedIndex = settingsPageVM.currencyOptions.IndexOf($"{settingsPageVM.Settings["currentCurrencyCode"]} - {settingsPageVM.Settings["currentCurrencySymbol"]}");
-        budgetCurrencyPicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
+        budgetCurrencyPicker.SelectedIndex = 0;
     }
 
     public void EditSettings(object sender, EventArgs e)
@@ -40,8 +36,8 @@ public partial class SettingsPage : ContentPage
         if (selectedIndex != -1)
         {
             budgetCurrencyPicker.SelectedIndex = selectedIndex;
-            settingsPageVM.Settings["currentCurrencyCode"] = settingsPageVM.currencyDataMap[settingsPageVM.currencyOptions[selectedIndex]].currencyCode;
-            settingsPageVM.Settings["currentCurrencySymbol"] = settingsPageVM.currencyDataMap[settingsPageVM.currencyOptions[selectedIndex]].currencySymbol;
+            settingsPageVM.Settings["currentCurrencyCode"] = settingsPageVM.currencyDataMap[settingsPageVM.CurrencyOptions[selectedIndex]].currencyCode;
+            settingsPageVM.Settings["currentCurrencySymbol"] = settingsPageVM.currencyDataMap[settingsPageVM.CurrencyOptions[selectedIndex]].currencySymbol;
             settingsPageVM.MonthlyBudgetLabel = $"Monthly Budget ( {settingsPageVM.Settings["currentCurrencyCode"]} {settingsPageVM.Settings["currentCurrencySymbol"]} ) : ";
         }
         else
@@ -57,23 +53,8 @@ public partial class SettingsPage : ContentPage
         settingsPageVM.Settings = new Dictionary<string, string>(settingsPageVM.settingsBackup);
         settingsPageVM.MonthlyBudgetLabel = $"Monthly Budget ( {settingsPageVM.Settings["currentCurrencyCode"]} {settingsPageVM.Settings["currentCurrencySymbol"]} ) : ";
 
-        int selectedIndex = settingsPageVM.budgetStartDateOptions.IndexOf(int.Parse(settingsPageVM.Settings["budgetStartDay"]));
-        //budgetStartDatePicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
-
-        selectedIndex = settingsPageVM.currencyOptions.IndexOf($"{settingsPageVM.Settings["currentCurrencyCode"]} - {settingsPageVM.Settings["currentCurrencySymbol"]}");
+        int selectedIndex = settingsPageVM.CurrencyOptions.IndexOf($"{settingsPageVM.Settings["currentCurrencyCode"]} - {settingsPageVM.Settings["currentCurrencySymbol"]}");
         budgetCurrencyPicker.SelectedIndex = selectedIndex != -1 ? selectedIndex : 0;
     }
 
-
-    //private void budgetStartDatePicker_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    var picker = (Picker)sender;
-    //    int selectedIndex = picker.SelectedIndex;
-
-    //    if (selectedIndex != -1)
-    //    {
-    //        budgetStartDatePicker.SelectedIndex = selectedIndex;
-    //        settingsPageVM.Settings["budgetStartDay"] = settingsPageVM.budgetStartDateOptions[selectedIndex].ToString();
-    //    }
-    //}
 }

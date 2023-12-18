@@ -25,8 +25,9 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         string monthlyBudgetLabel;
 
-        public List<int> budgetStartDateOptions { get; set; }
-        public List<string> currencyOptions { get; set; }
+        [ObservableProperty]
+        List<string> currencyOptions;
+
         public Dictionary<string,CurrencyData> currencyDataMap { get; set; }
 
         public SettingsPageViewModel()
@@ -36,29 +37,19 @@ namespace finwise.maui.ViewModels
             this.Settings = new Dictionary<string, string>(App._settings);
             this.settingsBackup = new Dictionary<string, string>(App._settings);
             this.MonthlyBudgetLabel = $"Monthly Budget ( {this.Settings["currentCurrencyCode"]} {this.Settings["currentCurrencySymbol"]} ) : ";
-
-            budgetStartDateOptions = new List<int>();
-            for (int i = 0; i < 31; i++)
+            this.CurrencyOptions = new List<string>()
             {
-                budgetStartDateOptions.Add(i + 1);
-            }
+                $"{this.Settings["currentCurrencyCode"]} - {this.Settings["currentCurrencySymbol"]}"
+            };
 
-            currencyOptions = new List<string>();
-            currencyDataMap = new Dictionary<string, CurrencyData>();
-            foreach (CultureInfo ci in new List<CultureInfo>(CultureInfo.GetCultures(CultureTypes.AllCultures)))
+            if (CurrencyOptions is null || CurrencyOptions.Count < 2)
             {
-                if(ci.Name != "" && ci.CultureTypes.HasFlag(CultureTypes.SpecificCultures))
-                {
-                    var currencyData = new CurrencyData(ci);
-                    if (!currencyDataMap.ContainsKey(currencyData.pickerLabel))
-                    {
-                        currencyDataMap[currencyData.pickerLabel] = currencyData;
-                        currencyOptions.Add(currencyData.pickerLabel);
-                    }
-                }
-            }
+                if (MainThread.IsMainThread)
+                    FetchCultureDetails();
 
-            currencyOptions.Sort();
+                else
+                    MainThread.BeginInvokeOnMainThread(FetchCultureDetails);
+            }
         }
 
         [RelayCommand]
@@ -87,6 +78,27 @@ namespace finwise.maui.ViewModels
 
                 pickerLabel = $"{currencyCode} - {currencySymbol}";
             }
+        }
+
+        public async void FetchCultureDetails()
+        {
+            currencyDataMap = new Dictionary<string, CurrencyData>();
+            foreach (CultureInfo ci in new List<CultureInfo>(CultureInfo.GetCultures(CultureTypes.AllCultures)))
+            {
+                if (ci.Name != "" && ci.CultureTypes.HasFlag(CultureTypes.SpecificCultures))
+                {
+                    var currencyData = new CurrencyData(ci);
+                    if (!currencyDataMap.ContainsKey(currencyData.pickerLabel))
+                    {
+                        currencyDataMap[currencyData.pickerLabel] = currencyData;
+                        CurrencyOptions.Add(currencyData.pickerLabel);
+                    }
+                }
+            }
+
+            CurrencyOptions.Sort();
+            CurrencyOptions.Insert(0, $"{this.Settings["currentCurrencyCode"]} - {this.Settings["currentCurrencySymbol"]}");
+            IsBusy = false;
         }
     }
 }

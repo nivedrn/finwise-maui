@@ -44,15 +44,6 @@ public partial class PeoplePage : ContentPage
         await Shell.Current.Navigation.PushModalAsync(new PersonDetailPage(peoplePageVM), true);
     }
     
-    //public async void AddGroup(object sender, EventArgs e)
-    //{
-    //    string result = await DisplayPromptAsync("Create a new Group", "Enter the group name:", "Continue");
-    //    if(result != "" && result is not null)
-    //    {
-    //        peoplePageVM.AddNewGroup(result);
-    //    }
-    //}
-
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);

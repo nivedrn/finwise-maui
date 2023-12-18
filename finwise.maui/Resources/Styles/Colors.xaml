@@ -8,22 +8,32 @@
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="Tertiary">#001A72</Color>
 
-
-    <Color x:Key="LightNavBar">#FFFFFF</Color>
-    <Color x:Key="DarkNavBar">#171415</Color>
-    <Color x:Key="LightSearchBar">#E1E1E1</Color>
-    <Color x:Key="DarkSearchBar">#171415</Color>
-    <Color x:Key="LightBG">#EBEDEF</Color>
-    <Color x:Key="DarkBG">#000000</Color>
-    <Color x:Key="LightText">#031320</Color>
-    <Color x:Key="DarkText">#FFFFFF</Color>
-    <Color x:Key="LightTextLink">#031320</Color>
-    <Color x:Key="DarkTextLink">#FFFFFF</Color>
-
-    <Color x:Key="DarkTabBarBG">#000000</Color>
+    <Color x:Key="WhiteTabBarBG">#e0d9d4</Color>
+    <Color x:Key="WhitePageBG">#f0e9e5</Color>
+    <Color x:Key="WhiteCardBG">#e4dcd8</Color>
+    <Color x:Key="WhiteHighlightText">#1b1d20</Color>
+    <Color x:Key="WhiteDefaultText">#2b292e</Color>
+    <Color x:Key="WhiteDimmedText">#727075</Color>
+    <Color x:Key="WhiteButtonIcons">#2b292e</Color>
+    <Color x:Key="WhiteListIcons">#727075</Color>
+    <Color x:Key="WhiteListBG">#e4dcd8</Color>
+    <Color x:Key="WhiteButtonBG">#e0d9d4</Color>
+    <Color x:Key="WhiteProgressBar">#727075</Color>
+    <Color x:Key="WhiteTabBarUnselected">#969399</Color>
+    
+    <Color x:Key="DarkTabBarBG">#1c1d25</Color>
     <Color x:Key="DarkPageBG">#0c0e10</Color>
-    <Color x:Key="DarkPageAltBG">#202224</Color>
     <Color x:Key="DarkCardBG">#1b1d20</Color>
+    <Color x:Key="DarkHighlightText">#1b1d20</Color>
+    <Color x:Key="DarkDefaultText">#bdbdbe</Color>
+    <Color x:Key="DarkDimmedText">#727075</Color>
+    <Color x:Key="DarkButtonIcons">#2b292e</Color>
+    <Color x:Key="DarkListIcons">#2b292e</Color>
+    <Color x:Key="DarkListBG">#727075</Color>
+    <Color x:Key="DarkButtonBG">#2a131d</Color>
+    <Color x:Key="DarkProgressBar">#cdecdb</Color>
+    
+    <Color x:Key="DarkPageAltBG">#202224</Color>
     <Color x:Key="DarkCardAltBG">#111214</Color>
     <Color x:Key="DarkTextHeader">#bdbfc1</Color>
     <Color x:Key="DarkTextSubHeader">#898b90</Color>
@@ -31,11 +41,10 @@
     <Color x:Key="DarkTextCaption">#44464a</Color>
     <Color x:Key="DarkButtonGray">#9b9a9e</Color>
     <Color x:Key="DarkButtonBlue">#0a152f</Color>
-    <Color x:Key="DarkTextDimmed">#bdbdbe</Color>
     <Color x:Key="DarkTextDimmedALT">#b5b5b6</Color>
 
-    <Color x:Key="DarkHighlightBlue">#8ba9a2</Color>
-    <Color x:Key="DarkHighlightGreen">#5286aa</Color>
+    <Color x:Key="DarkHighlightGreen">#8ba9a2</Color>
+    <Color x:Key="DarkHighlightBlue">#5286aa</Color>
     <Color x:Key="DarkHighlightPurple">#a67ed6</Color>
     <Color x:Key="DarkHighlightDarkPurple">#38264c</Color>
 

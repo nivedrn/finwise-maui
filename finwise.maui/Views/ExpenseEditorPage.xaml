@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="finwise.maui.Views.ExpenseEditorPage"
-             Title="ExpenseEditorPage"
-             Shell.TabBarIsVisible="False"
-             Shell.PresentationMode="ModalAnimated">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:conv="clr-namespace:finwise.maui.Converters"
+            x:Class="finwise.maui.Views.ExpenseEditorPage"
+            Title="ExpenseEditorPage"
+            Shell.TabBarIsVisible="False"
+            Shell.PresentationMode="ModalAnimated">
 
-    <ContentPage.Behaviors>
-        <mct:StatusBarBehavior x:Name="statusBar" StatusBarColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageBG} }" StatusBarStyle="{ AppThemeBinding Light=DarkContent, Dark=LightContent }"/>
-    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
+            <conv:AmountToCurrencyFormatConverter x:Key="AmountToCurrencyFormatConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
-    <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+    <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
         <Grid RowDefinitions="50,*,auto, auto" ColumnDefinitions="*">
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0" >
-                <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
-                <Label Grid.Row="0" Grid.Column="1" Padding="10,0" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="16" />
-                <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseCommand}"/>
+                <Button Grid.Row="0" Grid.Column="0" Padding="10,0" Margin="10,0,0,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
+                <Label Grid.Row="0" Grid.Column="1" Padding="10,0" HorizontalOptions="Center" FontFamily="NunitoSemiBold" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="16" />
+                <Button Grid.Row="0" Grid.Column="2" Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseCommand}"/>
             </FlexLayout>
 
-            <Frame Padding="35,20" Margin="10,0" CornerRadius="5" Grid.Row="1" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
+            <Frame Padding="35,20" Margin="10,0" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" CornerRadius="5" Grid.Row="1" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
                 <Grid RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="*,*">
                     <FlexLayout HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2">
                         <Image Source="{AppThemeBinding Light=receipts.png,Dark=receipts_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
                         <VerticalStackLayout FlexLayout.Grow="1">
-                            <Entry Margin="10,0,0,0" x:Name="expenseDescription" Text="{Binding ExpenseItem.description}" Placeholder="Enter a description" MaxLength="100" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextContent}}" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseAmount}" />
-                            <Label Margin="15,-6" Text="Description" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
+                            <Entry Margin="10,0,0,0" x:Name="expenseDescription" Text="{Binding ExpenseItem.description}" Placeholder="Enter a description" MaxLength="100" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseAmount}" FontFamily="NunitoSemiBold" />
+                            <Label Margin="15,-6" Text="Expense Title" FontSize="12" FontFamily="NunitoSemiBold" TextColor="{StaticResource DarkTextContent}" />
                         </VerticalStackLayout>
                     </FlexLayout>
                     <FlexLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10">
-                        <Label Padding="5,0,10,0" Text="{Binding CurrentCurrencySymbol}" FontSize="30" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextHeader}}" Margin="0,10,0,0" HeightRequest="35"/>
+                        <Label Padding="5,0,10,0" Text="{Binding CurrentCurrencySymbol}" FontSize="30" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" Margin="0,10,0,0" HeightRequest="35" FontFamily="NunitoSemiBold"/>
                         <VerticalStackLayout FlexLayout.Grow="1" >
-                            <Entry x:Name="expenseAmount" FontSize="Large" MinimumWidthRequest="80" Text="{Binding ExpenseItem.amount}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextContent}}"  toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseCategoryPicker}"/>
-                            <Label Margin="5,-6" Text="Amount" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
+                            <Entry x:Name="expenseAmount" FontSize="Large" MinimumWidthRequest="80" Text="{Binding ExpenseItem.amount}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}"  toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseCategoryPicker}" FontFamily="NunitoSemiBold"/>
+                            <Label Margin="5,-6" Text="Amount" FontSize="12" TextColor="{StaticResource DarkTextContent}" FontFamily="NunitoSemiBold" />
                         </VerticalStackLayout>
                     </FlexLayout>
                     <FlexLayout Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10" JustifyContent="Start" VerticalOptions="Center">
                         <Image Source="{AppThemeBinding Light=tag.png,Dark=tag_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
                         <VerticalStackLayout FlexLayout.Grow="1" >
-                            <Picker x:Name="expenseCategoryPicker" Title="Select the category of the expense." SelectedIndexChanged="expenseCategoryPicker_SelectedIndexChanged">
+                            <Picker x:Name="expenseCategoryPicker" Title="Select the category of the expense." SelectedIndexChanged="expenseCategoryPicker_SelectedIndexChanged" FontFamily="NunitoSemiBold">
                                 <Picker.Items>
                                     <x:String>Entertainment</x:String>
                                     <x:String>Food and drink</x:String>
@@ -50,20 +54,20 @@
                                     <x:String>Others</x:String>
                                 </Picker.Items>
                             </Picker>
-                            <Label Margin="5,-6" Text="Category" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
+                            <Label Margin="5,-6" Text="Category" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoSemiBold" />
                         </VerticalStackLayout>
                     </FlexLayout>
                     <FlexLayout VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Margin="0,10" JustifyContent="Start">
                         <Image Source="{AppThemeBinding Light=calendar.png,Dark=calendar_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
                         <VerticalStackLayout>
-                            <DatePicker x:Name="expenseDate" Date="{Binding ExpenseItem.expenseDate}" />
-                            <Label Margin="5,-8" Text="Expense Date" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
+                            <DatePicker x:Name="expenseDate" Date="{Binding ExpenseItem.expenseDate}" FontFamily="NunitoSemiBold" />
+                            <Label Margin="5,-8" Text="Expense Date" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoSemiBold" />
                         </VerticalStackLayout>
                     </FlexLayout>
                     <FlexLayout Grid.Row="3" Grid.Column="1" Margin="0,10" JustifyContent="End">
                         <Image Source="{AppThemeBinding Light=repeat.png,Dark=repeat_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
                         <VerticalStackLayout>
-                            <Picker x:Name="repeatExpensePicker" Title="Repeat Expense" WidthRequest="80" SelectedIndexChanged="repeatExpensePicker_SelectedIndexChanged">
+                            <Picker x:Name="repeatExpensePicker" Title="Repeat Expense" FontFamily="NunitoSemiBold" WidthRequest="80" SelectedIndexChanged="repeatExpensePicker_SelectedIndexChanged">
                                 <Picker.Items>
                                     <x:String>Off</x:String>
                                     <x:String>Weekly</x:String>
@@ -71,14 +75,15 @@
                                     <x:String>Yearly</x:String>
                                 </Picker.Items>
                             </Picker>
-                            <Label Margin="5,-8" Text="Repeat" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
+                            <Label Margin="5,-8" Text="Repeat" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoSemiBold" />
                         </VerticalStackLayout>
                     </FlexLayout>
                 </Grid>
             </Frame>
-            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" IsEnabled="{Binding ExpenseItem.isShared}" >
+            
+            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" IsVisible="{Binding ExpenseItem.isShared, Converter={StaticResource BooleanNegationConverter}}" >
                 <Label Text="Do you want to " FontSize="Small" VerticalOptions="Center"/>
-                <Button x:Name="ShareExpense" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Blue300Accent}, Dark={StaticResource DarkCardBG}}">
+                <Button x:Name="ShareExpense" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
                     <Button.Shadow>
                         <Shadow Brush="{StaticResource DarkButtonGray}" 
                         Offset="0,5"
@@ -88,9 +93,29 @@
                 </Button>
                 <Label Text=" with friends ?" FontSize="Small" VerticalOptions="Center"/>
             </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" IsVisible="{Binding ExpenseItem.isShared, Converter={StaticResource BooleanNegationConverter}}" >
+                <Label Text="Paid by" FontSize="Small" VerticalOptions="Center"/>
+                <Button x:Name="ExpensePaidBy" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
+                    <Button.Shadow>
+                        <Shadow Brush="{StaticResource DarkButtonGray}" 
+                        Offset="0,5"
+                        Radius="4"
+                        Opacity="0.5"/>
+                    </Button.Shadow>
+                </Button>
+                <Label Text="and split" FontSize="Small" VerticalOptions="Center"/>
+                <Button x:Name="ExpenseShares" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="{Binding ExpenseItem.shareType}" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
+                    <Button.Shadow>
+                        <Shadow Brush="{StaticResource DarkButtonGray}" 
+                            Offset="0,5"
+                            Radius="4"
+                            Opacity="0.5"/>     
+                    </Button.Shadow>
+                </Button>
+                <Label Text="." FontSize="Small" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
         </Grid>
-
-
     </VerticalStackLayout>
 
 </ContentPage>

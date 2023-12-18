@@ -31,6 +31,12 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         public bool showSelectableMembers;
 
+        [ObservableProperty]
+        public float tempPaidByTotal;
+
+        [ObservableProperty]
+        public float tempExpenseSplitTotal;
+
         public int currentIndex {  get; set; }
         
         public ExpenseEditorViewModel(Expense expense)
@@ -112,11 +118,16 @@ namespace finwise.maui.ViewModels
             {
                 ShowSelectableMembers = false;
                 tempExpenseShares.Add(new ExpenseShare(((Person)obj).id, false));
-                RecalculateSplit();
+
+                if (MainThread.IsMainThread)
+                    RecalculateSplit();
+
+                else
+                    MainThread.BeginInvokeOnMainThread(RecalculateSplit);
             }
         }
 
-        public void RecalculateSplit()
+        public async void RecalculateSplit()
         {
             foreach (ExpenseShare share in tempExpenseShares)
             {

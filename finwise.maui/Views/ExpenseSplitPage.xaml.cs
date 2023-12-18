@@ -28,8 +28,13 @@ public partial class ExpenseSplitPage : TabbedPage
     {
         base.OnAppearing();
         CurrentPage = Children[1];
-        expenseEditorVM.RecalculateSplit();
-        
+
+        if (MainThread.IsMainThread)
+            expenseEditorVM.RecalculateSplit();
+
+        else
+            MainThread.BeginInvokeOnMainThread(expenseEditorVM.RecalculateSplit);
+                
         //tempExpenseShareMemberSplits.ItemsSource = expenseEditorVM.tempExpenseShares;
     }
 
