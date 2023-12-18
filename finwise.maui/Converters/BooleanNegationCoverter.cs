@@ -5,13 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace finwise.maui.Helpers
+namespace finwise.maui.Converters
 {
-    public class MyConverters : IValueConverter
+    public class BooleanNegationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value is bool boolValue)
+            {
+                return !boolValue; 
+            }
+
+            return value; 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

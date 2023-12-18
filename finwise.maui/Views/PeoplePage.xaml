@@ -4,8 +4,7 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:Class="finwise.maui.Views.PeoplePage"
              Title="PeoplePage"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="Black">
+             Shell.NavBarIsVisible="False">
 
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior x:Name="statusBar" StatusBarColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource Blue200Accent} }" StatusBarStyle="{ AppThemeBinding Light=DarkContent, Dark=LightContent }"/>
@@ -47,8 +46,8 @@
                 <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" FontSize="20" />
                 <HorizontalStackLayout>
                     <FlexLayout JustifyContent="SpaceBetween">
-                        <ImageButton Source="{AppThemeBinding Light=add_group.png,Dark=edit_dark.png}" Clicked="AddGroup" HeightRequest="35" ToolTipProperties.Text="Create a new Group"/>
-                        <ImageButton Source="{AppThemeBinding Light=user_plus.png,Dark=edit_dark.png}" Clicked="AddPerson" Margin="2,0,0,0" Padding="0,3,0,3" HeightRequest="35" ToolTipProperties.Text="Add new Person"/>
+                        <!--<ImageButton Source="{AppThemeBinding Light=add_group.png,Dark=edit_dark.png}" Clicked="AddGroup" HeightRequest="35" ToolTipProperties.Text="Create a new Group"/>-->
+                        <ImageButton Source="{AppThemeBinding Light=user_plus.png,Dark=user_plus_dark.png}" Clicked="AddPerson" Margin="2,0,0,0" Padding="0,3,0,3" HeightRequest="35" ToolTipProperties.Text="Add new Person"/>
                     </FlexLayout>
                 </HorizontalStackLayout>
             </FlexLayout>

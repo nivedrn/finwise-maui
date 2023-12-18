@@ -13,13 +13,16 @@
     
     <ContentPage.Resources>
         <DataTemplate x:Name="SortAndFilterSheet" x:Key="SortAndFilterSheet">
-            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageBG} }" RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
+            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageAltBG} }" RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
                 <FlexLayout Grid.Row="0" JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" HorizontalOptions="Center" Text="Sort &amp; Filter"/>
-                    <Button CornerRadius="3" FontSize="Micro" Padding="6,2,6,2" WidthRequest="70" HorizontalOptions="Center" HeightRequest="30" Text="Clear All" Clicked="ClearAllFilters" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Blue300Accent}, Dark={StaticResource Gray900}}"/>
+                    <Label FontSize="Header" HorizontalOptions="Center" VerticalOptions="Center" Text="Sort &amp; Filter"/>
+                    <Button CornerRadius="3" FontSize="Micro" Padding="6,2,6,2" WidthRequest="70" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="30" Text="Clear All" Clicked="ClearAllFilters" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Blue300Accent}, Dark={StaticResource DarkHighlightDarkPurple}}"/>
                 </FlexLayout>
                 <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource LightNavBar}"/>
-                <Label Grid.Row="2" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
+                <VerticalStackLayout Grid.Row="2">
+                    <Label  HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
+                    <DatePicker />
+                </VerticalStackLayout>
                 <Label Grid.Row="3" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Sort By"/>
             </Grid>
         </DataTemplate>
@@ -40,16 +43,16 @@
             </Setter>
         </Style>
     </ContentPage.Resources>
-    
-    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+
+    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
         <Grid RowDefinitions="30,130,auto,auto" ColumnDefinitions="*,auto">
-            <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" FontSize="20" />
+            <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextDimmed}}" FontSize="20" />
             <BoxView Margin="0,8" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
 
             <BoxView CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="2" Grid.ColumnSpan="2" >
-                <SearchBar x:Name="searchInput" HeightRequest="30" FlexLayout.Grow="1" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" Placeholder="Search by description, amount or tags" TextChanged="OnSearchTextChanged" MaxLength="100" />
-                <Button Padding="10,0" HeightRequest="30" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Clicked="ShowBottomSheet" />
+                <SearchBar x:Name="searchInput" HeightRequest="40" FlexLayout.Grow="1" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextDimmed}}" Placeholder="Search by title, amount or category" TextChanged="OnSearchTextChanged" MaxLength="100" />
+                <Button Padding="10,0" HeightRequest="40" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Clicked="ShowBottomSheet" />
             </FlexLayout>
 
             <VerticalStackLayout Margin="0,8" Grid.Row="3" Grid.ColumnSpan="2">
@@ -59,9 +62,9 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid RowDefinitions="33,22" ColumnDefinitions="auto,*,100" Margin="0,0,0,1">
+                            <Grid RowDefinitions="40,25" ColumnDefinitions="auto,*,100" Margin="0,0,0,1">
                                 <BoxView CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardAltBG}}"/>
-                                <Image Margin="20,0,10,0" HeightRequest="30" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{AppThemeBinding Light=reciept.png,Dark=recipt_dark.png}"/>
+                                <Image Margin="20,0,10,0" HeightRequest="30" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{AppThemeBinding Light=document.png,Dark=document_dark.png}"/>
                                 <Label Padding="10,0,10,0" FontSize="Subtitle" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding description}" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" />                                
                                 <Label Padding="10,0" Grid.Row="1" Grid.Column="1" FontSize="Micro" Text="{Binding createdDate, StringFormat='{0:dd MMMM, yyyy}'}" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
                                 <Label Padding="20,0,20,0" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End" Text="{Binding amount, StringFormat='{0:C}'}" />

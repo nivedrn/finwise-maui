@@ -33,7 +33,7 @@ namespace finwise.maui.ViewModels
                 await Shell.Current.Navigation.PushModalAsync(new ExpenseDetailPage((Expense)obj), true);
             }
         }
-
+ 
         public ObservableCollection<Expense> RefreshExpenseList()
         {
             if (this.FilterParams["searchTerm"] != "")

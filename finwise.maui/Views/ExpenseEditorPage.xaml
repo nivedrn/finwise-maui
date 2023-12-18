@@ -12,7 +12,6 @@
         <mct:StatusBarBehavior x:Name="statusBar" StatusBarColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageBG} }" StatusBarStyle="{ AppThemeBinding Light=DarkContent, Dark=LightContent }"/>
     </ContentPage.Behaviors>
 
-
     <ContentPage.Resources>
         <DataTemplate x:Name="ShareExpenseSheet" x:Key="ShareExpenseSheet">
             <Grid BackgroundColor="{AppThemeBinding Light={StaticResource Cyan100Accent}, Dark={StaticResource DarkPageBG} }" RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
@@ -39,33 +38,33 @@
     </ContentPage.Resources>
     
     <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
-        <Grid RowDefinitions="45,*,auto, auto" ColumnDefinitions="*">
+        <Grid RowDefinitions="50,*,auto, auto" ColumnDefinitions="*">
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0" >
                 <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
-                <Label Grid.Row="0" Grid.Column="1" Padding="10,0" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="12" />
+                <Label Grid.Row="0" Grid.Column="1" Padding="10,0" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="16" />
                 <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseCommand}"/>
             </FlexLayout>
 
             <Frame Padding="35,20" Margin="10,0" CornerRadius="5" Grid.Row="1" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
-                <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="*,*">
+                <Grid RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="*,*">
                     <FlexLayout HorizontalOptions="Start" Grid.Row="0" Grid.ColumnSpan="2">
                         <Image Source="{AppThemeBinding Light=receipts.png,Dark=receipts_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
                         <VerticalStackLayout FlexLayout.Grow="1">
-                            <Entry Margin="10,0,0,0" x:Name="expenseDescription" HorizontalTextAlignment="Center" Text="{Binding ExpenseItem.description}" Placeholder="Enter a description" MaxLength="100" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextContent}}" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseAmount}" />
-                            <Label Margin="15,-6" Text="Description" FontSize="10" TextColor="{StaticResource DarkTextContent}" />
+                            <Entry Margin="10,0,0,0" x:Name="expenseDescription" Text="{Binding ExpenseItem.description}" Placeholder="Enter a description" MaxLength="100" FontSize="Medium" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextContent}}" toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseAmount}" />
+                            <Label Margin="15,-6" Text="Description" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
                         </VerticalStackLayout>
                     </FlexLayout>
-                    <FlexLayout Grid.Row="1" Grid.Column="0" Margin="0,10">
+                    <FlexLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10">
                         <Label Padding="5,0,10,0" Text="{Binding CurrentCurrencySymbol}" FontSize="30" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextHeader}}" Margin="0,10,0,0" HeightRequest="35"/>
-                        <VerticalStackLayout >
-                            <Entry x:Name="expenseAmount" FontSize="20" MinimumWidthRequest="80" Text="{Binding ExpenseItem.amount}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextContent}}"  toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseCategoryPicker}"/>
-                            <Label Margin="5,-6" Text="Amount" FontSize="10" TextColor="{StaticResource DarkTextContent}" />
+                        <VerticalStackLayout FlexLayout.Grow="1" >
+                            <Entry x:Name="expenseAmount" FontSize="Large" MinimumWidthRequest="80" Text="{Binding ExpenseItem.amount}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextContent}}"  toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference expenseCategoryPicker}"/>
+                            <Label Margin="5,-6" Text="Amount" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
                         </VerticalStackLayout>
                     </FlexLayout>
-                    <FlexLayout Grid.Row="1" Grid.Column="1" Margin="0,10" JustifyContent="End" VerticalOptions="Center">
+                    <FlexLayout Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10" JustifyContent="Start" VerticalOptions="Center">
                         <Image Source="{AppThemeBinding Light=tag.png,Dark=tag_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
-                        <VerticalStackLayout >
-                            <Picker x:Name="expenseCategoryPicker" Title="Select the category of the expense."  WidthRequest="110" SelectedIndexChanged="expenseCategoryPicker_SelectedIndexChanged">
+                        <VerticalStackLayout FlexLayout.Grow="1" >
+                            <Picker x:Name="expenseCategoryPicker" Title="Select the category of the expense." SelectedIndexChanged="expenseCategoryPicker_SelectedIndexChanged">
                                 <Picker.Items>
                                     <x:String>Entertainment</x:String>
                                     <x:String>Food and drink</x:String>
@@ -76,17 +75,17 @@
                                     <x:String>Others</x:String>
                                 </Picker.Items>
                             </Picker>
-                            <Label Margin="5,-6" Text="Category" FontSize="10" TextColor="{StaticResource DarkTextContent}" />
+                            <Label Margin="5,-6" Text="Category" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
                         </VerticalStackLayout>
                     </FlexLayout>
-                    <FlexLayout VerticalOptions="Center" Grid.Row="2" Grid.Column="0" Margin="0,10" JustifyContent="Start">
+                    <FlexLayout VerticalOptions="Center" Grid.Row="3" Grid.Column="0" Margin="0,10" JustifyContent="Start">
                         <Image Source="{AppThemeBinding Light=calendar.png,Dark=calendar_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
                         <VerticalStackLayout>
                             <DatePicker x:Name="expenseDate" Date="{Binding ExpenseItem.expenseDate}" />
-                            <Label Margin="5,-8" Text="Expense Date" FontSize="10" TextColor="{StaticResource DarkTextContent}" />
+                            <Label Margin="5,-8" Text="Expense Date" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
                         </VerticalStackLayout>
                     </FlexLayout>
-                    <FlexLayout Grid.Row="2" Grid.Column="1" Margin="0,10" JustifyContent="End">
+                    <FlexLayout Grid.Row="3" Grid.Column="1" Margin="0,10" JustifyContent="End">
                         <Image Source="{AppThemeBinding Light=repeat.png,Dark=repeat_dark.png}" Margin="0,10,0,0" VerticalOptions="Center" HeightRequest="30"/>
                         <VerticalStackLayout>
                             <Picker x:Name="repeatExpensePicker" Title="Repeat Expense" WidthRequest="80" SelectedIndexChanged="repeatExpensePicker_SelectedIndexChanged">
@@ -97,14 +96,14 @@
                                     <x:String>Yearly</x:String>
                                 </Picker.Items>
                             </Picker>
-                            <Label Margin="5,-8" Text="Repeat" FontSize="10" TextColor="{StaticResource DarkTextContent}" />
+                            <Label Margin="5,-8" Text="Repeat" FontSize="12" TextColor="{StaticResource DarkTextContent}" />
                         </VerticalStackLayout>
                     </FlexLayout>
                 </Grid>
             </Frame>
             <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" IsEnabled="{Binding ExpenseItem.isShared}" >
-                <Label Text="Do you want to " FontSize="Caption" VerticalOptions="Center"/>
-                <Button x:Name="ShareExpense" Margin="10,10" CornerRadius="3" FontSize="Micro" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Blue300Accent}, Dark={StaticResource DarkCardBG}}">
+                <Label Text="Do you want to " FontSize="Small" VerticalOptions="Center"/>
+                <Button x:Name="ShareExpense" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}" BackgroundColor="{AppThemeBinding Light={StaticResource Blue300Accent}, Dark={StaticResource DarkCardBG}}">
                     <Button.Shadow>
                         <Shadow Brush="{StaticResource DarkButtonGray}" 
                         Offset="0,5"
@@ -112,42 +111,8 @@
                         Opacity="0.5"/>
                     </Button.Shadow>
                 </Button>
-                <Label Text=" with friends ?" FontSize="Caption" VerticalOptions="Center"/>
+                <Label Text=" with friends ?" FontSize="Small" VerticalOptions="Center"/>
             </HorizontalStackLayout>
-            <!--<Frame Padding="0" Margin="10,10,10,0" CornerRadius="5" Grid.Row="3" BorderColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
-                <Grid RowDefinitions="*,35" ColumnDefinitions="*">
-                    <BoxView Grid.Row="0" MinimumHeightRequest="50" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardAltBG}}"/>
-                    <FlexLayout x:Name="flexLayout" Direction="Row" Wrap="Wrap" Grid.Row="0">
-                         Your other FlexLayout properties and children go here 
-                    </FlexLayout>
-                    <CollectionView x:Name="expenseTagsCollectioView" ItemsSource="{Binding expenseTags}" SelectionMode="None" >
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical" />
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid RowDefinitions="33,22" ColumnDefinitions="auto,*,100" Margin="0,0,0,1">
-                                    <BoxView CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardAltBG}}"/>
-                                    
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                        <CollectionView.EmptyView>
-                            <ContentView>
-                                <FlexLayout>
-                                    <Label FlexLayout.Grow="1" HorizontalTextAlignment="Center" FontSize="12" VerticalTextAlignment="Center" Text="Add some tags to help you further organize your expenses."/>
-                                </FlexLayout>
-                            </ContentView>
-                        </CollectionView.EmptyView>
-                    </CollectionView>Jam
-                    <BoxView Grid.Row="1" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
-                    <FlexLayout Grid.Row="1" HorizontalOptions="Center" >
-                        <Button CornerRadius="0" x:Name="RemoveLastExpenseTag" Padding="5,0,10,0" FontSize="10" Clicked="AddExpenseTag_Clicked" Text="Add Tag" ImageSource="{AppThemeBinding Light=plus_small.png,Dark=plus_small_dark.png}" ContentLayout="Left,0" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}"  BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkButtonBlue}}" />
-                        <Entry x:Name="searchInput" FlexLayout.Grow="1" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" Placeholder="Enter tag name (Max: 30 characters)" MaxLength="30" ToolTipProperties.Text="Enter tag name (Max: 30 characters)" TextTransform="Lowercase" />
-                        <Button CornerRadius="0" x:Name="AddExpenseTag" Padding="5,0,10,0" FontSize="10" Clicked="AddExpenseTag_Clicked" Text="Add Tag" ImageSource="{AppThemeBinding Light=plus_small.png,Dark=plus_small_dark.png}" ContentLayout="Left,0" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkText}}"  BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkButtonBlue}}" />
-                    </FlexLayout>
-                </Grid>                
-            </Frame>-->
         </Grid>
 
 

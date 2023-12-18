@@ -16,7 +16,6 @@
 
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
                 <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
-                <Label Grid.Row="0" Grid.Column="1" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20" />
                 <HorizontalStackLayout>
                     <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Command="{Binding EditExpenseCommand}"/>
                     <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Command="{Binding EditExpenseCommand}"/>
@@ -35,7 +34,7 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="40,40,40,40"/>
                 </Border.StrokeShape>
-                <Image Source="{AppThemeBinding Light=receipts.png,Dark=receipts_dark.png}" VerticalOptions="Center" HeightRequest="20"/>
+                <Image Source="{AppThemeBinding Light=receipts.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="20"/>
             </Border>
         </Grid>
     </VerticalStackLayout>

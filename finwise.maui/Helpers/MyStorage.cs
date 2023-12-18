@@ -14,7 +14,7 @@ namespace finwise.maui.Helpers
     {
         public MyStorage(){}
 
-        public static bool toDelete = false;
+        public static bool toDelete = true;
         public static string Init<T>(string fileName) where T: BaseModel, new()
         {
             try
@@ -105,6 +105,7 @@ namespace finwise.maui.Helpers
             var jsonString = "";
             if (Preferences.Default.ContainsKey("Settings"))
             {
+                //Preferences.Default.Set("Settings", string.Empty); //Uncomment to reset Settings
                 jsonString =  Preferences.Default.Get("Settings", string.Empty);
             }
 
@@ -117,8 +118,9 @@ namespace finwise.maui.Helpers
 
             if(defaultSettings.Count == 0)
             {
+                defaultSettings["userId"] = Guid.NewGuid().ToString();
                 defaultSettings["username"] = "User";
-                defaultSettings["monthlyBudget"] = "20";
+                defaultSettings["monthlyBudget"] = "1000";
                 defaultSettings["budgetStartDay"] = "12";
                 defaultSettings["currentCountryName"] = "Germany";
                 defaultSettings["currentCurrencyCode"] = "EUR";

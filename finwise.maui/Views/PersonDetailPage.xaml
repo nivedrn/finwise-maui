@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="finwise.maui.Views.PersonDetailPage"
-             Title="PersonDetailPage">
+             Title="PersonDetailPage"
+             Shell.NavBarIsVisible="False">
+    
     <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
         <VerticalStackLayout.GestureRecognizers>
             <SwipeGestureRecognizer Swiped="OnSwiped" Direction="Left"></SwipeGestureRecognizer>

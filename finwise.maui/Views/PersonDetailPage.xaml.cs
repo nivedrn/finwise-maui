@@ -4,12 +4,12 @@ namespace finwise.maui.Views;
 
 public partial class PersonDetailPage : ContentPage
 {
-	PeoplePageViewModel peoplePageVM;
+    public PeoplePageViewModel peoplePageVM { get; set; }
 
     public PersonDetailPage(PeoplePageViewModel vmReference)
     {
-        this.BindingContext = peoplePageVM = vmReference;
         InitializeComponent();
+        this.BindingContext = this.peoplePageVM = vmReference;
     }
 
     void OnSwiped(object sender, SwipedEventArgs e)

@@ -11,16 +11,19 @@ namespace finwise.maui.Models
     {
         public string description {  get; set; }
         public float amount { get; set; }
-        public string repeatExpense { get; set; }
         public string category { get; set; }
 
         public List<string> tags { get; set; }
         public string notes { get; set; }
 
-        public DateTime expenseDate { get; set; }
-
         public List<Person> members { get; set; }
+        public List<ExpenseShare> expenseShares { get; set; }
         public bool isShared { get; set; }
+        public string sharingType { get; set; }
+
+        public DateTime expenseDate { get; set; }
+        public string repeatExpense { get; set; }
+        public string scheduleId { get; set; }
 
         public Expense()
         {
@@ -29,10 +32,12 @@ namespace finwise.maui.Models
             this.expenseDate = DateTime.Now;
 
             this.tags = new List<string>();
+            this.members = new List<Person>();
+            this.expenseShares = new List<ExpenseShare>();
 
             this.isShared = false;
             this.isDeleted = false;
-
         }
+
     }
 }

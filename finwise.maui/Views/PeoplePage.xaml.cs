@@ -24,14 +24,14 @@ public partial class PeoplePage : ContentPage
 	{
 		InitializeComponent();
 		this.BindingContext = peoplePageVM = new PeoplePageViewModel();
+        peopleCollectionView.SelectedItem = null;
+        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         Debug.WriteLine("On Appearing: PeoplePage");
-        peopleCollectionView.SelectedItem = null;
-        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
     }
 
     public async void AddPerson(object sender, EventArgs e)
@@ -41,16 +41,17 @@ public partial class PeoplePage : ContentPage
         {
             peoplePageVM.AddNewPerson(result);
         }
+        await Shell.Current.Navigation.PushModalAsync(new PersonDetailPage(peoplePageVM), true);
     }
     
-    public async void AddGroup(object sender, EventArgs e)
-    {
-        string result = await DisplayPromptAsync("Create a new Group", "Enter the group name:", "Continue");
-        if(result != "" && result is not null)
-        {
-            peoplePageVM.AddNewGroup(result);
-        }
-    }
+    //public async void AddGroup(object sender, EventArgs e)
+    //{
+    //    string result = await DisplayPromptAsync("Create a new Group", "Enter the group name:", "Continue");
+    //    if(result != "" && result is not null)
+    //    {
+    //        peoplePageVM.AddNewGroup(result);
+    //    }
+    //}
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {

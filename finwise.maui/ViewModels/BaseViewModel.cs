@@ -13,6 +13,7 @@ using CommunityToolkit.Maui.Core;
 
 namespace finwise.maui.ViewModels
 {
+    [Serializable]
     public partial class BaseViewModel : ObservableObject
     {
         [ObservableProperty]
@@ -23,6 +24,9 @@ namespace finwise.maui.ViewModels
 
         [ObservableProperty]
         bool isBusy;
+
+        [ObservableProperty]
+        bool isNotBusy;
 
         public ObservableCollection<Expense> Expenses { get; set; }
         public ObservableCollection<Person> People { get; set; }
@@ -40,6 +44,12 @@ namespace finwise.maui.ViewModels
         private static async Task PopModal()
         {
             await Shell.Current.Navigation.PopModalAsync();
+        }
+
+        public void SetBusyState(bool busy)
+        {
+            this.IsBusy = busy;
+            this.IsNotBusy = !busy;
         }
     }
 }

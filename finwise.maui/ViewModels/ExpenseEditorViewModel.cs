@@ -25,11 +25,14 @@ namespace finwise.maui.ViewModels
 
         public ObservableCollection<string> expenseTags { get; set; }
 
-        public ObservableCollection<Person> expenseMembers { get; set; }
+        public ObservableCollection<Person> selectableMembers { get; set; }
+        public ObservableCollection<ExpenseShare> tempExpenseShares { get; set; }
+
+        [ObservableProperty]
+        public bool showSelectableMembers;
 
         public int currentIndex {  get; set; }
-        //public BaseViewModel localBVM { get; set; }
-
+        
         public ExpenseEditorViewModel(Expense expense)
         {
             //localBVM = App._bvm;
@@ -40,7 +43,9 @@ namespace finwise.maui.ViewModels
                 Title = "Add new Expense";
                 ExpenseItem.id = Guid.NewGuid().ToString();
                 expenseTags = new ObservableCollection<string>();
-                expenseMembers = new ObservableCollection<Person>();
+                tempExpenseShares = new ObservableCollection<ExpenseShare>{
+                    new ExpenseShare(App._settings["userId"], true)
+                };
             }
             else
             {
@@ -49,9 +54,10 @@ namespace finwise.maui.ViewModels
                 isEditMode = true;
                 Title = "Modify Expense";
                 expenseTags = new ObservableCollection<string>(ExpenseItem.tags);
-                expenseMembers = new ObservableCollection<Person>(ExpenseItem.members);
+                tempExpenseShares = new ObservableCollection<ExpenseShare>(ExpenseItem.expenseShares); 
             }
 
+            selectableMembers = new ObservableCollection<Person>(App._bvm.People);
             currentCurrencySymbol = App._settings["currentCurrencySymbol"];
         }
 
@@ -72,6 +78,52 @@ namespace finwise.maui.ViewModels
             MyStorage.WriteToDataFile<Expense>(App._bvm.Expenses.ToList());
             await Shell.Current.Navigation.PopModalAsync();
         }
-                
+
+        [RelayCommand]
+        private async Task SaveExpenseSplit()
+        {
+            if (ValidateSplit())
+            {
+                this.ExpenseItem.expenseShares = tempExpenseShares.ToList();
+                this.ExpenseItem.isShared = true;
+                this.ExpenseItem.sharingType = "";
+                await Shell.Current.Navigation.PopModalAsync();
+            }
+        }
+
+        public ObservableCollection<Person> RefreshPeopleList(string searchTerm)
+        {
+            var existingIds = tempExpenseShares.Select(share => share.personId).ToList();
+
+            if (searchTerm != "")
+            {
+                return new ObservableCollection<Person>(App._bvm.People.Where(
+                    person => person.name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) &&
+                    !existingIds.Contains(person.id))?
+                    .ToList());
+            }
+
+            return new ObservableCollection<Person>(App._bvm.People);
+        }
+
+        [RelayCommand]
+        public void selectableMembersResult_SelectionChanged(Object obj)
+        {
+            if (obj is not null)
+            {
+                ShowSelectableMembers = false;
+                tempExpenseShares.Add(new ExpenseShare(((Person)obj).id, false));
+            }
+        }
+
+        public void RecalculateSplit()
+        {
+
+        }
+
+        public bool ValidateSplit()
+        {
+            return false;
+        }
     }
 }

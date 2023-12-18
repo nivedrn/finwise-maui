@@ -32,10 +32,10 @@
 	
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.45" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#111327" Resize="false" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -61,6 +61,7 @@
 	  <None Remove="Resources\Images\add_group_dark.svg" />
 	  <None Remove="Resources\Images\add_person_dark.svg" />
 	  <None Remove="Resources\Images\edit_dark.svg" />
+	  <None Remove="Resources\Images\user_plus - Copy.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -100,6 +101,9 @@
 	  <MauiXaml Update="Views\ExpenseEditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ExpenseSplitPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\GroupDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -119,6 +123,6 @@
 	  <Folder Include="Resources\Raw\" />
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionfinwisemauiHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionfinwisemauiHideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarfinwisemauiHideInfoBar="True" XamarinHotReloadUnhandledDeviceExceptionfinwisemauiHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 
 </Project>

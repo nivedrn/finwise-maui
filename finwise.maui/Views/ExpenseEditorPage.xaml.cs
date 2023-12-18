@@ -65,9 +65,11 @@ public partial class ExpenseEditorPage : ContentPage
         base.OnNavigatedFrom(args);
     }
 
-    private void ShareExpense_Clicked(object sender, EventArgs e)
+    private async void ShareExpense_Clicked(object sender, EventArgs e)
     {
-        bottomSheet = this.ShowBottomSheet(GetSharedExpenseBottomSheetView(), true);
+        //bottomSheet = this.ShowBottomSheet(GetSharedExpenseBottomSheetView(), true);
+        //await Shell.Current.GoToAsync("ExpenseSplitPage");
+        await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM), false);
     }
 
     private void modifyExpenseSplit_Clicked(object sender, EventArgs e)

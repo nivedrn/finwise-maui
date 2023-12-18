@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:conv="clr-namespace:finwise.maui.Converters"
+            x:Class="finwise.maui.Views.ExpenseSplitPage" Shell.NavBarIsVisible="True"
+            x:Name="tabbedPage"
+            BarBackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}"
+            >
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <conv:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+            <conv:IdToNameConverter x:Key="IdToNameConverter" />
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    
+    <!--<NavigationPage Title="" IconImageSource="{AppThemeBinding Light=help.png, Dark=help_dark.png}"  
+            BarBackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+        <x:Arguments>
+            <ContentPage x:Name="HelpTab">
+                <NavigationPage.TitleView>
+                    <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+                        <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
+                        <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseCommand}"/>
+                    </FlexLayout>
+                </NavigationPage.TitleView>
+                <StackLayout Padding="5, 25">
+                    <Label Text="Help Page"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Center" />       
+                </StackLayout>
+            </ContentPage>
+        </x:Arguments>
+    </NavigationPage>-->
+    
+    <NavigationPage Title="Select Friends" 
+            BarBackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">        
+        <x:Arguments>
+            <ContentPage x:Name="SelectFriendsTab" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+                <NavigationPage.TitleView>
+                    <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+                        <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
+                        <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
+                    </FlexLayout>
+                </NavigationPage.TitleView>
+                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+                    <FlexLayout Margin="5,10,5,10">
+                        <SearchBar x:Name="expenseMembersSearch" FontSize="16" FlexLayout.Grow="1" HeightRequest="50" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" Placeholder="Search by friend's name" TextChanged="expenseMembersSearch_TextChanged" HorizontalOptions="Center"/>
+                    </FlexLayout>
+                    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}">
+                        <VerticalStackLayout>
+                            <CollectionView Margin="10" x:Name="selectableMembersResult" IsVisible="{Binding ShowSelectableMembers}" ItemsSource="{Binding selectableMembers}" SelectionMode="Single" SelectionChangedCommand="{Binding selectableMembersResult_SelectionChangedCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference selectableMembersResult}}" EmptyView="No matching Results.">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="10,5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding name}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+                            <CollectionView x:Name="tempExpenseShareMembers" Margin="10,0" IsVisible="{Binding ShowSelectableMembers, Converter={StaticResource BooleanNegationConverter}}" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="10,5" RowDefinitions="*" ColumnDefinitions="50,*,50">
+                                            <Border Grid.Row="0" Grid.RowSpan="2" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"      Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="30,30,30,30"/>
+                                                </Border.StrokeShape>
+                                                <Image Source="{AppThemeBinding Light=user.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="20">
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightDarkPurple}}" />
+                                                    </Image.Behaviors>
+                                                </Image>
+                                            </Border>
+                                            <Label Grid.Column="1" VerticalOptions="Center" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
+                                            <CheckBox VerticalOptions="Center" Grid.Column="2" IsChecked="True"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>                            
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>                              
+            </ContentPage>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Adjust Paid By" 
+            BarBackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+        <x:Arguments>
+            <ContentPage x:Name="AdjustPaidByTab" Loaded="SelectFriendsTab_Loaded">
+                <NavigationPage.TitleView>
+                    <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+                        <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
+                        <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
+                    </FlexLayout>
+                </NavigationPage.TitleView>
+                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+                    <Label Text="$0.00 of $100.00" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                    <Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>
+                    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}">
+                        <VerticalStackLayout>
+                            <CollectionView x:Name="tempExpenseSharePaidMembers" Margin="10,0" IsVisible="{Binding ShowSelectableMembers, Converter={StaticResource BooleanNegationConverter}}" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="10,5" RowDefinitions="*" ColumnDefinitions="50,50,2*,*">
+                                            <CheckBox VerticalOptions="Center" Grid.Column="0" IsChecked="{Binding hasPaid}"/>
+                                            <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"      Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="30,30,30,30"/>
+                                                </Border.StrokeShape>
+                                                <Image Source="{AppThemeBinding Light=user.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="20">
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightDarkPurple}}" />
+                                                    </Image.Behaviors>
+                                                </Image>
+                                            </Border>
+                                            <Label Grid.Column="2" VerticalOptions="Center" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
+                                            <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding paidAmount}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
+            </ContentPage>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Adjust Split" 
+            BarBackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}"
+            BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+        <x:Arguments>
+            <ContentPage x:Name="AdjustSharesTab">
+                <NavigationPage.TitleView>
+                    <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}">
+                        <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
+                        <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
+                    </FlexLayout>
+                </NavigationPage.TitleView>
+                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardALTBG}}">
+                    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}">
+                        <VerticalStackLayout>
+                            <CollectionView x:Name="tempExpenseShareMemberSplits" Margin="10,0" IsVisible="{Binding ShowSelectableMembers, Converter={StaticResource BooleanNegationConverter}}" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="10,5" RowDefinitions="*" ColumnDefinitions="50,50,2*,*">
+                                            <CheckBox VerticalOptions="Center" Grid.Column="0" IsChecked="{Binding hasShare}"/>
+                                            <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" Stroke="{StaticResource DarkHighlightPurple}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="30,30,30,30"/>
+                                                </Border.StrokeShape>
+                                                <Image Source="{AppThemeBinding Light=user.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="20">
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightDarkPurple}}" />
+                                                    </Image.Behaviors>
+                                                </Image>
+                                            </Border>
+                                            <Label Grid.Column="2" VerticalOptions="Center" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
+                                            <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding shareAmount,StringFormat='{0:F2}'}}" Placeholder="0" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
+            </ContentPage>
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>

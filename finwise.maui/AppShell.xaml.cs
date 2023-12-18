@@ -21,6 +21,8 @@ namespace finwise.maui
             }
 
             Routing.RegisterRoute(nameof(ExpenseDetailPage), typeof(ExpenseDetailPage));
+            Routing.RegisterRoute(nameof(ExpenseSplitPage), typeof(ExpenseSplitPage));
+            Routing.RegisterRoute(nameof(PersonDetailPage), typeof(PersonDetailPage));
 
             appShellViewModel = new AppShellViewModel();
             BindingContext = appShellViewModel;

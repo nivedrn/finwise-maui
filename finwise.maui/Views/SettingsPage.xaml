@@ -23,8 +23,8 @@
                 <Button Clicked="EditSettings" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}"/>
             </FlexLayout>
 
-            <Label Grid.Row="1" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="YOUR DETAILS" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextCaption}}" />
-            <BoxView Grid.Row="2" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardAltBG}}"/>
+            <Label Grid.Row="1" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="YOUR DETAILS" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}" />
+            <BoxView Grid.Row="2" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
             <VerticalStackLayout Grid.Row="2" Padding="10,0,10,0" >
                 <FlexLayout JustifyContent="SpaceBetween" Wrap="NoWrap" >
                     <Label FontSize="Small" VerticalOptions="Center" FlexLayout.Grow="0.3" HorizontalOptions="Start" Text="Your Name : "/>
@@ -32,11 +32,11 @@
                 </FlexLayout>
             </VerticalStackLayout>
 
-            <Label Grid.Row="3" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="BUDGET" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextCaption}}" />
-            <BoxView Grid.Row="4" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardAltBG}}"/>
+            <Label Grid.Row="3" FontSize="Header" Padding="5,10,0,4" Margin="0,20,0,0" FontAttributes="Bold" Text="BUDGET" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}" />
+            <BoxView Grid.Row="4" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkCardBG}}"/>
             <VerticalStackLayout Grid.Row="4" Padding="10,0,10,0" >
                 <FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding MonthlyBudgetLabel}" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}"/>
+                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="{Binding MonthlyBudgetLabel}" TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextHeader}}"/>
                     <Entry VerticalOptions="Center" x:Name="monthlyBudget" IsEnabled="{Binding IsEditMode}" WidthRequest="100" HorizontalTextAlignment="Center" Text="{Binding Settings[monthlyBudget], StringFormat='{0:C}'}" Keyboard="Numeric" />
                 </FlexLayout>
                 <!--<FlexLayout JustifyContent="SpaceBetween">
@@ -44,9 +44,11 @@
                     <Picker x:Name="budgetStartDatePicker" SelectedIndexChanged="budgetStartDatePicker_SelectedIndexChanged" WidthRequest="100" IsEnabled="{Binding IsEditMode}" ItemsSource="{Binding budgetStartDateOptions}" HorizontalTextAlignment="Center" Title="Select the start date of the monthly budget." />
                 </FlexLayout>-->
                 <FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="Default expense currency : " TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextSubHeader}}"/>
+                    <Label FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Text="Default expense currency : " TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource DarkTextHeader}}"/>
                     <Picker x:Name="budgetCurrencyPicker" SelectedIndexChanged="budgetCurrencyPicker_SelectedIndexChanged" WidthRequest="100" IsEnabled="{Binding IsEditMode}" ItemsSource="{Binding currencyOptions}" HorizontalTextAlignment="Center" Title="Select the default expense currency." />
                 </FlexLayout>
+
+                <Label Text="{Binding Settings[userId]}" HorizontalOptions="Center" Margin="10"/>
             </VerticalStackLayout>
 
             <FlexLayout Grid.Row="5" Margin="0,20,0,0" JustifyContent="SpaceBetween" IsVisible="{Binding IsEditMode}">
@@ -54,5 +56,6 @@
                 <Button Text="Save" CornerRadius="4" Margin="10,0,0,0" FlexLayout.Grow="0.6" Command="{Binding SaveEditedSettingsCommand}"/>
             </FlexLayout>
         </Grid>
+        
     </ScrollView>
 </ContentPage>
