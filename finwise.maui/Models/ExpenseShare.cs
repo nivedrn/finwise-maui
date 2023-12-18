@@ -19,6 +19,7 @@ namespace finwise.maui.Models
 
         public ExpenseShare(string pId, bool appUser)
         {
+            id = Guid.NewGuid().ToString(); 
             personId = pId;
             isAppUser = appUser;
             hasPaid = appUser;

@@ -48,46 +48,27 @@
                         <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
                     </FlexLayout>
                 </NavigationPage.TitleView>
-                <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
-                    <FlexLayout Margin="5,10,5,10">
+                <Grid RowDefinitions="60,auto" Margin="10" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
+                    <FlexLayout Grid.Row="0" Margin="5,10,5,10">
                         <SearchBar x:Name="expenseMembersSearch" FontSize="16" FlexLayout.Grow="1" HeightRequest="50" TextColor="{AppThemeBinding Light={StaticResource LightText}, Dark={StaticResource DarkTextHeader}}" Placeholder="Search by friend's name" TextChanged="expenseMembersSearch_TextChanged" HorizontalOptions="Center"/>
                     </FlexLayout>
-                    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardBG}}">
-                        <VerticalStackLayout>
-                            <CollectionView Margin="10" x:Name="selectableMembersResult" IsVisible="{Binding ShowSelectableMembers}" ItemsSource="{Binding selectableMembers}" SelectionMode="Single" SelectionChangedCommand="{Binding selectableMembersResult_SelectionChangedCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference selectableMembersResult}}">
+                    <ScrollView Grid.Row="1" Padding="0,20" MinimumHeightRequest="100" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkCardAltBG}}">
+                        <VerticalStackLayout MinimumHeightRequest="100">
+                            <CollectionView x:Name="selectableMembersResult" IsVisible="{Binding ShowSelectableMembers}" ItemsSource="{Binding selectableMembers}" SelectionMode="Single" SelectionChangedCommand="{Binding selectableMembersResult_SelectionChangedCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference selectableMembersResult}}">
                                 <CollectionView.ItemsLayout>
                                     <LinearItemsLayout Orientation="Vertical" />
                                 </CollectionView.ItemsLayout>
-                                <CollectionView.EmptyView>
-                                    <ContentView>
-                                        <Button Grid.Row="1" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageAltBG}}" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}" ImageSource="{AppThemeBinding Light=user_plus.png,Dark=user_plus_dark.png}" Text="Add new Person" Clicked="QuickAddPerson" Margin="15" Padding="20,20" HeightRequest="45"/>
-                                    </ContentView>
-                                </CollectionView.EmptyView>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Padding="10,5">
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <Label Text="{Binding name}"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-
-                            <CollectionView x:Name="tempExpenseShareMembers" Margin="10,0" IsVisible="{Binding ShowSelectableMembers, Converter={StaticResource BooleanNegationConverter}}" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
-                                <CollectionView.ItemsLayout>
-                                    <LinearItemsLayout Orientation="Vertical" />
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Padding="5,5,10,5" RowDefinitions="*" ColumnDefinitions="50,*,50">
-                                            <Border Grid.Row="0" Grid.RowSpan="2" WidthRequest="30" HeightRequest="30" VerticalOptions="Center"      Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                            <Border Grid.Row="0" Grid.Column="0" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="30,30,30,30"/>
                                                 </Border.StrokeShape>
@@ -97,15 +78,43 @@
                                                     </Image.Behaviors>
                                                 </Image>
                                             </Border>
-                                            <Label Grid.Column="1" VerticalOptions="Center" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
-                                            <CheckBox VerticalOptions="Center" Grid.Column="2" IsChecked="True"/>
+                                            <Label Grid.Row="0" Grid.Column="1" Padding="10,5" HorizontalOptions="Start" Text="{Binding name}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                                <CollectionView.EmptyView>
+                                    <ContentView MaximumHeightRequest="80">
+                                        <Button BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkPageAltBG}}" ImageSource="{AppThemeBinding Light=user_plus.png,Dark=user_plus_dark.png}"  Clicked="QuickAddPerson" Text="Quick Add: New Friend" TextColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkTextDimmed}}"/>
+                                    </ContentView>
+                                </CollectionView.EmptyView>
+                            </CollectionView>
+
+                            <CollectionView x:Name="tempExpenseShareMembers" Margin="10,0" IsVisible="{Binding ShowSelectableMembers, Converter={StaticResource BooleanNegationConverter}}" ItemsSource="{Binding tempExpenseShares}" SelectionMode="None">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="5,5,10,5" RowDefinitions="*" ColumnDefinitions="50,50,*">
+                                            <CheckBox VerticalOptions="Center" Grid.Column="0" IsChecked="{Binding hasShare}"/>
+                                            <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="30,30,30,30"/>
+                                                </Border.StrokeShape>
+                                                <Image Source="{AppThemeBinding Light=user.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="20">
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkHighlightDarkPurple}}" />
+                                                    </Image.Behaviors>
+                                                </Image>
+                                            </Border>
+                                            <Label Grid.Column="2" VerticalOptions="Center" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
                         </VerticalStackLayout>
                     </ScrollView>
-                </VerticalStackLayout>
+                </Grid>
             </ContentPage>
         </x:Arguments>
     </NavigationPage>

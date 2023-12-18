@@ -1,5 +1,6 @@
 using finwise.maui.Models;
 using finwise.maui.ViewModels;
+using System.Collections.Specialized;
 using System.Xml.Linq;
 
 namespace finwise.maui.Views;
@@ -13,14 +14,14 @@ public partial class ExpenseSplitPage : TabbedPage
 	{
 		InitializeComponent();
         this.BindingContext = expenseEditorVM = viewModel;
-        expenseEditorVM.ShowSelectableMembers = false;
+        //selectableMembersResult.ItemsSource = expenseEditorVM.RefreshPeopleList("");
         firstLoad = true;
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        //var changedFocus = expenseMembersSearch.Focus();
+        var changedFocus = expenseMembersSearch.Focus();
     }
 
     protected override void OnAppearing()
@@ -28,8 +29,8 @@ public partial class ExpenseSplitPage : TabbedPage
         base.OnAppearing();
         CurrentPage = Children[1];
         expenseEditorVM.RecalculateSplit();
-        tempExpenseSharePaidMembers.ItemsSource = expenseEditorVM.tempExpenseShares;
-        tempExpenseShareMemberSplits.ItemsSource = expenseEditorVM.tempExpenseShares;
+        
+        //tempExpenseShareMemberSplits.ItemsSource = expenseEditorVM.tempExpenseShares;
     }
 
     private void expenseMembersSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -44,7 +45,7 @@ public partial class ExpenseSplitPage : TabbedPage
         {
             expenseEditorVM.ShowSelectableMembers = false;
         }
-
+        var changedFocus = expenseMembersSearch.Focus();
     }
 
     private void SelectFriendsTab_Loaded(object sender, EventArgs e)
@@ -53,6 +54,7 @@ public partial class ExpenseSplitPage : TabbedPage
         {
             CurrentPage = Children[0];
             firstLoad = false;
+            expenseEditorVM.ShowSelectableMembers = false;
             var changedFocus = expenseMembersSearch.Focus();
         }
     }
@@ -70,6 +72,7 @@ public partial class ExpenseSplitPage : TabbedPage
             person.isDeleted = false;
 
             App._bvm.People.Insert(0, person);
+            expenseMembersSearch.Text = result;
             selectableMembersResult.ItemsSource = expenseEditorVM.RefreshPeopleList(result);
             tempExpenseSharePaidMembers.ItemsSource = expenseEditorVM.tempExpenseShares;
             tempExpenseShareMemberSplits.ItemsSource = expenseEditorVM.tempExpenseShares;

@@ -56,6 +56,7 @@ namespace finwise.maui.ViewModels
                 tempExpenseShares = new ObservableCollection<ExpenseShare>(ExpenseItem.expenseShares); 
             }
 
+            ShowSelectableMembers = true;
             selectableMembers = new ObservableCollection<Person>(App._bvm.People);
             currentCurrencySymbol = App._settings["currentCurrencySymbol"];
         }
@@ -93,7 +94,7 @@ namespace finwise.maui.ViewModels
         {
             var existingIds = tempExpenseShares.Select(share => share.personId).ToList();
 
-            if (searchTerm != "")
+            if (searchTerm is not null)
             {
                 return new ObservableCollection<Person>(App._bvm.People.Where(
                     person => person.name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) &&
@@ -101,7 +102,7 @@ namespace finwise.maui.ViewModels
                     .ToList());
             }
 
-            return new ObservableCollection<Person>(App._bvm.People);
+            return new ObservableCollection<Person>();
         }
 
         [RelayCommand]
