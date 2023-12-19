@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Text.Json;
 using finwise.maui.Models;
-using Org.Json;
 
 namespace finwise.maui.Helpers
 { 
@@ -122,7 +121,7 @@ namespace finwise.maui.Helpers
             {
                 defaultSettings["userId"] = Guid.NewGuid().ToString();
                 defaultSettings["username"] = "User";
-                defaultSettings["monthlyBudget"] = "1000";
+                defaultSettings["monthlyBudget"] = "0";
                 defaultSettings["budgetStartDay"] = "12";
                 defaultSettings["currentCountryName"] = "Germany";
                 defaultSettings["currentCurrencyCode"] = "EUR";

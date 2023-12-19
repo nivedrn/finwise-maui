@@ -20,7 +20,7 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         Dictionary<string, string> settings;
 
-        public Dictionary<string, string> settingsBackup {  get; set; }
+        //public Dictionary<string, string> settingsBackup {  get; set; }
 
         [ObservableProperty]
         string monthlyBudgetLabel;
@@ -35,7 +35,7 @@ namespace finwise.maui.ViewModels
             this.Title = "Settings";
             this.IsEditMode = false;
             this.Settings = new Dictionary<string, string>(App._settings);
-            this.settingsBackup = new Dictionary<string, string>(App._settings);
+            //this.settingsBackup = new Dictionary<string, string>(App._settings);
             this.MonthlyBudgetLabel = $"Monthly Budget ( {this.Settings["currentCurrencyCode"]} {this.Settings["currentCurrencySymbol"]} ) : ";
             this.CurrencyOptions = new List<string>()
             {
@@ -52,14 +52,14 @@ namespace finwise.maui.ViewModels
             }
         }
 
-        [RelayCommand]
-        public void SaveEditedSettings()
-        {
-            this.settingsBackup = new Dictionary<string, string>(this.Settings);
-            MyStorage.SaveAppSettings(this.Settings);
-            App._settings = this.Settings;
-            this.IsEditMode = false;
-        }
+        //[RelayCommand]
+        //public void SaveEditedSettings()
+        //{
+        //    this.settingsBackup = new Dictionary<string, string>(this.Settings);
+        //    MyStorage.SaveAppSettings(this.Settings);
+        //    App._settings = this.Settings;
+        //    this.IsEditMode = false;
+        //}
 
         public class CurrencyData
         {

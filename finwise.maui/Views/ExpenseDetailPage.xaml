@@ -37,17 +37,17 @@
                     <Label HorizontalOptions="Center" FontSize="50" FontFamily="NunitoBold" Text="{Binding ExpenseItem.amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" />
                     <Label HorizontalOptions="Center" FontSize="30" FontFamily="NunitoSemiBold" Text="{Binding ExpenseItem.description}" />
                     <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
-                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" Text="Category : " />
-                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" Text="{Binding ExpenseItem.category}" />
+                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoRegular" Text="Category : " />
+                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoRegular" Text="{Binding ExpenseItem.category}" />
                     </HorizontalStackLayout>
                     <FlexLayout JustifyContent="SpaceBetween" Margin="0,10,0,20">
                         <HorizontalStackLayout>
                             <Image VerticalOptions="Center" HorizontalOptions="Center" Source="{AppThemeBinding Light=calendar.png,Dark=calendar_dark.png}" Margin="0,10,0,0" HeightRequest="30"/>
-                            <Label VerticalOptions="End" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" Text="{Binding ExpenseItem.expenseDate, StringFormat='{0:dd MMM, yyyy}'}" />
+                            <Label VerticalOptions="End" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoRegular" Text="{Binding ExpenseItem.expenseDate, StringFormat='{0:dd MMM, yyyy}'}" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout>
-                            <Label VerticalOptions="End" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" Text="Repeat : " />
-                            <Label VerticalOptions="End" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" Text="{Binding ExpenseItem.repeatExpense}" />
+                            <Label VerticalOptions="End" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoRegular" Text="Repeat : " />
+                            <Label VerticalOptions="End" HorizontalOptions="Center" FontSize="Medium" FontFamily="NunitoRegular" Text="{Binding ExpenseItem.repeatExpense}" />
                         </HorizontalStackLayout>
                     </FlexLayout>
                 </VerticalStackLayout>
@@ -105,7 +105,6 @@
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>-->
-                        <Label Margin="40,0" VerticalOptions="Center" HorizontalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text="Expense Split Details"/>
                         <CollectionView x:Name="expenseDebtsAll" Margin="10,0" ItemsSource="{Binding expenseDebtsAll}" SelectionMode="None">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Vertical" />
@@ -124,8 +123,9 @@
                                             </Image>
                                         </Border>
                                         <Label Padding="5,0,0,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Small" Text="{Binding fromPersonId, Converter={StaticResource IdToNameConverter}}"/>
-                                        <Label VerticalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text=" owes "/>
+                                        <Label VerticalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text="  owes "/>
                                         <Label Padding="5,0,0,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Small" Text="{Binding toPersonId, Converter={StaticResource IdToNameConverter}}"/>
+                                        <Label VerticalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text="  :  "/>
                                         <Label VerticalOptions="Center" FontFamily="NunitoBold" FontSize="Small" Text="{Binding debtAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}"/>
                                     </HorizontalStackLayout>
                                 </DataTemplate>

@@ -51,29 +51,35 @@
 
         <ResourceDictionary>
             <conv:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+            <conv:StringToColorConverter x:Key="StringToColorConverter" />
+            <conv:BoolToColorConverter x:Key="BoolToColorConverter" />
             <conv:AmountToCurrencyFormatConverter x:Key="AmountToCurrencyFormatConverter" />
         </ResourceDictionary>
         
     </ContentPage.Resources>
 
     <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
-        <Grid RowDefinitions="30,auto,auto,auto" ColumnDefinitions="*,auto" RowSpacing="10">
-            <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" />
-            <BoxView CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
-            <VerticalStackLayout Grid.Row="1">
-                <Label Text="{Binding BudgetMonthDetails}" HorizontalOptions="Center" Padding="10,10,10,0" FontFamily="NunitoMedium" FontSize="Micro"/>
+        <Grid RowDefinitions="30,auto,auto,auto" ColumnDefinitions="*,auto">
+            <Label x:Name="ExpensesPageTitle" Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" Loaded="ExpensesPageTitle_Loaded" />
+            <BoxView Margin="0,10,0,15" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
+            <VerticalStackLayout Margin="0,10,0,15" Grid.Row="1">
+                <Label Text="{Binding BudgetMonthDetails}" HorizontalOptions="Center" Padding="10,10,10,0" FontFamily="NunitoRegular" FontSize="Small"/>
                 <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HeightRequest="20" VerticalOptions="Center" />
-                <ProgressBar Progress="{Binding BudgetProgress}" ScaleY="3" ProgressColor="{AppThemeBinding Light={StaticResource WhiteProgressBar}, Dark={StaticResource DarkHighlightBlue}}" Margin="20,0" HeightRequest="25" IsVisible="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}" />
-                <FlexLayout JustifyContent="SpaceAround" Padding="10,5,10,10">
+                <Frame CornerRadius="100" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Margin="10,0">
+                    <ProgressBar Progress="{Binding BudgetProgress}" ScaleY="4" ProgressColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource DarkHighlightBlue}}" HeightRequest="25" IsVisible="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}" />
+                </Frame>
+                <FlexLayout JustifyContent="Center" Padding="10,5,10,10">
                     <HorizontalStackLayout Padding="10,5,10,10">
-                        <Label Text="{Binding BudgetProgressDetails[0]}" HorizontalOptions="Center" FontFamily="NunitoMedium" FontSize="Small"/>
-                        <Label Text="{Binding BudgetProgressDetails[1]}" HorizontalOptions="Center" FontFamily="NunitoBold" FontSize="Small"/>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Padding="10,5,10,10">
-                        <Label Text="{Binding BudgetProgressDetails[2]}" HorizontalOptions="Center" FontFamily="NunitoMedium" FontSize="Small"/>
+                        <Label Text="{Binding BudgetProgressDetails[0]}" HorizontalOptions="Center" FontFamily="NunitoRegular" FontSize="Small"/>
+                        <Label Text="{Binding BudgetProgressDetails[1]}" TextColor="{Binding WithinBudget, Converter={StaticResource BoolToColorConverter}}" HorizontalOptions="Center" FontFamily="NunitoBold" FontSize="Small"/>
+                        <Label Text="{Binding BudgetProgressDetails[2]}" HorizontalOptions="Center" FontFamily="NunitoRegular" FontSize="Small"/>
                         <Label Text="{Binding BudgetProgressDetails[3]}" HorizontalOptions="Center" FontFamily="NunitoBold" FontSize="Small"/>
                     </HorizontalStackLayout>
                 </FlexLayout>
+                <Frame CornerRadius="50" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Margin="10,0">
+                    <Label Text="{Binding BudgetProgressStatusCode}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoRegular" FontSize="Small" HorizontalOptions="Center" Margin="0,10,0,15"/>
+                </Frame>
+                
             </VerticalStackLayout>
 
             <BoxView CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
@@ -88,30 +94,25 @@
             </FlexLayout>
 
             <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
-                <CollectionView Margin="0,5" x:Name="expenseCollectioView" ItemsSource="{Binding localBVM.Expenses}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenExpenseDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference expenseCollectioView}}">
+                <CollectionView Margin="0,5" x:Name="expenseCollectioView" ItemsSource="{Binding localBVM.Expenses}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenExpenseDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference expenseCollectioView}}" EmptyView="No Expenses Found.">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid RowDefinitions="35,25" ColumnDefinitions="auto,*,100" Margin="0,0,0,1">
+                            <Grid RowDefinitions="35,30" ColumnDefinitions="*,auto" Margin="0,0,0,1">
                                 <BoxView CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource WhiteListBG}, Dark={StaticResource DarkCardAltBG}}"/>
-                                <Image Margin="20,0,10,0" HeightRequest="30" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{AppThemeBinding Light=document.png,Dark=document_dark.png}">
+                                <!--<Image Margin="20,0,10,0" HeightRequest="30" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="{AppThemeBinding Light=document.png,Dark=document_dark.png}">
                                     <Image.Behaviors>
                                         <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhiteListIcons}, Dark={StaticResource DarkListIcons}}" />
                                     </Image.Behaviors>
-                                </Image>
-                                <Label Padding="10,0,10,0" FontSize="Medium" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Start" Text="{Binding description}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" />
-                                <Label Padding="10,0" Grid.Row="1" Grid.Column="1" FontSize="Micro" FontFamily="NunitoSemiBold" Text="{Binding createdDate, StringFormat='{0:dd MMMM, yyyy}'}" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkDimmedText}}"/>
-                                <Label Padding="20,0,20,0" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End" Text="{Binding amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" />
+                                </Image>-->
+                                <Label Margin="15,0,10,0" Padding="10,0,10,0" FontSize="Medium" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.Column="0" VerticalOptions="End" HorizontalOptions="Start" Text="{Binding description}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" />
+                                <Label Margin="15,0,10,0" Padding="10,0" Grid.Row="1" Grid.Column="0" FontSize="Caption" FontFamily="NunitoSemiBold" Text="{Binding createdDate, StringFormat='{0:dd MMMM, yyyy}'}" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkDimmedText}}"/>
+                                <Label Padding="20,0,20,0" FontFamily="NunitoSemiBold" FontSize="Medium" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End" Text="{Binding amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" />
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <ContentView MaximumHeightRequest="80">
-                            <Label Text="No Expenses Found." FontFamily="NunitoSemiBold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </ContentView>
-                    </CollectionView.EmptyView>
                 </CollectionView>
             </VerticalStackLayout>
         </Grid>

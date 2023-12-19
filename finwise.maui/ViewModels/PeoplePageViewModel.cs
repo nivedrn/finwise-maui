@@ -9,14 +9,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Google.Crypto.Tink.Shaded.Protobuf;
 
 namespace finwise.maui.ViewModels
 {
     [Serializable]
     public partial class PeoplePageViewModel: BaseViewModel
     {
-        public BaseViewModel localBVM { get; set; }
 
         [ObservableProperty]
         Dictionary<string, string> filterParams;
@@ -30,18 +28,27 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         string talliedAmountSummary;
 
+        [ObservableProperty]
+        bool isTallyAmountOwedToYou;
+
         public int currentIndex {  get; set; }
         public int peopleCount { get; set; }
 
+        [ObservableProperty]
+        ObservableCollection<Person> peopleCollection;
 
         public PeoplePageViewModel()
         {
             Title = "Friends";
-            localBVM = App._bvm;
-            peopleCount = App._bvm.People.Count;
             filterParams = new Dictionary<string, string> { { "searchTerm", "" }, { "isDeleted" , "false" } };
-
+            RefreshPeopleList();
             InitUpdateOverallTallyAmount();
+        }
+
+        public void Init()
+        {
+            peopleCount = App._bvm.People.Count;
+
         }
 
         public void AddNewPerson(string name)
@@ -56,8 +63,9 @@ namespace finwise.maui.ViewModels
                 person.isDeleted = false;
 
                 App._bvm.People.Insert(0, person);
+                RefreshPeopleList();
             }
-            //MyStorage.WriteToDataFile<Person>(App._bvm.People.ToList());
+            MyStorage.WriteToDataFile<Person>(App._bvm.People.ToList());
         }
 
         [RelayCommand]
@@ -71,9 +79,9 @@ namespace finwise.maui.ViewModels
             }
         }
 
-        public ObservableCollection<Person> RefreshPeopleList()
+        public void RefreshPeopleList()
         {
-            var results = localBVM.People;
+            var results = App._bvm.People;
 
             if (this.FilterParams["isDeleted"] != "true")
             {
@@ -85,9 +93,10 @@ namespace finwise.maui.ViewModels
                 results =  new ObservableCollection<Person>(results.Where(exp => exp.name.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase))?.ToList());
             }
 
-            return new ObservableCollection<Person>(results);
-        }
+            InitUpdateOverallTallyAmount();
 
+            PeopleCollection = new ObservableCollection<Person>(results);
+        }
 
         public void InitUpdateOverallTallyAmount()
         {
@@ -127,6 +136,7 @@ namespace finwise.maui.ViewModels
                 totalTalliedAmount *= -1;
                 TalliedAmountSummary = $"Looks Good! You are all settled up.";
             }
+
             IsBusy = false;
         }
     }

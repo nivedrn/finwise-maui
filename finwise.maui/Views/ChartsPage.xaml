@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="finwise.maui.Views.ChartsPage"
-             Title="ChartsPage">
-    
-    <ScrollView>
-        <VerticalStackLayout>
-            <Label 
-            Text="{Binding LogsExpenses}"
-            HorizontalOptions="Start" />
-        </VerticalStackLayout>
+            xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:conv="clr-namespace:finwise.maui.Converters"
+            x:Class="finwise.maui.Views.ChartsPage"
+            Title="ChartsPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="80" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
+                <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" />
+            </FlexLayout>
+
+            <BoxView Grid.Row="1" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
+
+            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="2">
+                <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" />
+            </FlexLayout>
+        </Grid>
+
     </ScrollView>
 </ContentPage>

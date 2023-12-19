@@ -29,7 +29,7 @@ public partial class HomePage : ContentPage, IDisposable
         this.BindingContext = homePageVM;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         Debug.WriteLine("On Appearing: HomePage");
@@ -37,12 +37,14 @@ public partial class HomePage : ContentPage, IDisposable
         expenseCollectioView.ItemsSource = homePageVM.RefreshExpenseList();
 
         homePageVM.InitUpdateBudgetProgressBar();
+
     }
 
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
         Debug.WriteLine("On Navigated To: HomePage");
+        
     }
 
     public void OnSearchTextChanged(object sender, EventArgs e)
@@ -81,6 +83,23 @@ public partial class HomePage : ContentPage, IDisposable
 #if !WINDOWS
         bottomSheet?.Dispose();
 #endif
+    }
+
+    private async void ExpensesPageTitle_Loaded(object sender, EventArgs e)
+    {   
+        var rememberMe = Preferences.Default.Get<bool>("RememberMe", false);
+        Debug.WriteLine("First App Launch Flow");
+        
+        if (!rememberMe)
+        {
+            bool answer = await DisplayAlert("Welcome to FinWise.", "Set a budget and track your personal and shared expenses. \n\nGo to \"Settings\" to set your monthly budget, your preferred currency or user name.\n\nClick on \"+\" at the bottom of the screen to add expenses.", "Go to Settings", "Skip for now");
+            if (answer)
+            {
+                await Shell.Current.GoToAsync("//SettingsPage");
+            }
+            Preferences.Default.Set("RememberMe", true);
+        }
+
     }
 
 }

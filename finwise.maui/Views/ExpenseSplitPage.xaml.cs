@@ -15,8 +15,7 @@ public partial class ExpenseSplitPage : TabbedPage
 	{
 		InitializeComponent();
         this.BindingContext = expenseEditorVM = viewModel;
-        Debug.WriteLine(expenseEditorVM.GetHashCode());
-        //selectableMembersResult.ItemsSource = expenseEditorVM.RefreshPeopleList("");
+
         firstLoad = true;
     }
 
@@ -61,7 +60,14 @@ public partial class ExpenseSplitPage : TabbedPage
         {
             CurrentPage = Children[0];
             firstLoad = false;
-            expenseEditorVM.ShowSelectableMembers = false;
+            selectableMembersResult.ItemsSource = expenseEditorVM.RefreshPeopleList(null, true);
+            expenseEditorVM.ShowSelectableMembers = true;
+
+            if(expenseEditorVM.tempExpenseShares.Count == 1)
+            {
+                expenseEditorVM.tempExpenseShares[0].paidAmount = expenseEditorVM.ExpenseItem.amount;
+            }
+
             var changedFocus = expenseMembersSearch.Focus();
         }
     }
@@ -100,6 +106,16 @@ public partial class ExpenseSplitPage : TabbedPage
         }
         
         Debug.WriteLine("Action: " + action);
+
+    }
+
+    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        expenseEditorVM.ValidateSplit();
+    }
+
+    private void expenseSplitTypePicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
 
     }
 }

@@ -18,7 +18,7 @@
     </Shell.FlyoutFooterTemplate>
         
     <!-- Desktop/Tablet-->
-    <ShellContent  Title="Main" Icon="heart.png" FlyoutItem.IsVisible="True" ContentTemplate="{DataTemplate views:OnboardPage}" />
+    <!--<ShellContent  Title="Main" Icon="heart.png" FlyoutItem.IsVisible="True" ContentTemplate="{DataTemplate views:OnboardPage}" />-->
 
     <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="Home" Icon="home.png" ContentTemplate="{DataTemplate views:HomePage}"/>
     <ShellContent IsEnabled="{OnIdiom Phone=False,Default=True}" IsVisible="{OnIdiom Phone=False,Default=True}" Title="People" Icon="users.png" ContentTemplate="{DataTemplate views:PeoplePage}"/>

@@ -60,11 +60,6 @@ public partial class ExpenseEditorPage : ContentPage
         await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM), false);
     }
 
-    private void AddExpenseTag_Clicked(object sender, EventArgs e)
-    {
-
-    }
-
     private void repeatExpensePicker_SelectedIndexChanged(object sender, EventArgs e)
     {
         var picker = (Picker)sender;
@@ -97,8 +92,25 @@ public partial class ExpenseEditorPage : ContentPage
         }
     }
 
-    private void ShareExpenseWithGroup_Clicked(object sender, EventArgs e)
+    private async void SaveExpenseButton_Clicked(object sender, EventArgs e)
     {
+        if (expenseEditorVM.ExpenseItem.description != "" && expenseEditorVM.ExpenseItem.amount > 0)
+        {
+            expenseEditorVM.SaveExpense();
+        }
+        else
+        {
+            string message = "";
+            if (expenseEditorVM.ExpenseItem.description == "") message += "You must enter a title\n";
+            if (expenseEditorVM.ExpenseItem.amount == 0)
+            {
+                message += "You must enter an amount\n";
+            }
+            else if (expenseEditorVM.ExpenseItem.amount < 0)
+            {
+                message += "You must enter an amount greater than 0.\n";
+            }
 
+            await DisplayAlert("Cannot create Expense.", message, "OK");        }
     }
 }

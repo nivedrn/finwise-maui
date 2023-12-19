@@ -16,6 +16,6 @@ public partial class ChartsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        chartsPageVM.LogsExpenses = await Logger.ReadLogsAsync();
+        //chartsPageVM.LogsExpenses = await Logger.ReadLogsAsync();
     }
 }

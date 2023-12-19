@@ -29,11 +29,25 @@ namespace finwise.maui.ViewModels
         public ObservableCollection<string> expenseTags { get; set; }
 
         public ObservableCollection<Person> selectableMembers { get; set; }
+
         public ObservableCollection<ExpenseShare> tempExpenseShares { get; set; }
+
         public ObservableCollection<ExpenseDebt> tempExpenseDebts { get; set; }
 
         [ObservableProperty]
         public bool showSelectableMembers;
+
+        [ObservableProperty]
+        public bool isValidSplit;
+
+        [ObservableProperty]
+        public bool isPaidTallyValid;
+
+        [ObservableProperty]
+        public bool isShareTallyValid;
+
+        [ObservableProperty]
+        public string tempSplitType;
 
         [ObservableProperty]
         public decimal tempPaidByTotal;
@@ -79,8 +93,7 @@ namespace finwise.maui.ViewModels
             currentCurrencySymbol = App._settings["currentCurrencySymbol"];
         }
 
-        [RelayCommand]
-        private async Task SaveExpense()
+        public async void SaveExpense()
         {
             if (!IsEditMode)
             {
@@ -104,13 +117,17 @@ namespace finwise.maui.ViewModels
             {
                 this.ExpenseItem.expenseShares = tempExpenseShares.ToList();
                 this.ExpenseItem.expenseDebts = tempExpenseDebts.ToList();
-                this.ExpenseItem.isShared = true;
+
+                if(this.ExpenseItem.expenseShares.Count > 0)
+                {
+                    this.ExpenseItem.isShared = true;
+                }
                 await Shell.Current.Navigation.PopModalAsync();
                 ShareUpdated = true;
             }
         }
 
-        public ObservableCollection<Person> RefreshPeopleList(string searchTerm)
+        public ObservableCollection<Person> RefreshPeopleList(string searchTerm, bool showAll = false)
         {
             var existingIds = tempExpenseShares.Select(share => share.personId).ToList();
 
@@ -118,6 +135,13 @@ namespace finwise.maui.ViewModels
             {
                 return new ObservableCollection<Person>(App._bvm.People.Where(
                     person => person.name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) && !person.isDeleted &&
+                    !existingIds.Contains(person.id))?
+                    .ToList());
+            }
+
+            if (showAll)
+            {
+                return new ObservableCollection<Person>(App._bvm.People.Where( person =>  !person.isDeleted &&
                     !existingIds.Contains(person.id))?
                     .ToList());
             }
@@ -147,39 +171,20 @@ namespace finwise.maui.ViewModels
         {
             tempExpenseDebts = new ObservableCollection<ExpenseDebt>();
 
+            var sharedCount = tempExpenseShares.Where(es => es.hasShare).ToList().Count;
+
             foreach (ExpenseShare share in tempExpenseShares)
             {
                 if (share.paidAmount > 0) share.hasPaid = true;
                 if (share.shareAmount > 0) share.hasShare = true;
 
-                switch (ExpenseItem.paidByType)
+                if (share.hasShare || share.hasPaid)
                 {
-                    case "Paid By You":
-                        if (share.hasPaid)
-                        {
-                            share.paidAmount = ExpenseItem.amount;
-                        }
-                        break;
+                    if (share.hasShare && ExpenseItem.shareType == "Equally")
+                    {
+                        share.shareAmount = sharedCount > 0 ? ExpenseItem.amount / sharedCount : 0;
+                    }
 
-                    default:
-                        break;
-                }
-
-                switch (ExpenseItem.shareType)
-                {
-                    case "Equally":
-                        if (share.hasShare)
-                        {
-                            share.shareAmount = ExpenseItem.amount / tempExpenseShares.Count;
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-
-                if(share.hasShare || share.hasPaid) 
-                {
                     var remainingShare = share.shareAmount - share.paidAmount;
 
                     if (remainingShare > 0)
@@ -208,11 +213,41 @@ namespace finwise.maui.ViewModels
                     }
                 }                
             }
+
+            ValidateSplit();
         }
 
         public bool ValidateSplit()
         {
-            return true;
+            IsValidSplit = true;
+            TempSplitType = "Equally";
+            IsShareTallyValid = true;
+            IsPaidTallyValid = true;
+
+            decimal sharedCount = tempExpenseShares.Where(es => es.hasShare).ToList().Count;
+
+            TempPaidByTotal = tempExpenseShares.Where(es => es.hasShare || es.hasPaid).Select(es => es.paidAmount).Sum();
+            TempExpenseSplitTotal = tempExpenseShares.Where(es => es.hasShare).Select(es => es.shareAmount).Sum();
+
+            decimal equallySplitShare = ExpenseItem.amount / sharedCount;
+
+            if (TempPaidByTotal != ExpenseItem.amount)
+            {
+                IsValidSplit = false;
+                IsPaidTallyValid = false;
+            }
+            if (TempExpenseSplitTotal != ExpenseItem.amount)
+            {
+                IsValidSplit = false;
+                IsShareTallyValid = false;
+            }
+
+
+            bool isEquallySplit = tempExpenseShares.Where(es => es.hasShare && es.shareAmount != equallySplitShare).ToList().Count > 0;
+
+            if (!isEquallySplit) TempSplitType = "Unequally";
+
+            return IsValidSplit;
         }
     }
 }

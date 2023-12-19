@@ -15,6 +15,7 @@ namespace finwise.maui.ViewModels
 
         public ChartsPageViewModel()
         {
+            Title = "Charts";
             LogsExpenses = "";
         }
 

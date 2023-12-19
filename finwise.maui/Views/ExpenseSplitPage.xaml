@@ -12,6 +12,7 @@
     <TabbedPage.Resources>
         <ResourceDictionary>
             <conv:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+            <conv:BoolToColorConverter x:Key="BoolToColorConverter" />
             <conv:IdToNameConverter x:Key="IdToNameConverter" />
             <conv:AmountToCurrencyFormatConverter x:Key="AmountToCurrencyFormatConverter" />
         </ResourceDictionary>
@@ -121,6 +122,7 @@
             </ContentPage>
         </x:Arguments>
     </NavigationPage>
+    
     <NavigationPage Title="Adjust Paid By" 
             BarBackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}"
             BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
@@ -134,11 +136,11 @@
                 </NavigationPage.TitleView>
                 <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
                     <HorizontalStackLayout HorizontalOptions="Center">
-                        <Label Text="{Binding TempPaidByTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                        <Label Text="{Binding TempPaidByTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" TextColor="{Binding IsPaidTallyValid, Converter={StaticResource BoolToColorConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
                         <Label Text=" of " FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
                         <Label Text="{Binding ExpenseItem.amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
                     </HorizontalStackLayout>
-                    <Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>
+                    <!--<Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>-->
                     <Frame Padding="5" Margin="10,0" MinimumHeightRequest="300" CornerRadius="5" Grid.Row="1" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
                         <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}">
                         <VerticalStackLayout>
@@ -149,7 +151,7 @@
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Padding="10,5" RowDefinitions="*" ColumnDefinitions="auto,30,2*,*">
-                                            <CheckBox VerticalOptions="Center" Grid.Column="0" IsChecked="{Binding hasPaid}"/>
+                                            <!--<CheckBox VerticalOptions="Center" Grid.Column="0" IsChecked="{Binding hasPaid}"/>-->
                                             <Border Grid.Column="1" WidthRequest="30" HeightRequest="30" VerticalOptions="Center" Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
                                                 <Border.StrokeShape>
                                                     <RoundRectangle CornerRadius="30,30,30,30"/>
@@ -161,7 +163,7 @@
                                                     </Image>
                                                 </Border>
                                                 <Label Grid.Column="2" Padding="10,0,10,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Medium"  Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
-                                                <Entry Grid.Column="3" MinimumWidthRequest="80" FontFamily="NunitoSemiBold" FontSize="Medium"  Text="{Binding paidAmount,StringFormat='{0:F2}'}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}"/>
+                                                <Entry Grid.Column="3" MinimumWidthRequest="80" FontFamily="NunitoSemiBold" FontSize="Medium"  Text="{Binding paidAmount,StringFormat='{0:F2}'}" Placeholder="0.00" Keyboard="Numeric" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" TextChanged="Entry_TextChanged"/>
                                         </Grid>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
@@ -173,6 +175,7 @@
             </ContentPage>
         </x:Arguments>
     </NavigationPage>
+    
     <NavigationPage Title="Adjust Split" 
             BarBackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}"
             BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
@@ -186,15 +189,14 @@
                 </NavigationPage.TitleView>
                 <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
                     <FlexLayout JustifyContent="SpaceBetween">
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout HorizontalOptions="Center">
-                                <Label Text="{Binding TempExpenseSplitTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                        <VerticalStackLayout VerticalOptions="Center">
+                            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,0,0">
+                                <Label Text="{Binding TempExpenseSplitTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5" TextColor="{Binding IsShareTallyValid, Converter={StaticResource BoolToColorConverter}}"/>
                                 <Label Text=" of " FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
                                 <Label Text="{Binding ExpenseItem.amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
                             </HorizontalStackLayout>
-                            <Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>
                         </VerticalStackLayout>
-                        <Button  x:Name="expenseSplitTypeButton" Clicked="expenseSplitTypeButton_Clicked" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
+                        <Button  x:Name="expenseSplitTypeButton" Clicked="expenseSplitTypeButton_Clicked" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="30" Text="Split Equally" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
                             <Button.Shadow>
                                 <Shadow Brush="{StaticResource DarkButtonGray}" 
                                     Offset="0,5"
@@ -225,7 +227,7 @@
                                                     </Image>
                                                 </Border>
                                                 <Label Grid.Column="2" Padding="10,0,10,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Medium" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
-                                                <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding shareAmount,StringFormat='{0:F2}'}" Placeholder="0.00" Keyboard="Numeric" FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}"/>
+                                                <Entry Grid.Column="3" FontSize="Medium" MinimumWidthRequest="80" Text="{Binding shareAmount,StringFormat='{0:F2}'}" Placeholder="0.00" Keyboard="Numeric" FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" TextChanged="Entry_TextChanged"/>
                                             </Grid>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>

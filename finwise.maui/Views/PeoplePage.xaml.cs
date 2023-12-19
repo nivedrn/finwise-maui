@@ -24,16 +24,17 @@ public partial class PeoplePage : ContentPage
 	{
 		InitializeComponent();
 		this.BindingContext = peoplePageVM = new PeoplePageViewModel();
-        peopleCollectionView.SelectedItem = null;
-        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
+        //peopleCollectionView.SelectedItem = null;
+        //peopleCollectionView.ItemsSource = peoplePageVM.peopleCollection;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        peoplePageVM.Init();
         Debug.WriteLine("On Appearing: PeoplePage");
         peopleCollectionView.SelectedItem = null;
-        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
+        peoplePageVM.RefreshPeopleList();
     }
 
     public async void AddPerson(object sender, EventArgs e)
@@ -42,8 +43,9 @@ public partial class PeoplePage : ContentPage
         if (result != "" && result is not null)
         {
             peoplePageVM.AddNewPerson(result);
+            //peoplePageVM.RefreshPeopleList();
+            //await Shell.Current.Navigation.PushModalAsync(new PersonDetailPage(peoplePageVM), true);
         }
-        await Shell.Current.Navigation.PushModalAsync(new PersonDetailPage(peoplePageVM), true);
     }
     
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
@@ -55,14 +57,14 @@ public partial class PeoplePage : ContentPage
     public void OnSearchTextChanged(object sender, EventArgs e)
     {
         this.peoplePageVM.FilterParams["searchTerm"] = ((SearchBar)sender).Text;
-        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
+        peoplePageVM.RefreshPeopleList();
     }
 
     public void ClearAllFilters(object sender, EventArgs args)
     {
         peopleCollectionView.SelectedItem = null;
         searchInput.Text = "";
-        peopleCollectionView.ItemsSource = peoplePageVM.localBVM.People;
+        //peopleCollectionView.ItemsSource = peoplePageVM.localBVM.People;
         bottomSheet?.CloseBottomSheet();
     }
 

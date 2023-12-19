@@ -44,30 +44,45 @@
     </ContentPage.Resources>
 
     <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
-            <Grid RowDefinitions="30,80,auto,auto" ColumnDefinitions="*,auto">
-            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
+            <Grid RowDefinitions="30,80,auto,auto" ColumnDefinitions="*,auto,auto">
+            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0" Grid.ColumnSpan="3">
                 <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" />
-                <HorizontalStackLayout>
-                    <FlexLayout JustifyContent="SpaceBetween">
-                        <ImageButton Source="{AppThemeBinding Light=user_plus.png,Dark=user_plus_dark.png}" Clicked="AddPerson" Margin="2,0,0,0" Padding="0,3,0,3" HeightRequest="35" ToolTipProperties.Text="Add new Person"/>
-                    </FlexLayout>
-                </HorizontalStackLayout>
             </FlexLayout>
 
-            <BoxView Margin="0,8" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
-            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding TalliedAmountSummary}" FontFamily="NunitoBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <BoxView Margin="0,8,0,0" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding TalliedAmountSummary}" FontSize="Medium" FontFamily="NunitoRegular" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-            <BoxView CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
-            <FlexLayout JustifyContent="SpaceBetween" Grid.Row="2" Grid.ColumnSpan="2" >
-                <SearchBar x:Name="searchInput" HeightRequest="40" FlexLayout.Grow="1" FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" Placeholder="Search by name" TextChanged="OnSearchTextChanged" MaxLength="100" />
-                <ImageButton Padding="5,0" HeightRequest="40" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Source="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Clicked="ShowBottomSheet" >
+            <BoxView Margin="0,15,0,0" CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
+            <SearchBar Margin="0,15,0,0" x:Name="searchInput" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1"  HeightRequest="40" FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" Placeholder="Search by name" TextChanged="OnSearchTextChanged" MaxLength="100" />
+
+            <FlexLayout Margin="0,15,0,0" Grid.Row="2" Grid.Column="1" JustifyContent="Center">
+                <Border Grid.Column="1" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Background="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5,5,5,5"/>
+                    </Border.StrokeShape>
+                    <ImageButton Padding="7,0" HeightRequest="40" WidthRequest="50" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Source="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Clicked="ShowBottomSheet" >
+                        <ImageButton.Behaviors>
+                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhiteButtonIcons}, Dark={StaticResource DarkButtonIcons}}" />
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </Border>
+            </FlexLayout>
+
+            <FlexLayout Margin="5,15,0,0" Grid.Row="2" Grid.Column="2" JustifyContent="Center">
+                <Border Grid.Column="1" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Background="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5,5,5,5"/>
+                </Border.StrokeShape>
+                <ImageButton Source="{AppThemeBinding Light=user_plus.png,Dark=user_plus_dark.png}" Clicked="AddPerson" Margin="5,0,5,0" Padding="0,3,0,3" HeightRequest="35" ToolTipProperties.Text="Add new Person">
                     <ImageButton.Behaviors>
-                        <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhiteButtonIcons}, Dark={StaticResource DarkButtonIcons}}" />
+                            <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhiteButtonIcons}, Dark={StaticResource DarkHighlightDarkPurple}}" />
                     </ImageButton.Behaviors>
                 </ImageButton>
+                </Border>
             </FlexLayout>
-            <VerticalStackLayout Margin="0,8" Grid.Row="3" Grid.ColumnSpan="2">
-                <CollectionView x:Name="peopleCollectionView" ItemsSource="{Binding localBVM.People}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenPersonDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference peopleCollectionView}}" EmptyView="No friends added.">
+            
+            <VerticalStackLayout Margin="0,5" Grid.Row="3" Grid.ColumnSpan="3">
+                <CollectionView x:Name="peopleCollectionView" ItemsSource="{Binding PeopleCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenPersonDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference peopleCollectionView}}" EmptyView="No friends added.">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
@@ -75,12 +90,12 @@
                         <DataTemplate>
                             <Grid RowDefinitions="70" ColumnDefinitions="auto,*,100" Margin="0,0,0,1">
                                 <BoxView CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource WhiteListBG}, Dark={StaticResource DarkCardAltBG}}"/>
-                                <Image Margin="20,0,10,0" HeightRequest="20" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="user.png">
+                                <!--<Image Margin="20,0,10,0" HeightRequest="20" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="user.png">
                                     <Image.Behaviors>
                                         <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhiteListIcons}, Dark={StaticResource DarkListIcons}}" />
                                     </Image.Behaviors>
-                                </Image>
-                                <Label Padding="10,0,10,0" FontSize="Medium" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding name}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" />
+                                </Image>-->
+                                <Label Padding="20,0,10,0" FontSize="Medium" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding name}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" />
                                 <FlexLayout Direction="Column" Grid.Column="2" VerticalOptions="Center">
                                     <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou}" Text="owes you" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
                                     <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="you owe" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
