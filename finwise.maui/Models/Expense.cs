@@ -17,6 +17,7 @@ namespace finwise.maui.Models
         public string notes { get; set; }
 
         public List<ExpenseShare> expenseShares { get; set; }
+        public List<ExpenseDebt> expenseDebts { get; set; }
         public bool isShared { get; set; }
         public string paidByType { get; set; }
         public string shareType { get; set; }
@@ -33,6 +34,7 @@ namespace finwise.maui.Models
 
             this.tags = new List<string>();
             this.expenseShares = new List<ExpenseShare>();
+            this.expenseDebts = new List<ExpenseDebt>();
 
             this.paidByType = "Paid By You";
             this.shareType = "Equally";

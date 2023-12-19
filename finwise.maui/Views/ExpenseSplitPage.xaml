@@ -185,12 +185,24 @@
                     </FlexLayout>
                 </NavigationPage.TitleView>
                 <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
-                    <HorizontalStackLayout HorizontalOptions="Center">
-                        <Label Text="{Binding TempExpenseSplitTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
-                        <Label Text=" of " FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
-                        <Label Text="{Binding ExpenseItem.amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
-                    </HorizontalStackLayout>
-                    <Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>
+                    <FlexLayout JustifyContent="SpaceBetween">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout HorizontalOptions="Center">
+                                <Label Text="{Binding TempExpenseSplitTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                                <Label Text=" of " FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                                <Label Text="{Binding ExpenseItem.amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                            </HorizontalStackLayout>
+                            <Label Text="$0.00 left" FontSize="Caption" HorizontalOptions="Center" Margin="0,0,0,20"/>
+                        </VerticalStackLayout>
+                        <Button  x:Name="expenseSplitTypeButton" Clicked="expenseSplitTypeButton_Clicked" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
+                            <Button.Shadow>
+                                <Shadow Brush="{StaticResource DarkButtonGray}" 
+                                    Offset="0,5"
+                                    Radius="4"
+                                    Opacity="0.5"/>
+                            </Button.Shadow>
+                        </Button>
+                    </FlexLayout>
                     <Frame Padding="5" Margin="10,0" MinimumHeightRequest="300" CornerRadius="5" Grid.Row="1" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
                         <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}">
                             <VerticalStackLayout>

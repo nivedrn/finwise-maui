@@ -27,7 +27,7 @@
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0">
                 <Button Grid.Row="0" Grid.Column="0" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
                 <HorizontalStackLayout>
-                    <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Command="{Binding EditExpenseCommand}"/>
+                    <Button x:Name="expenseDeleteButton" Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Clicked="expenseDeleteButton_Clicked" />
                     <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Command="{Binding EditExpenseCommand}"/>
                 </HorizontalStackLayout>
             </FlexLayout>
@@ -76,7 +76,57 @@
                                         </Border>
                                         <Label Grid.Column="1" Padding="5,0,0,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Small" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
                                         <Label Grid.Column="1" VerticalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text=" paid "/>
+                                        <Label Grid.Column="2" VerticalOptions="Center" FontFamily="NunitoBold" FontSize="Small" Text="{Binding paidAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <!--<CollectionView x:Name="expenseSharesAll" Margin="30,0" ItemsSource="{Binding expenseSharesAll}" SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Padding="10,5" HorizontalOptions="Center">
+                                        <Border Grid.Column="0" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="20,20,20,20"/>
+                                            </Border.StrokeShape>
+                                            <Image Source="{AppThemeBinding Light=user.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="10">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhiteListIcons}, Dark={StaticResource DarkHighlightDarkPurple}}" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                        </Border>
+                                        <Label Grid.Column="1" Padding="5,0,0,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Small" Text="{Binding personId, Converter={StaticResource IdToNameConverter}}"/>
+                                        <Label Grid.Column="1" VerticalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text=" paid "/>
                                         <Label Grid.Column="2" VerticalOptions="Center" FontFamily="NunitoBold" FontSize="Small" Text="{Binding shareAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>-->
+                        <Label Margin="40,0" VerticalOptions="Center" HorizontalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text="Expense Split Details"/>
+                        <CollectionView x:Name="expenseDebtsAll" Margin="10,0" ItemsSource="{Binding expenseDebtsAll}" SelectionMode="None">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Padding="10,5" HorizontalOptions="Center">
+                                        <Border Grid.Column="0" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" Stroke="{StaticResource DarkButtonBlue}" Background="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkHighlightPurple}}" StrokeThickness="0">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="20,20,20,20"/>
+                                            </Border.StrokeShape>
+                                            <Image Source="{AppThemeBinding Light=user.png,Dark=user.png}" VerticalOptions="Center" HeightRequest="10">
+                                                <Image.Behaviors>
+                                                    <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Light={StaticResource WhiteListIcons}, Dark={StaticResource DarkHighlightDarkPurple}}" />
+                                                </Image.Behaviors>
+                                            </Image>
+                                        </Border>
+                                        <Label Padding="5,0,0,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Small" Text="{Binding fromPersonId, Converter={StaticResource IdToNameConverter}}"/>
+                                        <Label VerticalOptions="Center" FontFamily="NunitoLight" FontSize="Small" Text=" owes "/>
+                                        <Label Padding="5,0,0,0" VerticalOptions="Center" FontFamily="NunitoSemiBold" FontSize="Small" Text="{Binding toPersonId, Converter={StaticResource IdToNameConverter}}"/>
+                                        <Label VerticalOptions="Center" FontFamily="NunitoBold" FontSize="Small" Text="{Binding debtAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}"/>
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

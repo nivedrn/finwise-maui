@@ -28,4 +28,5 @@ namespace finwise.maui.Models
             modifiedDate = DateTime.Now;
         }
     }
+
 }

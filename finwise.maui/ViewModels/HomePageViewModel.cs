@@ -60,14 +60,14 @@ namespace finwise.maui.ViewModels
 
         public void InitUpdateBudgetProgressBar()
         {
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 IsBusy = true;
                 UpdateBudgetProgressBar();
             });
         }
 
-        public async void UpdateBudgetProgressBar()
+        public void UpdateBudgetProgressBar()
         {
             var today = DateTime.Today;
             DateTime startDate = new DateTime(today.Year, today.Month, 1);

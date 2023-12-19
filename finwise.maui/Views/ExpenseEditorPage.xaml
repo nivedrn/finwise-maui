@@ -80,8 +80,8 @@
                     </FlexLayout>
                 </Grid>
             </Frame>
-            
-            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" IsVisible="{Binding ExpenseItem.isShared, Converter={StaticResource BooleanNegationConverter}}" >
+
+            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" IsVisible="{Binding ShareUpdated, Converter={StaticResource BooleanNegationConverter}}" >
                 <Label Text="Do you want to " FontSize="Small" VerticalOptions="Center"/>
                 <Button x:Name="ShareExpense" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
                     <Button.Shadow>
@@ -94,7 +94,7 @@
                 <Label Text=" with friends ?" FontSize="Small" VerticalOptions="Center"/>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" IsVisible="{Binding ExpenseItem.isShared}" >
+            <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" IsVisible="{Binding ShareUpdated}" >
                 <Label Text="Paid by" FontSize="Small" VerticalOptions="Center"/>
                 <Button x:Name="ExpensePaidBy" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
                     <Button.Shadow>

@@ -21,12 +21,16 @@ namespace finwise.maui.ViewModels
         Boolean isEditMode;
 
         [ObservableProperty]
+        Boolean shareUpdated;
+
+        [ObservableProperty]
         string currentCurrencySymbol;
 
         public ObservableCollection<string> expenseTags { get; set; }
 
         public ObservableCollection<Person> selectableMembers { get; set; }
         public ObservableCollection<ExpenseShare> tempExpenseShares { get; set; }
+        public ObservableCollection<ExpenseDebt> tempExpenseDebts { get; set; }
 
         [ObservableProperty]
         public bool showSelectableMembers;
@@ -55,6 +59,9 @@ namespace finwise.maui.ViewModels
                 tempExpenseShares = new ObservableCollection<ExpenseShare>{
                     appUserShare
                 };
+                tempExpenseDebts = new ObservableCollection<ExpenseDebt>();
+
+                ShareUpdated = false;
             }
             else
             {
@@ -62,6 +69,7 @@ namespace finwise.maui.ViewModels
                 currentIndex = App._bvm.Expenses.IndexOf(expense);
                 isEditMode = true;
                 Title = "Modify Expense";
+                ShareUpdated = expense.isShared;
                 expenseTags = new ObservableCollection<string>(ExpenseItem.tags);
                 tempExpenseShares = new ObservableCollection<ExpenseShare>(ExpenseItem.expenseShares); 
             }
@@ -95,8 +103,10 @@ namespace finwise.maui.ViewModels
             if (ValidateSplit())
             {
                 this.ExpenseItem.expenseShares = tempExpenseShares.ToList();
+                this.ExpenseItem.expenseDebts = tempExpenseDebts.ToList();
                 this.ExpenseItem.isShared = true;
                 await Shell.Current.Navigation.PopModalAsync();
+                ShareUpdated = true;
             }
         }
 
@@ -107,7 +117,7 @@ namespace finwise.maui.ViewModels
             if (searchTerm is not null)
             {
                 return new ObservableCollection<Person>(App._bvm.People.Where(
-                    person => person.name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) &&
+                    person => person.name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) && !person.isDeleted &&
                     !existingIds.Contains(person.id))?
                     .ToList());
             }
@@ -135,8 +145,13 @@ namespace finwise.maui.ViewModels
 
         public void RecalculateSplit()
         {
+            tempExpenseDebts = new ObservableCollection<ExpenseDebt>();
+
             foreach (ExpenseShare share in tempExpenseShares)
             {
+                if (share.paidAmount > 0) share.hasPaid = true;
+                if (share.shareAmount > 0) share.hasShare = true;
+
                 switch (ExpenseItem.paidByType)
                 {
                     case "Paid By You":
@@ -162,8 +177,37 @@ namespace finwise.maui.ViewModels
                     default:
                         break;
                 }
-            }
 
+                if(share.hasShare || share.hasPaid) 
+                {
+                    var remainingShare = share.shareAmount - share.paidAmount;
+
+                    if (remainingShare > 0)
+                    {
+                        foreach (ExpenseShare personOwed in tempExpenseShares.Where(es => es.paidAmount > es.shareAmount && es.personId != share.personId).OrderByDescending(es => es.paidAmount - es.shareAmount).ToList())
+                        {
+                            var personOwedDebtTally = tempExpenseDebts.Where(es => es.toPersonId == personOwed.personId).Sum(es => es.debtAmount);
+                            var remainingOwedDebt = (personOwed.paidAmount - personOwed.shareAmount) - personOwedDebtTally;
+
+                            ExpenseDebt debt = new ExpenseDebt();
+                            debt.fromPersonId = share.personId;
+                            debt.toPersonId = personOwed.personId;
+
+                            if(remainingShare >= remainingOwedDebt)
+                            {
+                                debt.debtAmount = remainingOwedDebt;
+                            }
+                            else
+                            {
+                                debt.debtAmount = remainingShare;
+                            }
+
+                            remainingShare = remainingShare - debt.debtAmount;
+                            tempExpenseDebts.Add(debt);
+                        }
+                    }
+                }                
+            }
         }
 
         public bool ValidateSplit()

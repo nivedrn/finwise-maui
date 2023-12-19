@@ -17,7 +17,7 @@
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0" Margin="5,0">
                 <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
                 <HorizontalStackLayout>
-                    <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Command="{Binding EditExpenseCommand}"/>
+                    <Button x:Name="DeleteFriend" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Clicked="DeleteFriend_Clicked" />
                     <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Command="{Binding EditExpenseCommand}"/>
                 </HorizontalStackLayout>
             </FlexLayout>

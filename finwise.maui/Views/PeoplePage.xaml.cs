@@ -32,6 +32,8 @@ public partial class PeoplePage : ContentPage
     {
         base.OnAppearing();
         Debug.WriteLine("On Appearing: PeoplePage");
+        peopleCollectionView.SelectedItem = null;
+        peopleCollectionView.ItemsSource = peoplePageVM.RefreshPeopleList();
     }
 
     public async void AddPerson(object sender, EventArgs e)

@@ -23,6 +23,7 @@ namespace finwise.maui.ViewModels
 
         public ObservableCollection<ExpenseShare> expenseSharesPaidBy { get; set; }
         public ObservableCollection<ExpenseShare> expenseSharesAll { get; set; }
+        public ObservableCollection<ExpenseDebt> expenseDebtsAll { get; set; }
 
         public ExpenseDetailViewModel(Expense expense)
         {
@@ -33,6 +34,7 @@ namespace finwise.maui.ViewModels
 
             expenseSharesAll = new ObservableCollection<ExpenseShare>(expense.expenseShares);
             expenseSharesPaidBy = new ObservableCollection<ExpenseShare>(expenseSharesAll.Where(es => es.hasPaid && es.paidAmount > 0));
+            expenseDebtsAll = new ObservableCollection<ExpenseDebt>(expense.expenseDebts);
         }
 
         [RelayCommand]
@@ -40,6 +42,6 @@ namespace finwise.maui.ViewModels
         {
             await Shell.Current.Navigation.PushModalAsync(new ExpenseEditorPage(ExpenseItem), true);
         }
-        
+
     }
 }

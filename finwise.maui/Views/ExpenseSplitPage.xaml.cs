@@ -85,4 +85,21 @@ public partial class ExpenseSplitPage : TabbedPage
             tempExpenseShareMemberSplits.ItemsSource = expenseEditorVM.tempExpenseShares;
         }
     }
+
+    private async void expenseSplitTypeButton_Clicked(object sender, EventArgs e)
+    {
+        string action = await DisplayActionSheet("Choose how to split the expense:", "Cancel", null, "Equally", "Unequally");
+        if(action is not null & action != "Cancel")
+        {
+            expenseEditorVM.ExpenseItem.shareType = action;
+            if (MainThread.IsMainThread)
+                expenseEditorVM.RecalculateSplit();
+
+            else
+                MainThread.BeginInvokeOnMainThread(expenseEditorVM.RecalculateSplit);
+        }
+        
+        Debug.WriteLine("Action: " + action);
+
+    }
 }

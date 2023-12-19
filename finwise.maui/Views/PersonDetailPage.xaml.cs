@@ -14,22 +14,30 @@ public partial class PersonDetailPage : ContentPage
 
     void OnSwiped(object sender, SwipedEventArgs e)
     {
-        //int oldIndex = expenseDetailVM.currentIndex;
-        //switch (e.Direction)
-        //{
-        //    case SwipeDirection.Right:
-        //        expenseDetailVM.currentIndex = expenseDetailVM.currentIndex > 0 ? expenseDetailVM.currentIndex - 1 : expenseDetailVM.currentIndex;
-        //        break;
-        //    case SwipeDirection.Left:
-        //        expenseDetailVM.currentIndex = expenseDetailVM.currentIndex < expenseDetailVM.expensesCount - 1 ? expenseDetailVM.currentIndex + 1 : expenseDetailVM.currentIndex;
-        //        break;
-        //}
+        int oldIndex = peoplePageVM.currentIndex;
+        switch (e.Direction)
+        {
+            case SwipeDirection.Right:
+                peoplePageVM.currentIndex = peoplePageVM.currentIndex > 0 ? peoplePageVM.currentIndex - 1 : peoplePageVM.currentIndex;
+                break;
+            case SwipeDirection.Left:
+                peoplePageVM.currentIndex = peoplePageVM.currentIndex < peoplePageVM.peopleCount - 1 ? peoplePageVM.currentIndex + 1 : peoplePageVM.currentIndex;
+                break;
+        }
 
-        //if (oldIndex != expenseDetailVM.currentIndex)
-        //{
-        //    expenseDetailVM.ExpenseItem = App._bvm.Expenses[expenseDetailVM.currentIndex];
-        //}
-
+        if (oldIndex != peoplePageVM.currentIndex)
+        {
+            peoplePageVM.CurrentIndexPerson = App._bvm.People[peoplePageVM.currentIndex];
+        }
     }
 
+    private async void DeleteFriend_Clicked(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Are you Sure ?", "Deleting this person will disable them from being added to new expenses.", "Confirm", "Cancel");
+        if (answer)
+        {
+            peoplePageVM.CurrentIndexPerson.isDeleted = true;
+            await Shell.Current.Navigation.PopModalAsync();
+        }
+    }
 }

@@ -55,6 +55,7 @@
             </FlexLayout>
 
             <BoxView Margin="0,8" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding TalliedAmountSummary}" FontFamily="NunitoBold" HorizontalOptions="Center" VerticalOptions="Center"/>
 
             <BoxView CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="2" Grid.ColumnSpan="2" >
@@ -81,7 +82,8 @@
                                 </Image>
                                 <Label Padding="10,0,10,0" FontSize="Medium" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding name}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" />
                                 <FlexLayout Direction="Column" Grid.Column="2" VerticalOptions="Center">
-                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" Text="you owe" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou}" Text="owes you" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="you owe" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
                                     <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" Text="{Binding talliedAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
                                 </FlexLayout>
                             </Grid>

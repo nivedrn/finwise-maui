@@ -43,4 +43,13 @@ public partial class ExpenseDetailPage : ContentPage
         this.BindingContext = expenseDetailVM = new ExpenseDetailViewModel(App._bvm.Expenses[expenseDetailVM.currentIndex]);
     }
 
+    private async void expenseDeleteButton_Clicked(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Are you Sure ?", "Expense details cannot be retrieved once deleted.", "Confirm", "Cancel");
+        if (answer)
+        {
+            App._bvm.Expenses.RemoveAt(expenseDetailVM.currentIndex);
+            await Shell.Current.Navigation.PopModalAsync();
+        }
+    }
 }

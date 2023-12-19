@@ -14,7 +14,7 @@ namespace finwise.maui.Models
         public string phoneNo { get; set; }
 
         public bool owesYou { get; set; }
-        public float talliedAmount { get; set; }
+        public decimal talliedAmount { get; set; }
 
         public string state { get; set; }
 
@@ -23,6 +23,7 @@ namespace finwise.maui.Models
             state = "No expenses";
             owesYou = false;
             talliedAmount = 0;
+            isDeleted = false;
         }
     }
 }

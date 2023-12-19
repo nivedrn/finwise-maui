@@ -11,7 +11,7 @@ namespace finwise.maui.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is float amount)
+            if (value is decimal amount)
             {
                 return $"{App._settings["currentCurrencySymbol"]} {amount.ToString("0.00")}";
             }
