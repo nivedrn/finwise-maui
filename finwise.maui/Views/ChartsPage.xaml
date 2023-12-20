@@ -4,6 +4,7 @@
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
             xmlns:conv="clr-namespace:finwise.maui.Converters"
             x:Class="finwise.maui.Views.ChartsPage"
+             Shell.NavBarIsVisible="False"
             Title="ChartsPage">
 
     <ContentPage.Resources>

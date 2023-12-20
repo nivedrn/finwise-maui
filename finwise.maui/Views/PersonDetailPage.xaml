@@ -2,9 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+            xmlns:conv="clr-namespace:finwise.maui.Converters"
             x:Class="finwise.maui.Views.PersonDetailPage"
             Title="PersonDetailPage"
             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+            <conv:BoolToRedGreenColorConverter x:Key="BoolToRedGreenColorConverter" />
+            <conv:IdToNameConverter x:Key="IdToNameConverter" />
+            <conv:AmountToCurrencyFormatConverter x:Key="AmountToCurrencyFormatConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
         <VerticalStackLayout.GestureRecognizers>
@@ -18,14 +28,24 @@
                 <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
                 <HorizontalStackLayout>
                     <Button x:Name="DeleteFriend" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=trash_alt.png,Dark=trash_alt_dark.png}" Clicked="DeleteFriend_Clicked" />
-                    <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Command="{Binding EditExpenseCommand}"/>
+                    <!--<Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=edit.png,Dark=edit_dark.png}" Command="{Binding EditExpenseCommand}"/>-->
                 </HorizontalStackLayout>
             </FlexLayout>
 
-            <Frame Padding="15,25,15,15" Margin="10,0" CornerRadius="5" Grid.Row="2" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
+            <Frame Padding="15,25,15,15" Margin="10,0" CornerRadius="5" Grid.Row="2" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
                 <VerticalStackLayout>
                     <Label HeightRequest="40" HorizontalOptions="Center" FontSize="Large" Text="{Binding CurrentIndexPerson.name}" />
-                    <Label HorizontalOptions="Center" FontSize="Small" Text="You owe jojo $110.00" />
+                    
+                    <HorizontalStackLayout HorizontalOptions="Center" Margin="0,5,10,5" VerticalOptions="Center">
+                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" IsVisible="{Binding CurrentIndexPerson.owesYou}" Text="Owes" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou}" Text=" You " TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                        <Label HorizontalOptions="Center" Padding="0,0,0,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="You" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                        <Label HorizontalOptions="Center" Padding="0,0,0,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text=" owe " TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+
+                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="{Binding CurrentIndexPerson.name}" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+
+                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" Text="{Binding CurrentIndexPerson.talliedAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource Gray300}}"/>    
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Frame>
 
@@ -41,5 +61,30 @@
                 </Image>
             </Border>
         </Grid>
+
+        <ScrollView Margin="10">
+            <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
+                <CollectionView Margin="0,5" x:Name="relatedExpenseDebtsCollection" ItemsSource="{Binding RelatedExpenseDebtsCollection}" SelectionMode="None" EmptyView="Not involved in any expense with you.">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="35,30" ColumnDefinitions="*,auto" Margin="0,0,0,1">
+                                <BoxView CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource WhiteListBG}, Dark={StaticResource DarkCardAltBG}}"/>
+                                <Label Margin="15,0,10,0" Padding="10,0,10,0" FontSize="Medium" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.Column="0" VerticalOptions="End" HorizontalOptions="Start" Text="{Binding expense.description}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" />
+                                <Label Margin="15,0,10,0" Padding="10,0" Grid.Row="1" Grid.Column="0" FontSize="Caption" FontFamily="NunitoSemiBold" Text="{Binding expense.createdDate, StringFormat='{0:dd MMMM, yyyy}'}" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkDimmedText}}"/>
+                                <!--<Label Padding="20,0,20,0" FontFamily="NunitoSemiBold" FontSize="Medium" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End" Text="{Binding debt.debtAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}" />-->
+                                <FlexLayout Direction="Column" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center">
+                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou}" Text="owes you" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="you owe" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" Text="{Binding debt.debtAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}" TextColor="{Binding owesYou, Converter={StaticResource BoolToRedGreenColorConverter}}"/>
+                                </FlexLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
     </VerticalStackLayout>
 </ContentPage>

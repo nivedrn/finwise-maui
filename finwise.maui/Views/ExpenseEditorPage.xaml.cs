@@ -101,7 +101,7 @@ public partial class ExpenseEditorPage : ContentPage
         else
         {
             string message = "";
-            if (expenseEditorVM.ExpenseItem.description == "") message += "You must enter a title\n";
+            if (expenseEditorVM.ExpenseItem.description == "" || expenseEditorVM.ExpenseItem.description is null) message += "You must enter a title\n";
             if (expenseEditorVM.ExpenseItem.amount == 0)
             {
                 message += "You must enter an amount\n";

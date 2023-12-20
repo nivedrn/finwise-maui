@@ -29,7 +29,7 @@ public partial class HomePage : ContentPage, IDisposable
         this.BindingContext = homePageVM;
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
         Debug.WriteLine("On Appearing: HomePage");
@@ -40,7 +40,7 @@ public partial class HomePage : ContentPage, IDisposable
 
     }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
         Debug.WriteLine("On Navigated To: HomePage");

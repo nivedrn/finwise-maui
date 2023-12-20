@@ -85,6 +85,8 @@ namespace finwise.maui.ViewModels
         {
             var today = DateTime.Today;
             WithinBudget = true;
+            BudgetProgressStatus = "";
+            BudgetProgressStatusCode = "DEFAULT";
             DateTime startDate = new DateTime(today.Year, today.Month, 1);
             DateTime endDate = startDate.AddMonths(1);
 
@@ -99,7 +101,6 @@ namespace finwise.maui.ViewModels
             {
                 BudgetProgress = totalAmount / monthlyBudget;
                 endDate = endDate.AddDays(-1);
-                BudgetProgressStatusCode = "DEFAULT";
 
                 ShowBudgetStatusMessage = false;
                 if(totalAmount > monthlyBudget)

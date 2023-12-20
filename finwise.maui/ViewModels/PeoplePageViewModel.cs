@@ -35,12 +35,19 @@ namespace finwise.maui.ViewModels
         public int peopleCount { get; set; }
 
         [ObservableProperty]
+        string appUserId;
+
+        [ObservableProperty]
         ObservableCollection<Person> peopleCollection;
+
+        [ObservableProperty]
+        ObservableCollection<ExpenseWithPerson> relatedExpenseDebtsCollection;
 
         public PeoplePageViewModel()
         {
             Title = "Friends";
             filterParams = new Dictionary<string, string> { { "searchTerm", "" }, { "isDeleted" , "false" } };
+            AppUserId = App._settings["userId"];
             RefreshPeopleList();
             InitUpdateOverallTallyAmount();
         }
@@ -75,6 +82,7 @@ namespace finwise.maui.ViewModels
             {
                 currentIndex = App._bvm.People.IndexOf((Person)obj);
                 CurrentIndexPerson = App._bvm.People[currentIndex];
+                RelatedExpenseDebtsCollection = new ObservableCollection<ExpenseWithPerson>();
                 await Shell.Current.Navigation.PushModalAsync(new PersonDetailPage(this), true);
             }
         }
@@ -138,6 +146,42 @@ namespace finwise.maui.ViewModels
             }
 
             IsBusy = false;
+        }
+
+        public class ExpenseWithPerson
+        {
+            public Expense expense { get; set; }
+            public ExpenseDebt debt { get; set; }
+            public bool owesYou { get; set; }
+        }
+
+        public ObservableCollection<ExpenseWithPerson> FetchRelatedExpenses()
+        {
+            var result = new ObservableCollection<ExpenseWithPerson>();
+
+            var userId = App._settings["userId"];
+
+            if(CurrentIndexPerson is not null)
+            {
+                foreach (var expense in App._bvm.Expenses)
+                {
+                    var relatedExpenseDebt = expense.expenseDebts.FirstOrDefault(es => (es.fromPersonId == userId || es.fromPersonId == CurrentIndexPerson.id) && (es.toPersonId == userId || es.toPersonId == CurrentIndexPerson.id));
+
+                    if (relatedExpenseDebt != null)
+                    {
+                        var expenseWithPerson = new ExpenseWithPerson
+                        {
+                            expense = expense,
+                            debt = relatedExpenseDebt,
+                            owesYou = relatedExpenseDebt.toPersonId == userId
+                        };
+                        result.Add(expenseWithPerson);
+                    }
+                }
+            }
+
+            return result;
+
         }
     }
 }

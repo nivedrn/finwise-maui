@@ -76,8 +76,8 @@
                         <Label Text="{Binding BudgetProgressDetails[3]}" HorizontalOptions="Center" FontFamily="NunitoBold" FontSize="Small"/>
                     </HorizontalStackLayout>
                 </FlexLayout>
-                <Frame CornerRadius="50" Padding="0" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Margin="10,0">
-                    <Label Text="{Binding BudgetProgressStatusCode}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoRegular" FontSize="Small" HorizontalOptions="Center" Margin="0,10,0,15"/>
+                <Frame CornerRadius="50" Padding="0" IsVisible="{Binding ShowBudgetStatusMessage}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Margin="10,0">
+                    <Label Text="{Binding BudgetProgressStatus}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoRegular" FontSize="Small" HorizontalOptions="Center" Margin="0,10,0,15"/>
                 </Frame>
                 
             </VerticalStackLayout>

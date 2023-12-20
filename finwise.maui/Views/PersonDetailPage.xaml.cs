@@ -10,6 +10,7 @@ public partial class PersonDetailPage : ContentPage
     {
         InitializeComponent();
         this.BindingContext = this.peoplePageVM = vmReference;
+        relatedExpenseDebtsCollection.ItemsSource = peoplePageVM.FetchRelatedExpenses();
     }
 
     void OnSwiped(object sender, SwipedEventArgs e)
