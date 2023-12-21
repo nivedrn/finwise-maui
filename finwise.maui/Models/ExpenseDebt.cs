@@ -12,6 +12,7 @@ namespace finwise.maui.Models
         public string toPersonId { get; set;}
         public decimal debtAmount { get; set; }
         public bool debtSettled { get; set; }
+        public bool isSettlement { get; set; }
 
         public ExpenseDebt() { }
     }

@@ -32,19 +32,19 @@
                 </HorizontalStackLayout>
             </FlexLayout>
 
-            <Frame Padding="15,25,15,15" Margin="10,0" CornerRadius="5" Grid.Row="2" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
+            <Frame Padding="15,25,15,12" Margin="10,0" CornerRadius="5" Grid.Row="2" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
                 <VerticalStackLayout>
-                    <Label HeightRequest="40" HorizontalOptions="Center" FontSize="Large" Text="{Binding CurrentIndexPerson.name}" />
+                    <Label HeightRequest="35" HorizontalOptions="Center" FontSize="Large" Text="{Binding CurrentIndexPerson.name}" />
                     
-                    <HorizontalStackLayout HorizontalOptions="Center" Margin="0,5,10,5" VerticalOptions="Center">
-                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" IsVisible="{Binding CurrentIndexPerson.owesYou}" Text="Owes" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
-                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou}" Text=" You " TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
-                        <Label HorizontalOptions="Center" Padding="0,0,0,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="You" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
-                        <Label HorizontalOptions="Center" Padding="0,0,0,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoMedium" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text=" owe " TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Margin="0,0,0,0" VerticalOptions="Center">
+                        <Label HorizontalOptions="Center" Padding="0,0,5,0" VerticalOptions="Center" FontSize="Small" FontFamily="NunitoMedium" IsVisible="{Binding CurrentIndexPerson.owesYou}" Text="Owes" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                        <Label HorizontalOptions="Center" Padding="0,0,5,0" VerticalOptions="Center" FontSize="Small" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou}" Text="You" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                        <Label HorizontalOptions="Center" Padding="0,0,5,0" VerticalOptions="Center" FontSize="Small" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="You" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                        <Label HorizontalOptions="Center" Padding="0,0,5,0" VerticalOptions="Center" FontSize="Small" FontFamily="NunitoMedium" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="owe" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
 
-                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="{Binding CurrentIndexPerson.name}" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
+                        <Label HorizontalOptions="Center" Padding="0,0,5,0" VerticalOptions="Center" FontSize="Small" FontFamily="NunitoSemiBold" IsVisible="{Binding CurrentIndexPerson.owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="{Binding CurrentIndexPerson.name}" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource Gray300}}"/>
 
-                        <Label HorizontalOptions="Center" Padding="0,0,10,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" Text="{Binding CurrentIndexPerson.talliedAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource Gray300}}"/>    
+                        <Label HorizontalOptions="Center" Padding="0,0,5,0" VerticalOptions="Center" FontSize="Small" FontFamily="NunitoSemiBold" Text="{Binding CurrentIndexPerson.talliedAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource Gray300}}"/>    
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Frame>

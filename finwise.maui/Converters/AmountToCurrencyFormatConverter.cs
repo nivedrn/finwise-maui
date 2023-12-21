@@ -16,6 +16,11 @@ namespace finwise.maui.Converters
                 return $"{App._settings["currentCurrencySymbol"]} {amount.ToString("0.00")}";
             }
 
+            if (value is string amountString)
+            {
+                return $"{App._settings["currentCurrencySymbol"]} {amountString}";
+            }
+
             return value.ToString();
         }
 

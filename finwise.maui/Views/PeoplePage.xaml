@@ -10,14 +10,36 @@
 
     <ContentPage.Resources>
         <DataTemplate x:Name="SortAndFilterSheet" x:Key="SortAndFilterSheet">
-            <Grid RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
+            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG} }" RowDefinitions="35,auto,*,*" ColumnDefinitions="*" Padding="10">
                 <FlexLayout Grid.Row="0" JustifyContent="SpaceBetween">
-                    <Button CornerRadius="3" FontSize="Micro" Padding="6,2,6,2" WidthRequest="70" HorizontalOptions="Center" HeightRequest="30" Text="Clear All" Clicked="ClearAllFilters" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource Gray900}}"/>
-                    <Label FontSize="Medium" HorizontalOptions="Center" Text="{Binding SheetTitle}"/>
+                    <ImageButton x:Name="ClearAllFilters"  VerticalOptions="Start" Source="{AppThemeBinding Light=clearfilter.png,Dark=clearfilter.png}" Clicked="ClearAllFilters" Margin="2,0,0,0" Padding="0,3,0,3" HeightRequest="30" ToolTipProperties.Text="Clear All Filters"/>
+                    <Label FontSize="Medium" HorizontalOptions="Center" FontFamily="NunitoSemiBold" VerticalOptions="Start" Text="Sort &amp; Filter"/>
+                    <ImageButton x:Name="ApplyFilters"  VerticalOptions="Start" Source="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Clicked="ApplyFilters_Clicked" Margin="2,0,0,0" Padding="0,3,0,3" HeightRequest="35" ToolTipProperties.Text="Apply Selections"/>
                 </FlexLayout>
                 <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource WhiteCardBG}"/>
-                <Label Grid.Row="2" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
-                <Label Grid.Row="3" HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Sort By"/>
+                <VerticalStackLayout Grid.Row="2" Padding="0,10,0,20">
+                    <Label Margin="2" Padding="2" FontSize="Small" HorizontalOptions="Start" Text="Filter By" FontFamily="NunitoRegular" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkDefaultText}}"/>
+                    <Frame Padding="0" Margin="2,0" CornerRadius="5" Grid.Row="2" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
+                        <VerticalStackLayout Padding="10,0">
+                            <RadioButton Content="All" IsChecked="{Binding FilterParams[showAll], Converter={StaticResource StringToBoolConverter}}" GroupName="filterRadioGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Owes You" IsChecked="{Binding FilterParams[showIfOwesYou], Converter={StaticResource StringToBoolConverter}}" GroupName="filterRadioGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="You Owe" IsChecked="{Binding FilterParams[showIfYouOwe], Converter={StaticResource StringToBoolConverter}}" GroupName="filterRadioGroup" FontFamily="NunitoRegular" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Row="3" Padding="0,0,0,30">
+                    <Label Margin="2" Padding="2" FontSize="Small" HorizontalOptions="Start" Text="Sort By" FontFamily="NunitoRegular" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkDefaultText}}"/>
+                    <Frame Padding="0" Margin="2,0" CornerRadius="5" Grid.Row="2" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
+                        <VerticalStackLayout Padding="10,0">
+                            <RadioButton Content="Created Date (New to Old)" IsChecked="{Binding FilterParams[sortByCreatedDateDesc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Created Date (Old to New)" IsChecked="{Binding FilterParams[sortByCreatedDateAsc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Amount (Lowest to Highest)" IsChecked="{Binding FilterParams[sortByAmountAsc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Amount (Highest to Lowest)" IsChecked="{Binding FilterParams[sortByAmountDesc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Name (A to Z)" IsChecked="{Binding FilterParams[sortByNameAsc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Name (Z to A)" IsChecked="{Binding FilterParams[sortByNameDesc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
             </Grid>
         </DataTemplate>
 
@@ -41,17 +63,21 @@
             <conv:BooleanNegationConverter x:Key="BooleanNegationConverter" />
             <conv:AmountToCurrencyFormatConverter x:Key="AmountToCurrencyFormatConverter" />
             <conv:BoolToRedGreenColorConverter x:Key="BoolToRedGreenColorConverter" />
+            <conv:StringToBoolConverter x:Key="StringToBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
-            <Grid RowDefinitions="30,80,auto,auto" ColumnDefinitions="*,auto,auto">
+            <Grid RowDefinitions="30,50,auto,auto" ColumnDefinitions="*,auto,auto">
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="0" Grid.ColumnSpan="3">
                 <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" />
             </FlexLayout>
 
             <BoxView Margin="0,8,0,0" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
-            <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding TalliedAmountSummary}" FontSize="Medium" FontFamily="NunitoRegular" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Margin="0,8,0,0" Text="{Binding TalliedAmountSummary[message]}" FontSize="Small" FontFamily="NunitoRegular" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Margin="0,8,0,0" Text="{Binding TalliedAmountSummary[amount]}" TextColor="{Binding TalliedAmountSummary[isOwedToUser], Converter={StaticResource BoolToRedGreenColorConverter}}" FontSize="Small" FontFamily="NunitoSemiBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
 
             <BoxView Margin="0,15,0,0" CornerRadius="5" Grid.Row="2" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
             <SearchBar Margin="0,15,0,0" x:Name="searchInput" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1"  HeightRequest="40" FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" Placeholder="Search by name" TextChanged="OnSearchTextChanged" MaxLength="100" />
@@ -81,15 +107,16 @@
                 </ImageButton>
                 </Border>
             </FlexLayout>
-            
+
             <VerticalStackLayout Margin="0,5" Grid.Row="3" Grid.ColumnSpan="3">
+                <Label Padding="5,10,0,0" HorizontalOptions="Center" Text="Showing Filtered Results" IsVisible="{Binding IsFilteredResults}" FontSize="Caption" FontFamily="NunitoLight"/>
                 <CollectionView x:Name="peopleCollectionView" ItemsSource="{Binding PeopleCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenPersonDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference peopleCollectionView}}" EmptyView="No friends added.">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid RowDefinitions="70" ColumnDefinitions="auto,*,100" Margin="0,0,0,1">
+                            <Grid RowDefinitions="70" ColumnDefinitions="auto,*,auto" Margin="0,0,0,1">
                                 <BoxView CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource WhiteListBG}, Dark={StaticResource DarkCardAltBG}}"/>
                                 <!--<Image Margin="20,0,10,0" HeightRequest="20" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="user.png">
                                     <Image.Behaviors>
@@ -97,11 +124,24 @@
                                     </Image.Behaviors>
                                 </Image>-->
                                 <Label Padding="20,0,10,0" FontSize="Medium" FontFamily="NunitoSemiBold" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Start" Text="{Binding name}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" />
-                                <FlexLayout Direction="Column" Grid.Column="2" VerticalOptions="Center">
+
+                                <FlexLayout Direction="Column" Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding hasDebts, Converter={StaticResource BooleanNegationConverter}}">
+                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Caption" FontFamily="NunitoMedium" IsVisible="{Binding owesYou}" Text="no expenses" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Caption" FontFamily="NunitoMedium" IsVisible="{Binding owesYou}" Text="with you" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                </FlexLayout>
+
+                                <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" IsVisible="{Binding hasDebts}">
+                                    <FlexLayout Direction="Column"  IsVisible="{Binding isSettledUp, Converter={StaticResource BooleanNegationConverter}}" >
                                     <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou}" Text="owes you" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
                                     <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Micro" FontFamily="NunitoMedium" IsVisible="{Binding owesYou, Converter={StaticResource BooleanNegationConverter}}" Text="you owe" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
                                     <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Medium" FontFamily="NunitoSemiBold" Text="{Binding talliedAmount, Converter={StaticResource AmountToCurrencyFormatConverter}}" TextColor="{Binding owesYou, Converter={StaticResource BoolToRedGreenColorConverter}}"/>
-                                </FlexLayout>
+
+                                    </FlexLayout>
+                                    <FlexLayout Direction="Column" IsVisible="{Binding isSettledUp}" >
+                                        <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Caption" FontFamily="NunitoMedium" Text="all settled up" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                        <Label HorizontalOptions="End" Padding="0,0,20,0" VerticalOptions="Center" FontSize="Caption" FontFamily="NunitoMedium" Text="with you" TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+                                    </FlexLayout>
+                                </VerticalStackLayout>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

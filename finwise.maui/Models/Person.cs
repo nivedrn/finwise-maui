@@ -14,14 +14,15 @@ namespace finwise.maui.Models
         public string phoneNo { get; set; }
 
         public bool owesYou { get; set; }
+        public bool hasDebts { get; set; }
+        public bool isSettledUp { get; set; }
         public decimal talliedAmount { get; set; }
-
-        public string state { get; set; }
 
         public Person()
         {
-            state = "No expenses";
-            owesYou = false;
+            owesYou = true;
+            hasDebts = false;
+            isSettledUp = false;
             talliedAmount = 0;
             isDeleted = false;
         }

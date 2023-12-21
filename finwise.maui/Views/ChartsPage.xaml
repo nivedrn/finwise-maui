@@ -31,7 +31,7 @@
             <BoxView Grid.Row="1" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
 
             <FlexLayout JustifyContent="SpaceBetween" Grid.Row="2">
-                <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" />
+                
             </FlexLayout>
         </Grid>
 

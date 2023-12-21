@@ -57,7 +57,14 @@ public partial class HomePage : ContentPage, IDisposable
     {
         expenseCollectioView.SelectedItem = null;
         searchInput.Text = "";
-        expenseCollectioView.ItemsSource = homePageVM.localBVM.Expenses;
+        homePageVM.ResetFilterParams();
+        expenseCollectioView.ItemsSource = homePageVM.RefreshExpenseList();
+        bottomSheet?.CloseBottomSheet();
+    }
+
+    private void ApplyFilters_Clicked(object sender, EventArgs e)
+    {
+        expenseCollectioView.ItemsSource = homePageVM.RefreshExpenseList();
         bottomSheet?.CloseBottomSheet();
     }
 

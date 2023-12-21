@@ -36,8 +36,8 @@
                     </FlexLayout>
                 </HorizontalStackLayout>
             </FlexLayout>
-            
-            <Label Grid.Row="1" FontSize="Medium" Padding="5,10,0,4" Margin="10,20,10,0" FontAttributes="Bold" Text="My Profile" FontFamily="NunitoBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkTextSubHeader}}" />
+
+            <Label Grid.Row="1" FontSize="Medium" Padding="5,10,0,4" Margin="10,20,10,0" FontAttributes="Bold" Text="My Profile" FontFamily="NunitoSemiBold" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkTextSubHeader}}" />
             <BoxView Grid.Row="2" CornerRadius="5" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
             <VerticalStackLayout Grid.Row="2" Margin="10,0" Padding="10,0,10,5" >
                 <FlexLayout JustifyContent="SpaceBetween" Wrap="NoWrap" >

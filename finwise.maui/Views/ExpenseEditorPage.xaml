@@ -83,7 +83,7 @@
 
             <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" IsVisible="{Binding ShareUpdated, Converter={StaticResource BooleanNegationConverter}}" >
                 <Label Text="Do you want to " FontSize="Small" FontFamily="NunitoRegular" VerticalOptions="Center"/>
-                <Button x:Name="ShareExpense" Margin="10,10" CornerRadius="3" FontSize="Small" FontFamily="NunitoSemiBold" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
+                <Button x:Name="SplitExpenseButton" Margin="10,10" CornerRadius="3" FontSize="Small" FontFamily="NunitoSemiBold" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="SplitExpenseButton_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
                     <Button.Shadow>
                         <Shadow Brush="{StaticResource DarkButtonGray}" 
                         Offset="0,5"
@@ -96,7 +96,7 @@
 
             <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" IsVisible="{Binding ShareUpdated}" >
                 <Label Text="Paid by" FontSize="Small" VerticalOptions="Center"/>
-                <Button x:Name="ExpensePaidBy" Margin="10,10" CornerRadius="3" FontSize="Small" FontFamily="NunitoSemiBold" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="Split Expense" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
+                <Button x:Name="ExpensePaidByButton" Margin="10,10" CornerRadius="3" FontSize="Small" FontFamily="NunitoSemiBold" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="{Binding PaidByButtonLabel}" Clicked="ExpensePaidByButton_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
                     <Button.Shadow>
                         <Shadow Brush="{StaticResource DarkButtonGray}" 
                         Offset="0,5"
@@ -105,7 +105,7 @@
                     </Button.Shadow>
                 </Button>
                 <Label Text="and split" FontSize="Small" VerticalOptions="Center"/>
-                <Button x:Name="ExpenseShares" Margin="10,10" CornerRadius="3" FontSize="Small" FontFamily="NunitoSemiBold" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="{Binding ExpenseItem.shareType}" Clicked="ShareExpense_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
+                <Button x:Name="ExpenseSharesButton" Margin="10,10" CornerRadius="3" FontSize="Small" FontFamily="NunitoSemiBold" Padding="10,2,10,2" HorizontalOptions="Center" HeightRequest="30" Text="{Binding ExpenseItem.shareType}" Clicked="ExpenseSharesButton_Clicked" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
                     <Button.Shadow>
                         <Shadow Brush="{StaticResource DarkButtonGray}" 
                             Offset="0,5"

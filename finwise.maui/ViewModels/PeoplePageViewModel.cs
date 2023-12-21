@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using finwise.maui.Helpers;
 using finwise.maui.Models;
@@ -25,8 +26,11 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         Person currentIndexPerson;
 
+        //[ObservableProperty]
+        //string talliedAmountSummary;
+
         [ObservableProperty]
-        string talliedAmountSummary;
+        Dictionary<string,string> talliedAmountSummary;
 
         [ObservableProperty]
         bool isTallyAmountOwedToYou;
@@ -38,6 +42,9 @@ namespace finwise.maui.ViewModels
         string appUserId;
 
         [ObservableProperty]
+        bool isFilteredResults;
+
+        [ObservableProperty]
         ObservableCollection<Person> peopleCollection;
 
         [ObservableProperty]
@@ -46,16 +53,39 @@ namespace finwise.maui.ViewModels
         public PeoplePageViewModel()
         {
             Title = "Friends";
-            filterParams = new Dictionary<string, string> { { "searchTerm", "" }, { "isDeleted" , "false" } };
             AppUserId = App._settings["userId"];
+            FilterParams = new Dictionary<string, string>();
+            TalliedAmountSummary = new Dictionary<string, string>();
+
+            TalliedAmountSummary["message"] = "";
+            TalliedAmountSummary["amount"] = "";
+            TalliedAmountSummary["isOwedToUser"] = "false";
+
+            ResetFilterParams();
             RefreshPeopleList();
-            InitUpdateOverallTallyAmount();
         }
 
         public void Init()
         {
             peopleCount = App._bvm.People.Count;
 
+        }
+
+        public void ResetFilterParams()
+        {
+            FilterParams["searchTerm"] = "";
+            FilterParams["isDeleted"] = "false";
+            FilterParams["showAll"] = "true";
+            FilterParams["showIfOwesYou"] = "false";
+            FilterParams["showIfYouOwe"] = "false";
+            FilterParams["sortByCreatedDateAsc"] = "false";
+            FilterParams["sortByCreatedDateDesc"] = "true";
+            FilterParams["sortByAmountAsc"] = "false";
+            FilterParams["sortByAmountDesc"] = "false";
+            FilterParams["sortByNameAsc"] = "false";
+            FilterParams["sortByNameDesc"] = "false";
+            FilterParams["isFiltered"] = "false";
+            IsFilteredResults = false;
         }
 
         public void AddNewPerson(string name)
@@ -89,16 +119,55 @@ namespace finwise.maui.ViewModels
 
         public void RefreshPeopleList()
         {
-            var results = App._bvm.People;
-
-            if (this.FilterParams["isDeleted"] != "true")
-            {
-                results = new ObservableCollection<Person>(results.Where(exp => !exp.isDeleted)?.ToList());
-            }
+            IsFilteredResults = false;
+            var results = new ObservableCollection<Person>(App._bvm.People);
 
             if (this.FilterParams["searchTerm"] != "")
             {
-                results =  new ObservableCollection<Person>(results.Where(exp => exp.name.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase))?.ToList());
+                IsFilteredResults = true;
+                results = results.Where(exp => exp.name.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase)).ToObservableCollection();
+            }
+
+            if (bool.Parse(FilterParams["showIfYouOwe"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => !exp.owesYou).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["showIfOwesYou"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp.owesYou).ToObservableCollection();
+            }
+
+            if (bool.Parse(FilterParams["sortByCreatedDateAsc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderBy(item => item.createdDate).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByCreatedDateDesc"]))
+            {
+                results = results.Where(exp => exp != null).OrderByDescending(item => item.createdDate).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByAmountAsc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderBy(item => item.talliedAmount).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByAmountDesc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderByDescending(item => item.talliedAmount).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByNameAsc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderBy(item => item.name).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByNameDesc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderByDescending(item => item.name).ToObservableCollection();
+
             }
 
             InitUpdateOverallTallyAmount();
@@ -118,31 +187,74 @@ namespace finwise.maui.ViewModels
         public void UpdateOverallTallyAmount()
         {
             decimal totalTalliedAmount = 0;
+            bool hasSharedExpenses = false;
+            bool allExpensesSettled = true;
+            TalliedAmountSummary = new Dictionary<string, string>();
+            TalliedAmountSummary["message"] = "";
+            TalliedAmountSummary["amount"] = "";
+            TalliedAmountSummary["isOwedToUser"] = "false";
+
             foreach (Person prsn in App._bvm.People)
             {
-                var debtTotalWithUser = App._bvm.Expenses
+                var debtsWithUser = App._bvm.Expenses
                                         .SelectMany(expense => expense.expenseDebts)
-                                        .Where(debt => debt.fromPersonId == prsn.id || debt.toPersonId == prsn.id)
-                                        .Sum(debt => debt.fromPersonId == prsn.id ? debt.debtAmount : -debt.debtAmount);
+                                        .Where(debt => debt.fromPersonId == prsn.id || debt.toPersonId == prsn.id).ToList();
 
-                prsn.talliedAmount = debtTotalWithUser;
-                prsn.owesYou = debtTotalWithUser > 0;
-                totalTalliedAmount += debtTotalWithUser;
+                if(debtsWithUser.Count > 0)
+                {
+                    var debtTotalWithUser = debtsWithUser.Sum(debt => debt.fromPersonId == prsn.id ? debt.debtAmount : -debt.debtAmount);
+
+                    hasSharedExpenses = true;
+
+                    prsn.hasDebts = true;
+                    prsn.isSettledUp = true;
+
+                    if (debtTotalWithUser != 0)
+                    {
+                        allExpensesSettled = false;
+                        prsn.isSettledUp = false;
+                        prsn.owesYou = debtTotalWithUser >= 0;
+                        totalTalliedAmount += debtTotalWithUser;
+
+                        if (debtTotalWithUser < 0) debtTotalWithUser *= -1;
+                    }
+
+                    prsn.talliedAmount = debtTotalWithUser;
+                }
+                else
+                {
+                    prsn.talliedAmount = 0;
+                    prsn.owesYou = true;
+                    prsn.hasDebts = false;
+                    prsn.isSettledUp = false;
+                }
             }
 
-            if (totalTalliedAmount > 0)
+            if (hasSharedExpenses)
             {
-                TalliedAmountSummary = $"Overall you are owed {App._settings["currentCurrencySymbol"]} {totalTalliedAmount}";
+                if (totalTalliedAmount > 0)
+                {
+                    TalliedAmountSummary["message"] = $"Overall, you are owed ";
+                    TalliedAmountSummary["amount"] = $"{App._settings["currentCurrencySymbol"]} {totalTalliedAmount.ToString("0.00")}";
+                    TalliedAmountSummary["isOwedToUser"] = "true";
 
-            }else if (totalTalliedAmount < 0)
-            {
-                totalTalliedAmount *= -1;
-                TalliedAmountSummary = $"Overall you owe {App._settings["currentCurrencySymbol"]} {totalTalliedAmount}";
+                }
+                else if (totalTalliedAmount < 0)
+                {
+                    totalTalliedAmount *= -1;
+                    TalliedAmountSummary["message"] = $"Overall, you owe ";
+                    TalliedAmountSummary["amount"] = $"{App._settings["currentCurrencySymbol"]} {totalTalliedAmount.ToString("0.00")}";
+                    TalliedAmountSummary["isOwedToUser"] = "false";
+                }
+                else
+                {
+                    TalliedAmountSummary["message"] = $"Looks Good! All expenses are all settled up.";
+                }
+
             }
             else
             {
-                totalTalliedAmount *= -1;
-                TalliedAmountSummary = $"Looks Good! You are all settled up.";
+                TalliedAmountSummary["message"] = $"No shared expenses created.";
             }
 
             IsBusy = false;

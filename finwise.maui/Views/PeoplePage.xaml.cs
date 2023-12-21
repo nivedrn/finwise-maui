@@ -35,6 +35,7 @@ public partial class PeoplePage : ContentPage
         Debug.WriteLine("On Appearing: PeoplePage");
         peopleCollectionView.SelectedItem = null;
         peoplePageVM.RefreshPeopleList();
+        peoplePageVM.InitUpdateOverallTallyAmount();
     }
 
     public async void AddPerson(object sender, EventArgs e)
@@ -64,6 +65,8 @@ public partial class PeoplePage : ContentPage
     {
         peopleCollectionView.SelectedItem = null;
         searchInput.Text = "";
+        peoplePageVM.ResetFilterParams();
+        peoplePageVM.RefreshPeopleList();
         //peopleCollectionView.ItemsSource = peoplePageVM.localBVM.People;
         bottomSheet?.CloseBottomSheet();
     }
@@ -91,5 +94,11 @@ public partial class PeoplePage : ContentPage
 #if !WINDOWS
         bottomSheet?.Dispose();
 #endif
+    }
+
+    private void ApplyFilters_Clicked(object sender, EventArgs e)
+    {
+        peoplePageVM.RefreshPeopleList();
+        bottomSheet?.CloseBottomSheet();
     }
 }

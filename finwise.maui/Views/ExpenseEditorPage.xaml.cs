@@ -51,13 +51,19 @@ public partial class ExpenseEditorPage : ContentPage
         base.OnNavigatedFrom(args);
     }
 
-    private async void ShareExpense_Clicked(object sender, EventArgs e)
+    private async void SplitExpenseButton_Clicked(object sender, EventArgs e)
     {
-        //bottomSheet = this.ShowBottomSheet(GetSharedExpenseBottomSheetView(), true);
-        //await Shell.Current.GoToAsync("ExpenseSplitPage");
+        await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM, 0), false);
+    }
 
-        Debug.WriteLine(expenseEditorVM.GetHashCode());
-        await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM), false);
+    private async void ExpensePaidByButton_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM, 1), false);
+    }
+
+    private async void ExpenseSharesButton_Clicked(object sender, EventArgs e)
+    {
+        await Shell.Current.Navigation.PushModalAsync(new ExpenseSplitPage(expenseEditorVM, 2), false);
     }
 
     private void repeatExpensePicker_SelectedIndexChanged(object sender, EventArgs e)
@@ -111,6 +117,8 @@ public partial class ExpenseEditorPage : ContentPage
                 message += "You must enter an amount greater than 0.\n";
             }
 
-            await DisplayAlert("Cannot create Expense.", message, "OK");        }
+            await DisplayAlert("Cannot save Expense.", message, "OK");        
+        }
     }
+
 }

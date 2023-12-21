@@ -47,7 +47,7 @@
                 <NavigationPage.TitleView>
                     <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
                         <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
-                        <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
+                        <Button x:Name="SaveExpenseSplit1" Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Clicked="SaveExpenseSplit_Clicked"/>
                     </FlexLayout>
                 </NavigationPage.TitleView>
                 <Grid RowDefinitions="auto,auto" Margin="10" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
@@ -131,7 +131,7 @@
                 <NavigationPage.TitleView>
                     <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
                         <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
-                        <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
+                        <Button  x:Name="SaveExpenseSplit2" Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Clicked="SaveExpenseSplit_Clicked"/>
                     </FlexLayout>
                 </NavigationPage.TitleView>
                 <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
@@ -184,27 +184,17 @@
                 <NavigationPage.TitleView>
                     <FlexLayout JustifyContent="SpaceBetween" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
                         <Button Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModalCommand}"/>
-                        <Button Padding="10,0" Margin="0,0,10,0" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Command="{Binding SaveExpenseSplitCommand}"/>
+                        <Button Padding="10,0" Margin="0,0,10,0" x:Name="SaveExpenseSplit3" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}" ImageSource="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Clicked="SaveExpenseSplit_Clicked"/>
                     </FlexLayout>
                 </NavigationPage.TitleView>
                 <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkCardAltBG}}">
-                    <FlexLayout JustifyContent="SpaceBetween">
-                        <VerticalStackLayout VerticalOptions="Center">
-                            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,0,0">
-                                <Label Text="{Binding TempExpenseSplitTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5" TextColor="{Binding IsShareTallyValid, Converter={StaticResource BoolToColorConverter}}"/>
-                                <Label Text=" of " FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
-                                <Label Text="{Binding ExpenseItem.amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                        <Button  x:Name="expenseSplitTypeButton" Clicked="expenseSplitTypeButton_Clicked" Margin="10,10" CornerRadius="3" FontSize="Small" Padding="10,2,10,2" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="30" Text="Split Equally" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkCardBG}}">
-                            <Button.Shadow>
-                                <Shadow Brush="{StaticResource DarkButtonGray}" 
-                                    Offset="0,5"
-                                    Radius="4"
-                                    Opacity="0.5"/>
-                            </Button.Shadow>
-                        </Button>
-                    </FlexLayout>
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="20,0,0,0">
+                            <Label Text="{Binding TempExpenseSplitTotal, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5" TextColor="{Binding IsShareTallyValid, Converter={StaticResource BoolToColorConverter}}"/>
+                            <Label Text=" of " FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                            <Label Text="{Binding ExpenseItem.amount, Converter={StaticResource AmountToCurrencyFormatConverter}}" FontSize="Medium" HorizontalOptions="Center" Margin="0,20,0,5"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
                     <Frame Padding="5" Margin="10,0" MinimumHeightRequest="300" CornerRadius="5" Grid.Row="1" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
                         <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}">
                             <VerticalStackLayout>

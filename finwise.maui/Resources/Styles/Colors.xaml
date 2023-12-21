@@ -11,12 +11,13 @@
     <Color x:Key="WhiteTabBarBG">#e0d9d4</Color>
     <Color x:Key="WhitePageBG">#f0e9e5</Color>
     <Color x:Key="WhiteCardBG">#e4dcd8</Color>
+    <Color x:Key="WhiteCardAltBG">#e4dcd8</Color>
     <Color x:Key="WhiteHighlightText">#1b1d20</Color>
     <Color x:Key="WhiteDefaultText">#2b292e</Color>
     <Color x:Key="WhiteDimmedText">#727075</Color>
     <Color x:Key="WhiteButtonIcons">#2b292e</Color>
     <Color x:Key="WhiteListIcons">#727075</Color>
-    <Color x:Key="WhiteListBG">#e4dcd8</Color>
+    <Color x:Key="WhiteListBG">#ECE5E1</Color>
     <Color x:Key="WhiteButtonBG">#e0d9d4</Color>
     <Color x:Key="WhiteProgressBar">#727075</Color>
     <Color x:Key="WhiteTabBarUnselected">#727075</Color>
@@ -45,7 +46,7 @@
     <Color x:Key="DarkTextDimmedALT">#b5b5b6</Color>
 
     <Color x:Key="DarkHighlightGreen">#8ba9a2</Color>
-    <Color x:Key="DarkHighlightBlue">#5286aa</Color>
+    <Color x:Key="DarkHighlightBlue">#3E4F8A</Color>
     <Color x:Key="DarkHighlightPurple">#a67ed6</Color>
     <Color x:Key="DarkHighlightDarkPurple">#38264c</Color>
 

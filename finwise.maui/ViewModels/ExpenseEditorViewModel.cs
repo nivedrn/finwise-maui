@@ -55,7 +55,15 @@ namespace finwise.maui.ViewModels
         [ObservableProperty]
         public decimal tempExpenseSplitTotal;
 
+        [ObservableProperty]
+        public string paidByButtonLabel;
+
+        [ObservableProperty]
+        public string expenseSplitValidationMessage;
+
         public int currentIndex {  get; set; }
+
+        public bool forceEqualSplit { get; set; }   
         
         public ExpenseEditorViewModel(Expense expense)
         {
@@ -95,6 +103,8 @@ namespace finwise.maui.ViewModels
 
         public async void SaveExpense()
         {
+            RecalculateSplit();
+
             if (!IsEditMode)
             {
                 this.ExpenseItem.createdDate = DateTime.Now;
@@ -110,21 +120,18 @@ namespace finwise.maui.ViewModels
             await Shell.Current.Navigation.PopModalAsync();
         }
 
-        [RelayCommand]
-        private async Task SaveExpenseSplit()
+        public async void SaveExpenseSplit()
         {
-            if (ValidateSplit())
-            {
-                this.ExpenseItem.expenseShares = tempExpenseShares.ToList();
-                this.ExpenseItem.expenseDebts = tempExpenseDebts.ToList();
+            RecalculateSplit();
+            this.ExpenseItem.expenseShares = tempExpenseShares.ToList();
+            this.ExpenseItem.expenseDebts = tempExpenseDebts.ToList();
 
-                if(this.ExpenseItem.expenseShares.Count > 0)
-                {
-                    this.ExpenseItem.isShared = true;
-                }
-                await Shell.Current.Navigation.PopModalAsync();
-                ShareUpdated = true;
+            if (this.ExpenseItem.expenseShares.Count > 0)
+            {
+                this.ExpenseItem.isShared = true;
             }
+            await Shell.Current.Navigation.PopModalAsync();
+            ShareUpdated = true;
         }
 
         public ObservableCollection<Person> RefreshPeopleList(string searchTerm, bool showAll = false)
@@ -175,14 +182,18 @@ namespace finwise.maui.ViewModels
 
             foreach (ExpenseShare share in tempExpenseShares)
             {
-                if (share.paidAmount > 0) share.hasPaid = true;
+                share.hasPaid = share.paidAmount > 0 ?  true: false;
                 if (share.shareAmount > 0) share.hasShare = true;
+
+                if (share.shareAmount < 0) share.shareAmount = -share.shareAmount;
+                if (share.paidAmount < 0) share.paidAmount = -share.paidAmount;
 
                 if (share.hasShare || share.hasPaid)
                 {
-                    if (share.hasShare && ExpenseItem.shareType == "Equally")
+                    if (share.hasShare && (ExpenseItem.shareType == "Equally" || forceEqualSplit ))
                     {
                         share.shareAmount = sharedCount > 0 ? ExpenseItem.amount / sharedCount : 0;
+                        forceEqualSplit = false;
                     }
 
                     var remainingShare = share.shareAmount - share.paidAmount;
@@ -223,25 +234,46 @@ namespace finwise.maui.ViewModels
             TempSplitType = "Equally";
             IsShareTallyValid = true;
             IsPaidTallyValid = true;
+            PaidByButtonLabel = "You";
+            ExpenseSplitValidationMessage = "";
 
             decimal sharedCount = tempExpenseShares.Where(es => es.hasShare).ToList().Count;
 
-            TempPaidByTotal = tempExpenseShares.Where(es => es.hasShare || es.hasPaid).Select(es => es.paidAmount).Sum();
-            TempExpenseSplitTotal = tempExpenseShares.Where(es => es.hasShare).Select(es => es.shareAmount).Sum();
+            TempPaidByTotal = tempExpenseShares.Where(es => (es.hasShare || es.hasPaid) && es.paidAmount >= 0).Select(es => es.paidAmount).Sum();
+            TempExpenseSplitTotal = tempExpenseShares.Where(es => es.hasShare && es.shareAmount >= 0).Select(es => es.shareAmount).Sum();
 
-            decimal equallySplitShare = ExpenseItem.amount / sharedCount;
+            decimal equallySplitShare = sharedCount > 0 ? ExpenseItem.amount / sharedCount : 0;
 
             if (TempPaidByTotal != ExpenseItem.amount)
             {
                 IsValidSplit = false;
+                ExpenseSplitValidationMessage += "The paid by amounts of the group doesn't add up to the total expense amount.\n\n";
                 IsPaidTallyValid = false;
             }
             if (TempExpenseSplitTotal != ExpenseItem.amount)
             {
                 IsValidSplit = false;
+                ExpenseSplitValidationMessage += "The share amounts of the group doesn't add up to the total expense amount.\n\n";
                 IsShareTallyValid = false;
             }
 
+            var paidBy = tempExpenseShares.Where(es => es.hasPaid).ToList();
+
+            if (paidBy.Count > 1)
+            {
+                PaidByButtonLabel = $"{paidBy.Count} people";
+            }
+            else if(paidBy.Count == 1)
+            {
+                if(paidBy[0].personId == App._settings["userId"])
+                {
+                    PaidByButtonLabel = "You";
+                }
+                else
+                {
+                    PaidByButtonLabel = App._bvm.People.ToList().Find(p => p.id == paidBy[0].personId)?.name;
+                }
+            }
 
             bool isEquallySplit = tempExpenseShares.Where(es => es.hasShare && es.shareAmount != equallySplitShare).ToList().Count > 0;
 

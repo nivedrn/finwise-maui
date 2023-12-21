@@ -8,6 +8,8 @@ using finwise.maui.Views;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using static Android.Net.Wifi.WifiEnterpriseConfig;
+using CommunityToolkit.Maui.Core.Extensions;
 
 namespace finwise.maui.ViewModels
 {
@@ -37,6 +39,9 @@ namespace finwise.maui.ViewModels
         bool withinBudget;
 
         [ObservableProperty]
+        bool isFilteredResults;
+
+        [ObservableProperty]
         public List<string> budgetProgressDetails;
 
         public HomePageViewModel() {
@@ -45,12 +50,31 @@ namespace finwise.maui.ViewModels
             localBVM = App._bvm;
             IsBusy = false;
             WithinBudget = true;
-            filterParams = new Dictionary<string, string> { { "searchTerm", "" } };
+            IsFilteredResults = false;
+            FilterParams = new Dictionary<string, string>();
+            ResetFilterParams();
             BudgetProgressDetails = new List<string>()
             { "","","",""
             };
             BudgetProgressStatusCode = "DEFAULT";
             InitUpdateBudgetProgressBar();
+        }
+
+        public void ResetFilterParams()
+        {
+            FilterParams["searchTerm"] = "";
+            FilterParams["isDeleted"] = "false";
+            FilterParams["showAll"] = "true";
+            FilterParams["showIfYouOwe"] = "false";
+            FilterParams["showIfOwesYou"] = "false";
+            FilterParams["sortByExpenseDateAsc"] = "false";
+            FilterParams["sortByExpenseDateDesc"] = "false";
+            FilterParams["sortByAmountAsc"] = "false";
+            FilterParams["sortByAmountDesc"] = "false";
+            FilterParams["sortByNameAsc"] = "false";
+            FilterParams["sortByNameDesc"] = "false";
+            FilterParams["defaultSort"] = "true";
+            IsFilteredResults = false;
         }
 
         [RelayCommand]
@@ -64,12 +88,47 @@ namespace finwise.maui.ViewModels
  
         public ObservableCollection<Expense> RefreshExpenseList()
         {
+            IsFilteredResults = false;
+            var results = new ObservableCollection<Expense>(App._bvm.Expenses);
+
             if (this.FilterParams["searchTerm"] != "")
             {
-                return new ObservableCollection<Expense>(localBVM.Expenses.Where(exp => exp.description.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase))?.ToList());
+                IsFilteredResults = true;
+                results = results.Where(exp => exp.amount.ToString().Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase) || exp.description.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase) || exp.category.Contains(this.FilterParams["searchTerm"], StringComparison.OrdinalIgnoreCase)).ToObservableCollection();
             }
 
-            return new ObservableCollection<Expense>(App._bvm.Expenses); 
+            if (bool.Parse(FilterParams["sortByExpenseDateAsc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderBy(item => item.expenseDate).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByExpenseDateDesc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderByDescending(item => item.expenseDate).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByAmountAsc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderBy(item => item.amount).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByAmountDesc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderByDescending(item => item.amount).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByNameAsc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderBy(item => item.description).ToObservableCollection();
+            }
+            else if (bool.Parse(FilterParams["sortByNameDesc"]))
+            {
+                IsFilteredResults = true;
+                results = results.Where(exp => exp != null).OrderByDescending(item => item.description).ToObservableCollection();
+            }
+
+            return results; 
         }
 
         public void InitUpdateBudgetProgressBar()
@@ -117,7 +176,7 @@ namespace finwise.maui.ViewModels
             {
                 BudgetProgress = 1;
                 ShowBudgetStatusMessage = true;
-                BudgetProgressStatus = "No budget set. Please set a budget in Settings.";
+                BudgetProgressStatus = "Go to Settings to set a Budget.";
                 BudgetProgressStatusCode = "NOTIFY";
             }
 

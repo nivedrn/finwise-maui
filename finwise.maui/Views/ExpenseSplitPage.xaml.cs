@@ -10,13 +10,15 @@ public partial class ExpenseSplitPage : TabbedPage
 {
     ExpenseEditorViewModel expenseEditorVM;
     public bool firstLoad;
+    public int selectedNavIndex;
 
-    public ExpenseSplitPage(ExpenseEditorViewModel viewModel)
+    public ExpenseSplitPage(ExpenseEditorViewModel viewModel, int tabIndex = 0)
 	{
 		InitializeComponent();
         this.BindingContext = expenseEditorVM = viewModel;
 
         firstLoad = true;
+        selectedNavIndex = tabIndex;
     }
 
     protected override void OnNavigatedTo(NavigatedToEventArgs args)
@@ -28,7 +30,15 @@ public partial class ExpenseSplitPage : TabbedPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        CurrentPage = Children[1];
+
+        if(selectedNavIndex != 1)
+        {
+            CurrentPage = Children[1];
+        }
+        else
+        {
+            CurrentPage = Children[0];
+        }
 
         if (MainThread.IsMainThread)
             expenseEditorVM.RecalculateSplit();
@@ -58,7 +68,7 @@ public partial class ExpenseSplitPage : TabbedPage
     {
         if (firstLoad)
         {
-            CurrentPage = Children[0];
+            CurrentPage = Children[selectedNavIndex];
             firstLoad = false;
             selectableMembersResult.ItemsSource = expenseEditorVM.RefreshPeopleList(null, true);
             expenseEditorVM.ShowSelectableMembers = true;
@@ -66,6 +76,7 @@ public partial class ExpenseSplitPage : TabbedPage
             if(expenseEditorVM.tempExpenseShares.Count == 1)
             {
                 expenseEditorVM.tempExpenseShares[0].paidAmount = expenseEditorVM.ExpenseItem.amount;
+                expenseEditorVM.ValidateSplit();
             }
 
             var changedFocus = expenseMembersSearch.Focus();
@@ -94,28 +105,52 @@ public partial class ExpenseSplitPage : TabbedPage
 
     private async void expenseSplitTypeButton_Clicked(object sender, EventArgs e)
     {
-        string action = await DisplayActionSheet("Choose how to split the expense:", "Cancel", null, "Equally", "Unequally");
-        if(action is not null & action != "Cancel")
-        {
-            expenseEditorVM.ExpenseItem.shareType = action;
-            if (MainThread.IsMainThread)
-                expenseEditorVM.RecalculateSplit();
+        //Split Shares Equally
+        expenseEditorVM.forceEqualSplit = true;
+        if (MainThread.IsMainThread)
+            expenseEditorVM.RecalculateSplit();
 
-            else
-                MainThread.BeginInvokeOnMainThread(expenseEditorVM.RecalculateSplit);
-        }
-        
-        Debug.WriteLine("Action: " + action);
+        else
+            MainThread.BeginInvokeOnMainThread(expenseEditorVM.RecalculateSplit);
 
     }
 
     private void Entry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        expenseEditorVM.ValidateSplit();
+        expenseEditorVM.RecalculateSplit();
     }
 
-    private void expenseSplitTypePicker_SelectedIndexChanged(object sender, EventArgs e)
+    private async void SaveExpenseSplit_Clicked(object sender, EventArgs e)
     {
+        if (expenseEditorVM.ValidateSplit())
+        {
+            expenseEditorVM.SaveExpenseSplit();
+        }
+        else
+        {
+            string message = expenseEditorVM.ExpenseSplitValidationMessage;
+            if (expenseEditorVM.ExpenseItem.description == "" || expenseEditorVM.ExpenseItem.description is null) message += "You must enter a title\n";
+            if (expenseEditorVM.ExpenseItem.amount == 0)
+            {
+                message += "You must enter an amount\n";
+            }
+            else if (expenseEditorVM.ExpenseItem.amount < 0)
+            {
+                message += "You must enter an amount greater than 0.\n";
+            }
 
+            await DisplayAlert("Cannot save the split details.", message, "OK");
+
+            if (expenseEditorVM.ExpenseSplitValidationMessage.Contains("paid by"))
+            {
+                CurrentPage = Children[1];
+            }
+            else
+            {
+                CurrentPage = Children[2];
+            }
+
+
+        }
     }
 }

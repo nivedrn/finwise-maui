@@ -14,17 +14,15 @@ namespace finwise.maui.Helpers
     {
         public MyStorage(){}
 
-        public static bool toDelete = false;
         public static string Init<T>(string fileName) where T: BaseModel, new()
         {
             try
             {
                 var filepath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
 
-                if (toDelete)
+                if (!Preferences.Default.Get<bool>("RememberMe", false))
                 {
                     File.Delete(filepath);
-                    //toDelete = false;
                 }
 
                 if (!File.Exists(filepath))
@@ -103,10 +101,15 @@ namespace finwise.maui.Helpers
 
         public static Dictionary<string, string> LoadAppSettings()
         {
+            //Preferences.Default.Set("RememberMe", false); //For App Reset on everyLaunch -- UNCOMMENT FOR RELEASE
+
             var jsonString = "";
             if (Preferences.Default.ContainsKey("Settings"))
             {
-                //Preferences.Default.Set("Settings", string.Empty); //Uncomment to reset Settings
+                if (!Preferences.Default.Get<bool>("RememberMe", false))
+                {
+                    Preferences.Default.Set("Settings", string.Empty);
+                }
                 jsonString =  Preferences.Default.Get("Settings", string.Empty);
             }
 
@@ -122,7 +125,6 @@ namespace finwise.maui.Helpers
                 defaultSettings["userId"] = Guid.NewGuid().ToString();
                 defaultSettings["username"] = "User";
                 defaultSettings["monthlyBudget"] = "0";
-                defaultSettings["budgetStartDay"] = "12";
                 defaultSettings["currentCountryName"] = "Germany";
                 defaultSettings["currentCurrencyCode"] = "EUR";
                 defaultSettings["currentCurrencySymbol"] = "€";

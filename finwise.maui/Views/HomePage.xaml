@@ -15,20 +15,33 @@
     
     <ContentPage.Resources>
         <DataTemplate x:Name="SortAndFilterSheet" x:Key="SortAndFilterSheet">
-            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG} }" RowDefinitions="55,auto,*,*" ColumnDefinitions="*" Padding="10">
+            <Grid BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG} }" RowDefinitions="35,auto,*,*" ColumnDefinitions="*" Padding="10">
                 <FlexLayout Grid.Row="0" JustifyContent="SpaceBetween">
-                    <Label FontSize="Header" HorizontalOptions="Center" VerticalOptions="Center" Text="Sort &amp; Filter"/>
-                    <Button CornerRadius="3" FontSize="Micro" Padding="6,2,6,2" WidthRequest="70" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="30" Text="Clear All" Clicked="ClearAllFilters" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteButtonBG}, Dark={StaticResource DarkButtonBG}}"/>
+                    <ImageButton x:Name="ClearAllFilters"  VerticalOptions="Start" Source="{AppThemeBinding Light=clearfilter.png,Dark=clearfilter.png}" Clicked="ClearAllFilters" Margin="2,0,0,0" HeightRequest="28" ToolTipProperties.Text="Clear All Filters"/>
+                    <Label FontSize="Medium" HorizontalOptions="Center" FontFamily="NunitoSemiBold" VerticalOptions="Start" Text="Sort &amp; Filter"/>
+                    <ImageButton x:Name="ApplyFilters"  VerticalOptions="Start" Source="{AppThemeBinding Light=check1.png,Dark=check1_dark.png}" Clicked="ApplyFilters_Clicked" Margin="2,0,0,0" HeightRequest="30" ToolTipProperties.Text="Apply Selections"/>
                 </FlexLayout>
                 <BoxView Grid.Row="1" HeightRequest="1" Color="{StaticResource WhiteCardBG}"/>
-                <VerticalStackLayout Grid.Row="2">
-                    <Label  HeightRequest="100" FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Filter By"/>
-                    <DatePicker />
+                <VerticalStackLayout Grid.Row="2" Padding="0,10,0,20">
+                    <Label Margin="2" Padding="2" FontSize="Small" HorizontalOptions="Start" Text="Filter By" FontFamily="NunitoRegular" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkDefaultText}}"/>
+                    <Frame Padding="0" Margin="2,0" CornerRadius="5" Grid.Row="2" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
+                        <VerticalStackLayout Padding="10,0">
+                            <RadioButton Content="All" IsChecked="{Binding FilterParams[showAll], Converter={StaticResource StringToBoolConverter}}" GroupName="filterRadioGroup" FontFamily="NunitoRegular" />
+                        </VerticalStackLayout>
+                    </Frame>
                 </VerticalStackLayout>
-                <VerticalStackLayout Grid.Row="3">
-                    <Label FontSize="Small" TextColor="Black" HorizontalOptions="Start" Text="Sort By"/>
-                    <HorizontalStackLayout>
-                    </HorizontalStackLayout>
+                <VerticalStackLayout Grid.Row="3" Padding="0,0,0,30">
+                    <Label Margin="2" Padding="2" FontSize="Small" HorizontalOptions="Start" Text="Sort By" FontFamily="NunitoRegular" TextColor="{AppThemeBinding Light={StaticResource WhiteDimmedText}, Dark={StaticResource DarkDefaultText}}"/>
+                    <Frame Padding="0" Margin="2,0" CornerRadius="5" Grid.Row="2" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardAltBG}}">
+                        <VerticalStackLayout Padding="10,0">
+                            <RadioButton Content="Expense Date (New to Old)" IsChecked="{Binding FilterParams[sortByExpenseDateDesc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Expense Date (Old to New)" IsChecked="{Binding FilterParams[sortByExpenseDateAsc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Amount (Lowest to Highest)" IsChecked="{Binding FilterParams[sortByAmountAsc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Amount (Highest to Lowest)" IsChecked="{Binding FilterParams[sortByAmountDesc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Name (A to Z)" IsChecked="{Binding FilterParams[sortByNameAsc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                            <RadioButton Content="Name (Z to A)" IsChecked="{Binding FilterParams[sortByNameDesc], Converter={StaticResource StringToBoolConverter}}" GroupName="sortGroup" FontFamily="NunitoRegular" />
+                        </VerticalStackLayout>
+                    </Frame>
                 </VerticalStackLayout>
             </Grid>
         </DataTemplate>
@@ -54,12 +67,12 @@
             <conv:StringToColorConverter x:Key="StringToColorConverter" />
             <conv:BoolToColorConverter x:Key="BoolToColorConverter" />
             <conv:AmountToCurrencyFormatConverter x:Key="AmountToCurrencyFormatConverter" />
+            <conv:StringToBoolConverter x:Key="StringToBoolConverter" />
         </ResourceDictionary>
         
     </ContentPage.Resources>
 
-    <ScrollView Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
-        <Grid RowDefinitions="30,auto,auto,auto" ColumnDefinitions="*,auto">
+        <Grid Padding="10" RowDefinitions="30,auto,auto,auto" ColumnDefinitions="*,auto" BackgroundColor="{AppThemeBinding Light={StaticResource WhitePageBG}, Dark={StaticResource DarkPageBG}}">
             <Label x:Name="ExpensesPageTitle" Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontSize="20" FontFamily="NunitoBold" Loaded="ExpensesPageTitle_Loaded" />
             <BoxView Margin="0,10,0,15" CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}"/>
             <VerticalStackLayout Margin="0,10,0,15" Grid.Row="1">
@@ -76,8 +89,11 @@
                         <Label Text="{Binding BudgetProgressDetails[3]}" HorizontalOptions="Center" FontFamily="NunitoBold" FontSize="Small"/>
                     </HorizontalStackLayout>
                 </FlexLayout>
-                <Frame CornerRadius="50" Padding="0" IsVisible="{Binding ShowBudgetStatusMessage}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Margin="10,0">
-                    <Label Text="{Binding BudgetProgressStatus}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoRegular" FontSize="Small" HorizontalOptions="Center" Margin="0,10,0,15"/>
+                <Frame CornerRadius="0" Padding="0" IsVisible="{Binding ShowBudgetStatusMessage}" BackgroundColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" BorderColor="{AppThemeBinding Light={StaticResource WhiteCardBG}, Dark={StaticResource DarkCardBG}}" Margin="0">
+                    <HorizontalStackLayout Margin="0,0,0,10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image VerticalOptions="Center" HorizontalOptions="Center" Source="{AppThemeBinding Light=info.png,Dark=info.png}" HeightRequest="15"/>
+                        <Label Padding="5,0,0,0" Text="{Binding BudgetProgressStatus}" TextColor="{AppThemeBinding Light={StaticResource WhiteDefaultText}, Dark={StaticResource DarkDefaultText}}" FontFamily="NunitoRegular" FontSize="Caption" HorizontalOptions="Center"/>
+                    </HorizontalStackLayout>
                 </Frame>
                 
             </VerticalStackLayout>
@@ -94,7 +110,8 @@
             </FlexLayout>
 
             <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
-                <CollectionView Margin="0,5" x:Name="expenseCollectioView" ItemsSource="{Binding localBVM.Expenses}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenExpenseDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference expenseCollectioView}}" EmptyView="No Expenses Found.">
+            <Label Padding="5,10,0,0" HorizontalOptions="Center" Text="Showing Filtered Results" IsVisible="{Binding IsFilteredResults}" FontSize="Caption" FontFamily="NunitoLight"/>
+            <CollectionView Margin="0,5" x:Name="expenseCollectioView" ItemsSource="{Binding localBVM.Expenses}" SelectionMode="Single" SelectionChangedCommand="{Binding OpenExpenseDetailCommand}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference expenseCollectioView}}" EmptyView="No Expenses Found.">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
@@ -116,6 +133,5 @@
                 </CollectionView>
             </VerticalStackLayout>
         </Grid>
-    </ScrollView>
 
 </ContentPage>
