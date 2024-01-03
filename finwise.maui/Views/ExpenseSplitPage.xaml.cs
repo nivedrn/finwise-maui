@@ -1,5 +1,6 @@
 using finwise.maui.Models;
 using finwise.maui.ViewModels;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Xml.Linq;

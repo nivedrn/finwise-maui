@@ -97,7 +97,16 @@ namespace finwise.maui.ViewModels
             }
 
             ShowSelectableMembers = true;
-            selectableMembers = new ObservableCollection<Person>(App._bvm.People);
+            if(App._bvm.People.Count > 0)
+            {
+                selectableMembers = new ObservableCollection<Person>(App._bvm.People);
+
+            }
+            else
+            {
+                selectableMembers = new ObservableCollection<Person>();
+
+            }
             currentCurrencySymbol = App._settings["currentCurrencySymbol"];
         }
 
