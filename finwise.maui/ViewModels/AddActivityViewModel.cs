@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
+using finwise.maui.Services;
 
 namespace finwise.maui.ViewModels
 {
     public partial class AddActivityViewModel : BaseViewModel
     {
-        public AddActivityViewModel()
+        private readonly INavigationService navigation;
+
+        public AddActivityViewModel(INavigationService navigation)
         {
+            this.navigation = navigation;
             Title = "Add Activity";
         }
 
+        [RelayCommand]
+        private Task CloseAsync() => navigation.CloseModalAsync();
     }
 }

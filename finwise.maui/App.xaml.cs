@@ -1,24 +1,15 @@
-﻿using finwise.maui.ViewModels;
 namespace finwise.maui
 {
     public partial class App : Application
     {
-        public IServiceProvider Services { get; }
+        private readonly AppShell shell;
 
-        public App()
+        public App(AppShell shell)
         {
-            Services = ConfigureServices();
             InitializeComponent();
-
-            MainPage = new AppShell();
+            this.shell = shell;
         }
 
-        private static IServiceProvider ConfigureServices()
-        {
-            var services = new ServiceCollection();
-            services.AddTransient<AddActivityViewModel>();
-            services.AddTransient<AppShellViewModel>();
-            return services.BuildServiceProvider();
-        }
+        protected override Window CreateWindow(IActivationState? activationState) => new(shell);
     }
 }

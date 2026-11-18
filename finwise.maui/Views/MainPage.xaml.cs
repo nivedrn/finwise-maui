@@ -1,25 +1,13 @@
-﻿using System.Diagnostics;
+﻿using finwise.maui.ViewModels;
 
 namespace finwise.maui.Views
 {
     public partial class MainPage : ContentPage
     {
-
-        public MainPage()
+        public MainPage(MainViewModel viewModel)
         {
             InitializeComponent();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            Debug.WriteLine("On Appearing");
-        }
-
-        protected override void OnNavigatedTo(NavigatedToEventArgs args)
-        {
-            base.OnNavigatedTo(args);
-            Debug.WriteLine("On Navigated To");
+            BindingContext = viewModel;
         }
     }
 }

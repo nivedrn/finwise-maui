@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:finwise.maui.ViewModels"
              x:Class="finwise.maui.Views.SearchPage"
-             Title="SearchPage"
+             x:DataType="vm:SearchViewModel"
+             Title="{Binding Title}"
              Shell.TabBarIsVisible="False"
              Shell.PresentationMode="Modal">
 
-    <Grid RowDefinitions="45,*,auto" ColumnDefinitions="50,*">
-        <BoxView Grid.Row="0" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+    <Grid RowDefinitions="45,*" ColumnDefinitions="50,*">
+        <BoxView Grid.Row="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
 
-        <Button Grid.Row="0" Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}" Command="{Binding PopModal}"/>
-        <Entry Grid.Row="0" Grid.Column="1" x:Name="searchInput" Placeholder="Search" TextChanged="OnEntryTextChanged" Completed="OnEntryCompleted" MaxLength="100" ClearButtonVisibility="WhileEditing"/>
-        
-        <!-- Large content that exceeds the available space -->
-        <ScrollView Padding="10" Grid.Row="1" Grid.ColumnSpan="3" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
+        <Button Grid.Row="0" Grid.Column="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"
+                ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}"
+                SemanticProperties.Description="Back"
+                Command="{Binding CloseCommand}"/>
+        <Entry Grid.Row="0" Grid.Column="1" x:Name="searchInput"
+               Placeholder="Search"
+               Text="{Binding SearchText}"
+               MaxLength="100"
+               ClearButtonVisibility="WhileEditing"
+               SemanticProperties.Description="Search activity"/>
+
+        <ScrollView Padding="10" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
             <VerticalStackLayout>
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
+                <!-- Placeholder: search results -->
+                <Label Text="No results." />
             </VerticalStackLayout>
         </ScrollView>
-
     </Grid>
 
 </ContentPage>

@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:finwise.maui.ViewModels"
              x:Class="finwise.maui.Views.AddActivityPage"
-             Title="AddActivityPage"
+             x:DataType="vm:AddActivityViewModel"
+             Title="{Binding Title}"
              Shell.TabBarIsVisible="False"
              Shell.PresentationMode="Modal">
 
-    <VerticalStackLayout>
-        <Button Text="Click to Rotate Text!"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                Command="{Binding PopModal}" />
-    </VerticalStackLayout>
+    <Grid RowDefinitions="45,*" ColumnDefinitions="50,*">
+        <BoxView Grid.Row="0" Grid.ColumnSpan="2" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+
+        <Button Grid.Row="0" Grid.Column="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"
+                ImageSource="{AppThemeBinding Light=arrow_left.png,Dark=arrow_left_dark.png}"
+                SemanticProperties.Description="Close"
+                Command="{Binding CloseCommand}"/>
+        <Label Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20"
+               SemanticProperties.HeadingLevel="Level1" />
+
+        <ScrollView Padding="10" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
+            <VerticalStackLayout>
+                <!-- Placeholder: add activity form -->
+                <Label Text="The add activity form is coming soon." />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
 </ContentPage>

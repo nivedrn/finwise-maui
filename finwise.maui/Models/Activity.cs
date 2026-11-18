@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace finwise.maui.Models
+﻿namespace finwise.maui.Models
 {
+    // Placeholder model: to be replaced by the Phase 1 domain model
+    // (decimal amounts, currency, date, payer, splits, category).
     public class Activity
     {
-        public string id {  get; set; }
-        public string title {  get; set; }
-        public string description {  get; set; }
-        public string type {  get; set; }
-        public float amount {  get; set; }
-        public string activityType {  get; set; }
+        public string id { get; set; } = string.Empty;
+        public string title { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+        public string type { get; set; } = string.Empty;
+        public float amount { get; set; }
+        public string activityType { get; set; } = string.Empty;
     }
 }
