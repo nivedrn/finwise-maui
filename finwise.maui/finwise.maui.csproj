@@ -54,4 +54,9 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.15" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\FinWise.Core\FinWise.Core.csproj" />
+		<ProjectReference Include="..\FinWise.Data\FinWise.Data.csproj" />
+	</ItemGroup>
+
 </Project>

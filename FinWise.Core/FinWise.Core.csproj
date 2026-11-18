@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk" TreatAsLocalProperty="TargetFrameworks">
+
+	<!-- Domain model and business logic. Deliberately has no MAUI or storage dependencies
+	     so it can be unit tested on any machine. -->
+	<PropertyGroup>
+		<!-- Always net10.0, even when the app is built with -p:TargetFrameworks=net10.0-android
+		     (a global property that would otherwise reach this project too). -->
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>FinWise.Core</RootNamespace>
+		<IsAotCompatible>true</IsAotCompatible>
+	</PropertyGroup>
+
+</Project>

@@ -1,4 +1,7 @@
 using CommunityToolkit.Maui;
+using FinWise.Core.Repositories;
+using FinWise.Data;
+using FinWise.Data.Repositories;
 using finwise.maui.Services;
 using finwise.maui.ViewModels;
 using finwise.maui.Views;
@@ -8,6 +11,8 @@ namespace finwise.maui
 {
     public static class MauiProgram
     {
+        private const string DatabaseFileName = "finwise.db3";
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
@@ -26,6 +31,17 @@ namespace finwise.maui
 
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<AppShell>();
+
+            // Storage: one SQLite database for the whole app. The schema is created or upgraded
+            // (and default categories seeded) the first time a repository uses it.
+            builder.Services.AddSingleton(TimeProvider.System);
+            builder.Services.AddSingleton(sp => new FinWiseDatabase(
+                Path.Combine(FileSystem.AppDataDirectory, DatabaseFileName),
+                sp.GetRequiredService<TimeProvider>()));
+            builder.Services.AddSingleton<IPersonRepository, PersonRepository>();
+            builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddSingleton<ITransactionRepository, TransactionRepository>();
+            builder.Services.AddSingleton<ISettlementRepository, SettlementRepository>();
 
             // View models
             builder.Services.AddTransient<MainViewModel>();

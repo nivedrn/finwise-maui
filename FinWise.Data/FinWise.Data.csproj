@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk" TreatAsLocalProperty="TargetFrameworks">
+
+	<!-- SQLite storage for FinWise. No MAUI dependency: the app passes in the database path. -->
+	<PropertyGroup>
+		<!-- Always net10.0, even when the app is built with -p:TargetFrameworks=net10.0-android
+		     (a global property that would otherwise reach this project too). -->
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>FinWise.Data</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- 1.11 ships with SQLitePCLRaw 3 and its own native SQLite, so no bundle package is needed. -->
+		<PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\FinWise.Core\FinWise.Core.csproj" />
+	</ItemGroup>
+
+</Project>
