@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:finwise.maui.ViewModels"
              x:Class="finwise.maui.Views.ActivityPage"
-             Title="ActivityPage"
+             x:DataType="vm:ActivityViewModel"
+             Title="{Binding Title}"
              Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="45,*,auto" ColumnDefinitions="*,30,50">
+    <Grid RowDefinitions="45,*" ColumnDefinitions="*,50,50">
         <BoxView Grid.Row="0" Grid.ColumnSpan="3" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
 
-        <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="Activity" FontSize="20" />
-        <Button Grid.Row="0" Grid.Column="1" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}" Command="{Binding SearchCommand}"/>
-        <Button Grid.Row="0" Grid.Column="2" Padding="10,0" BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}" ImageSource="{AppThemeBinding Light=search.png,Dark=search_dark.png}" Command="{Binding SearchCommand}"/>
+        <Label Grid.Row="0" Grid.Column="0" Padding="10,0" VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20"
+               SemanticProperties.HeadingLevel="Level1" />
+        <Button Grid.Row="0" Grid.Column="1" Padding="10,0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"
+                ImageSource="{AppThemeBinding Light=filters.png,Dark=filters_dark.png}"
+                SemanticProperties.Description="Filters"
+                Command="{Binding OpenSearchCommand}"/>
+        <Button Grid.Row="0" Grid.Column="2" Padding="10,0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"
+                ImageSource="{AppThemeBinding Light=search.png,Dark=search_dark.png}"
+                SemanticProperties.Description="Search"
+                Command="{Binding OpenSearchCommand}"/>
 
-        <!-- Large content that exceeds the available space -->
         <ScrollView Padding="10" Grid.Row="1" Grid.ColumnSpan="3" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
             <VerticalStackLayout>
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
-                <Label Text="Scrollable Content Here..." />
+                <!-- Placeholder: activity list -->
+                <Label Text="No activity yet." />
             </VerticalStackLayout>
         </ScrollView>
-        
     </Grid>
-    
+
 </ContentPage>

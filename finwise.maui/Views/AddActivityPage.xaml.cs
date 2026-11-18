@@ -1,27 +1,12 @@
-using Microsoft.Maui.Controls;
-using System.Diagnostics;
-using System.Windows.Input;
 using finwise.maui.ViewModels;
+
 namespace finwise.maui.Views;
 
 public partial class AddActivityPage : ContentPage
 {
-    public AddActivityPage()
-	{
-		InitializeComponent();
-        this.BindingContext = new AddActivityViewModel();
-    }
-
-    protected override void OnAppearing()
+    public AddActivityPage(AddActivityViewModel viewModel)
     {
-        base.OnAppearing();
-        Debug.WriteLine("On Appearing: Add Activity");
+        InitializeComponent();
+        BindingContext = viewModel;
     }
-
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnNavigatedTo(args);
-        Debug.WriteLine("On Navigated To: Add Activity");
-    }
-    
 }

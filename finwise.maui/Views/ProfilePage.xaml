@@ -2,12 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="finwise.maui.Views.ProfilePage"
-             Title="ProfilePage"
+             Title="Profile"
              Shell.NavBarIsVisible="False">
-    <VerticalStackLayout>
-        <Label 
-            Text="Profile"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <Grid RowDefinitions="45,*">
+        <BoxView Grid.Row="0" Color="{AppThemeBinding Light={StaticResource LightNavBar}, Dark={StaticResource DarkNavBar}}"/>
+        <Label Grid.Row="0" Padding="10,0" VerticalTextAlignment="Center" Text="Profile" FontSize="20"
+               SemanticProperties.HeadingLevel="Level1" />
+
+        <ScrollView Padding="10" Grid.Row="1" BackgroundColor="{AppThemeBinding Light={StaticResource LightBG}, Dark={StaticResource DarkBG}}">
+            <VerticalStackLayout>
+                <!-- Placeholder: profile and settings -->
+                <Label Text="Profile settings are coming soon." />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
 </ContentPage>
